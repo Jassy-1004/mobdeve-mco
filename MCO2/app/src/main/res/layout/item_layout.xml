@@ -80,7 +80,7 @@
 
                 <TextView
                     android:id="@+id/PublishedDate"
-                    android:layout_width="130dp"
+                    android:layout_width="149dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Published Date"
@@ -88,7 +88,7 @@
 
                 <TextView
                     android:id="@+id/Date"
-                    android:layout_width="170dp"
+                    android:layout_width="145dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:text="Date"

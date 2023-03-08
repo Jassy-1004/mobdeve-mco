@@ -5,26 +5,27 @@
 
     <item
         android:id="@+id/nav_home"
-        android:drawableLeft="@drawable/baseline_home_24"
+        android:icon="@drawable/baseline_home_24"
         android:title="Homepage"
         android:actionLayout="@layout/activity_main"
         android:iconTint="@color/lightorange"/>
 
     <item
         android:id="@+id/nav_books"
-        android:drawableLeft="@drawable/baseline_menu_book_24"
+        android:icon="@drawable/baseline_menu_book_24"
         android:title="My Book Reviews"
         android:iconTint="@color/lightorange"/>
 
 
     <item
         android:id="@+id/nav_profile"
-        android:drawableLeft="@drawable/baseline_person_24"
+        android:icon="@drawable/baseline_person_24"
         android:title="My Profile" />
 
     <item
         android:id="@+id/nav_logout"
-        android:drawableLeft="@drawable/baseline_exit_to_app_24"
+        android:actionLayout="@layout/activity_login"
+        android:icon="@drawable/baseline_exit_to_app_24"
         android:title="Logout" />
 
 </menu>
