@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MCO2</string>
+    <!-- to toggle the open close button of the navigation drawer -->
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <string name="dropdown">dropDownMenuExample</string>
+    <string-array name="filter">
+        <item>Most Rated</item>
+        <item>Latest Reviews</item>
+        <item>Oldest Reviews</item>
+    </string-array>
+</resources>
+
