@@ -8,9 +8,10 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="35dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,9 +20,10 @@
 
         <TextView
             android:id="@+id/homepagetv"
-            android:layout_width="match_parent"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:foregroundGravity="center"
             android:gravity="center"
             android:text="HOMEPAGE"
             android:textColor="@color/pastelorange"
@@ -63,14 +65,16 @@
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/navigation_menu" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
