@@ -85,10 +85,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="firstname"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="firstname"
             android:textColor="#939090"
             android:textSize="16sp" />
 
@@ -126,10 +126,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="lastname"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="lastname"
             android:textColor="#939090"
             android:textSize="16sp" />
 
@@ -175,23 +175,29 @@
             android:textSize="14sp"
             android:textStyle="normal|italic" />
 
-        <CheckBox
-            android:id="@+id/Male"
+        <RadioGroup
+            android:id="@+id/gender_group"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Male" />
+            android:layout_height="match_parent">
 
-        <CheckBox
-            android:id="@+id/Female"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Female" />
+            <RadioButton
+                android:id="@+id/Male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Male" />
 
-        <CheckBox
-            android:id="@+id/Others"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Others" />
+            <RadioButton
+                android:id="@+id/Female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+            <RadioButton
+                android:id="@+id/Others"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Others" />
+        </RadioGroup>
 
 
     </LinearLayout>

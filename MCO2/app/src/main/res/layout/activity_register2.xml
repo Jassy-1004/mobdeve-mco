@@ -84,13 +84,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
-            android:text="password"
-            android:textColor="#D5CFCF" />
+            android:textColor="#D5CFCF"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -126,13 +127,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="confirm password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
-            android:text="password"
-            android:textColor="#D5CFCF" />
+            android:textColor="#D5CFCF"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/Note1"

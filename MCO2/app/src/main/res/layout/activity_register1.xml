@@ -84,10 +84,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="username"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="username"
             android:textColor="#939090"
             android:textSize="16sp" />
 
@@ -125,10 +125,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="email"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="email"
             android:textColor="#939090"
             android:textSize="16sp" />
 

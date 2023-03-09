@@ -66,14 +66,14 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/loginemaltext"
+            android:id="@+id/loginemailtext"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="email"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="email"
             android:textColor="#939090"
             android:textSize="16sp" />
 
@@ -112,12 +112,12 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="password"
             android:inputType="textPassword"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
-            android:text="password"
             android:textColor="#D5CFCF" />
 
         <TextView

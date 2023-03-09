@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
@@ -25,8 +27,28 @@ class Login : AppCompatActivity() {
 
         login = viewBinding.loginbtn1
         login.setOnClickListener{
-            val intent : Intent = Intent(this, MainActivity::class.java);
-            startActivity(intent)
+            if(!TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) && !TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){
+                val intent : Intent = Intent(this, MainActivity::class.java);
+                startActivity(intent)
+            } else if(TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) && TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){
+                Toast.makeText(
+                    this,
+                    "please enter your account credentials",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (TextUtils.isEmpty(viewBinding.loginemailtext.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter your email",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter your password",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 }

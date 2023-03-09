@@ -152,10 +152,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
+            android:hint="Write here"
             android:inputType="textLongMessage"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Write here"
             android:textColor="#939090"
             android:textSize="16sp" />
 
