@@ -55,12 +55,14 @@ class MainActivity : AppCompatActivity() {
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        bottomNavigationView= findViewById(R.id.bottomNavigationView)
+        bottomNavigationView= viewBinding.bottomNavigationView
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
                 R.id.nav_home->startActivity(homepage)
                 R.id.nav_logout->startActivity(logout)
+                //R.id.nav_books->startActivity()
+                //R.id.nav_profile->startActivity()
 
 
             }

@@ -25,7 +25,7 @@ class Register4 : AppCompatActivity() {
 
         Reg4Btn = viewBinding.nextpage4
         Reg4Btn.setOnClickListener {
-            val intent: Intent = Intent(this, Login::class.java);
+            val intent: Intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
 
