@@ -16,8 +16,5 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.description.text = books.bookPlot
         this.viewBinding.myRatingBar.rating = books.bookRating
         this.viewBinding.Date.text = books.bookDate
-
     }
-
-
-    }
+}

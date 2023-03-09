@@ -30,7 +30,7 @@ class Login : AppCompatActivity() {
         login.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) && !TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){
-                    val intent : Intent = Intent(this, Register2::class.java);
+                    val intent : Intent = Intent(this, MainActivity::class.java);
                     startActivity(intent)
                 }else{
                     Toast.makeText(

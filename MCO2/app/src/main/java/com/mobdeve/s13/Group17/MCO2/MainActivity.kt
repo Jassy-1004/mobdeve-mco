@@ -12,12 +12,15 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 
 
@@ -28,6 +31,14 @@ class MainActivity : AppCompatActivity() {
     // RecyclerView reference
     private lateinit var recyclerView: RecyclerView
     private lateinit var bottomNavigationView: BottomNavigationView
+
+    private val bookInfoResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){result : ActivityResult->
+        if(result.resultCode == RESULT_OK){
+
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,15 +53,13 @@ class MainActivity : AppCompatActivity() {
         val homepage : Intent = Intent(this, MainActivity::class.java);
         val logout : Intent = Intent(this, StartPage::class.java);
 
-
-
         dropdown.adapter = adapter
 
         // Initialize the RecyclerView
         this.recyclerView = viewBinding.recyclerView
 
         // Set the Adapter.
-        this.recyclerView.adapter = MyAdapter(this.bookList)
+        this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher)
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -72,5 +81,5 @@ class MainActivity : AppCompatActivity() {
 
     }
 
- 
+
 }
