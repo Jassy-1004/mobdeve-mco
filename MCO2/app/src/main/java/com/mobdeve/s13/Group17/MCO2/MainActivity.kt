@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     // data
@@ -26,8 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
 
         val dropdown = findViewById<Spinner>(R.id.filter)
         val items = arrayOf("Most Rated", "Latest Books", "Oldest Books")
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         dropdown.adapter = adapter
 
         // Initialize the RecyclerView
-        this.recyclerView = findViewById(R.id.recyclerView)
+        this.recyclerView = viewBinding.recyclerView
 
         // Set the Adapter.
         this.recyclerView.adapter = MyAdapter(this.bookList)

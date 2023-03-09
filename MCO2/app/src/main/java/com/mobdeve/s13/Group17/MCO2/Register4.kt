@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityRegister4Binding
 import java.util.*
 
 
@@ -18,9 +19,11 @@ class Register4 : AppCompatActivity() {
     private lateinit  var dateButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register4)
 
-        Reg4Btn = findViewById(R.id.nextpage4)
+        val viewBinding : ActivityRegister4Binding = ActivityRegister4Binding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        Reg4Btn = viewBinding.nextpage4
         Reg4Btn.setOnClickListener {
             val intent: Intent = Intent(this, Login::class.java);
             startActivity(intent)
@@ -28,9 +31,8 @@ class Register4 : AppCompatActivity() {
 
         //Date Picker
         initDatePicker();
-        dateButton = findViewById(R.id.datePickerButton);
+        dateButton = viewBinding.datePickerButton
         dateButton.setText(getTodaysDate());
-
     }
 
 
