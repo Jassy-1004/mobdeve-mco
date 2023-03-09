@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
     private lateinit var signUpHere: TextView
@@ -13,21 +14,19 @@ class Login : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        signUpHere = findViewById(R.id.signuphere)
+
+        val viewBinding : ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+        signUpHere = viewBinding.signuphere
         signUpHere.setOnClickListener{
             val intent : Intent = Intent(this, Register1::class.java);
             startActivity(intent)
-
-
         }
 
-        login = findViewById(R.id.loginbtn1)
+        login = viewBinding.loginbtn1
         login.setOnClickListener{
             val intent : Intent = Intent(this, MainActivity::class.java);
             startActivity(intent)
-
-
         }
     }
 }
