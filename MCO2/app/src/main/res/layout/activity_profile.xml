@@ -45,7 +45,7 @@
             android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            app:srcCompat="@drawable/defaultProfile" />
+            app:srcCompat="@drawable/defaultprofile" />
 
 
     </LinearLayout>
