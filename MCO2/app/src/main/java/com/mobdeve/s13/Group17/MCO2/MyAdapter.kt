@@ -27,7 +27,7 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
                 intent.putExtra(BookInfoActivity.ISBN_KEY, view.ISBN.text.toString())
                 intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, view.description.text.toString())
                 intent.putExtra(BookInfoActivity.POSITION_KEY, myViewHolder.adapterPosition)
-                intent.putExtra(BookInfoActivity.RATING_KEY, view.myRatingBar.rating.toFloat())
+                intent.putExtra(BookInfoActivity.RATING_KEY, view.myRating.rating.toFloat())
 
                 myActivityResultLauncher.launch(intent)
             }
