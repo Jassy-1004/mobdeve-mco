@@ -3,7 +3,7 @@ package com.mobdeve.s13.Group17.MCO2
 class DataHelper {
     companion object{
         fun initializeData(): ArrayList<Books> {
-            val data = ArrayList <Books > ()
+            val data = ArrayList <Books> ()
             data.add(
                 Books("9780439023528", "The Hunger Games",
                     "Suzanne Collins",
