@@ -17,4 +17,9 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.myRating.rating = books.bookRating
         this.viewBinding.Date.text = books.bookDate
     }
+
+    fun bindData(profile: Profile){
+
+
+    }
 }

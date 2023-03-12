@@ -3,9 +3,10 @@ package com.mobdeve.s13.Group17.MCO2
 class DataHelper {
     companion object{
         fun initializeData(): ArrayList<Books> {
-            val data = ArrayList <Books> ()
+            val data = ArrayList<Books>()
             data.add(
-                Books("9780439023528", "The Hunger Games",
+                Books(
+                    "9780439023528", "The Hunger Games",
                     "Suzanne Collins",
                     "In the ruins of a place once known as North America lies the nation of Panem, a shining Capitol surrounded by twelve outlying districts. The Capitol is harsh and cruel and keeps the districts in line by forcing them all to send one boy and one girl between the ages of twelve and eighteen to participate in the annual Hunger Games, a fight to the death on live TV.\n" +
                             "\n" +
@@ -18,11 +19,13 @@ class DataHelper {
                             "weight survival against humanity and life against love.",
                     4.33F,
                     "September 14, 2008",
-                     R.drawable.hunger_games)
+                    R.drawable.hunger_games
+                )
 
             )
             data.add(
-                Books("9780439358071", "Harry Potter and the Order of the Phoenix (Harry Potter, #5)",
+                Books(
+                    "9780439358071", "Harry Potter and the Order of the Phoenix (Harry Potter, #5)",
                     "J.K. Rowling",
                     "Harry Potter is about to start his fifth year at Hogwarts School of Witchcraft and Wizardry. Unlike most schoolboys, " +
                             "Harry never enjoys his summer holidays, but this summer is even worse than usual." +
@@ -30,11 +33,13 @@ class DataHelper {
                             "Ron and Hermione, seem to be neglecting him.",
                     4.50F,
                     "June 21, 2003",
-                    R.drawable.harry)
+                    R.drawable.harry
+                )
 
             )
             data.add(
-                Books("9780684801223", "The Old Man and the Sea",
+                Books(
+                    "9780684801223", "The Old Man and the Sea",
                     "Ernest Hemingway",
                     "This short novel, already a modern classic, is the superbly " +
                             "told, tragic story of a Cuban fisherman in the Gulf Stream " +
@@ -43,11 +48,13 @@ class DataHelper {
                             "accompanying the author's Nobel Prize for literature in 1954.",
                     3.5F,
                     "September 1, 1952",
-                    R.drawable.the_oldman)
+                    R.drawable.the_oldman
+                )
 
             )
             data.add(
-                Books("9780062387240", "Divergent",
+                Books(
+                    "9780062387240", "Divergent",
                     "Veronica Roth",
                     "In Beatrice Prior's dystopian Chicago world, " +
                             "society is divided into five factions, each dedicated to " +
@@ -58,11 +65,13 @@ class DataHelper {
                             "including herself.",
                     4F,
                     "April 25, 2011",
-                    R.drawable.divergent)
+                    R.drawable.divergent
+                )
 
             )
             data.add(
-                Books("9780316327336", "Twilight",
+                Books(
+                    "9780316327336", "Twilight",
                     "Stephenie Meyer",
                     "About three things I was absolutely positive.\n" +
                             "\n" +
@@ -75,11 +84,13 @@ class DataHelper {
                             "Deeply seductive and extraordinarily suspenseful, Twilight is a love story with bite.\n",
                     2F,
                     "October 5, 2005",
-                    R.drawable.twilight)
+                    R.drawable.twilight
+                )
 
             )
             data.add(
-                Books("9781405288194", "The Little Prince",
+                Books(
+                    "9781405288194", "The Little Prince",
                     "Antoine de Saint-Exupéry",
                     "A pilot stranded in the desert awakes one morning to see, " +
                             "standing before him, the most extraordinary little fellow. " +
@@ -91,11 +102,13 @@ class DataHelper {
                             "has changed forever the world for its readers.",
                     4.5F,
                     "April 6, 1943",
-                    R.drawable.little_prince)
+                    R.drawable.little_prince
+                )
 
             )
             data.add(
-                Books("9780066238500", "The Chronicles of Narnia",
+                Books(
+                    "9780066238500", "The Chronicles of Narnia",
                     "C.S. Lewis",
                     "Journeys to the end of the world, fantastic creatures, and epic" +
                             " battles between good and evil—what more could any " +
@@ -104,10 +117,30 @@ class DataHelper {
                             " and together they became known as The Chronicles of Narnia.",
                     4.1F,
                     "January 1, 1956",
-                    R.drawable.narnia)
+                    R.drawable.narnia
+                )
 
             )
             return data;
         }
+        fun initializesData(): ArrayList<Profile> {
+            val data = ArrayList<Profile>()
+                data.add(
+                    Profile("kayeshi120","Kaye","Shi","kayeshi120@gmail.com",
+                        "12345","Female", "May 10, 2001","Hi! Welcome to my page.")
+                )
+
+                data.add(
+                    Profile("jasminechua123","Jasmine","Chua","jasminechua123@gmail.com",
+                        "76212","Female", "September 21, 2002","Hi! Welcome to my page.")
+                )
+
+                data.add(
+                    Profile("hailytan016","Haily","Tan","hailytan016@gmail.com",
+                        "761892","Female", "December 5, 2000","Hi! Welcome to my page.")
+                )
+            return data;
+            }
+
+        }
     }
-}
