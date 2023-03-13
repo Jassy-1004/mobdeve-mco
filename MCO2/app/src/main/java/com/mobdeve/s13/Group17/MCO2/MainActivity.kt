@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView = viewBinding.recyclerView
 
         // Set the Adapter.
-        this.recyclerView.adapter = MyAdapter(bookList, profileList, bookInfoResultLauncher)
+        this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher)
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -79,12 +79,22 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
             when(it.itemId){
-                R.id.nav_home->startActivity(homepage)
-                R.id.nav_logout->startActivity(logout)
-                R.id.nav_books->startActivity(library)
-                R.id.nav_profile->startActivity(profile)
-
-
+                R.id.nav_home-> {
+                    startActivity(homepage)
+                    finish()
+                }
+                R.id.nav_logout->{
+                    startActivity(logout)
+                    finish()
+                }
+                R.id.nav_books-> {
+                    startActivity(library)
+                    finish()
+                }
+                R.id.nav_profile-> {
+                    startActivity(profile)
+                    finish()
+                }
             }
             true
         }

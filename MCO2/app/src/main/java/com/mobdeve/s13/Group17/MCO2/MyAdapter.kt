@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 
 
-class MyAdapter(private val data: ArrayList<Books>, datas:ArrayList<Profile>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>): RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val data: ArrayList<Books>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>): RecyclerView.Adapter<MyViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             // Create a LayoutInflater using the parent's context
             val inflater = LayoutInflater.from(parent.context)

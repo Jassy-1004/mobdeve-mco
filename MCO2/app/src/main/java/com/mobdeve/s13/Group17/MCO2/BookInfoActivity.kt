@@ -47,8 +47,7 @@ class BookInfoActivity : AppCompatActivity() {
 
         backbtn= viewBinding.backbutton
         backbtn.setOnClickListener {
-            val intent : Intent = Intent(this, MainActivity::class.java);
-            startActivity(intent)
+            finish()
             
         }
     }

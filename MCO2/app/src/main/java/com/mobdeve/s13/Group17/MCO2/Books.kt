@@ -8,5 +8,4 @@ class Books(
     val bookRating:Float,
     val bookDate:String,
     val bookImage: Int
-){
-}
+)
