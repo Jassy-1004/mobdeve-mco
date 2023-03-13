@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
 
         val homepage : Intent = Intent(this, MainActivity::class.java);
         val logout : Intent = Intent(this, StartPage::class.java);
+        val library:Intent= Intent (this,MyLibrary::class.java);
+        val profile:Intent= Intent (this,ProfileActivity::class.java);
 
         dropdown.adapter = adapter
 
@@ -79,8 +81,8 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.nav_home->startActivity(homepage)
                 R.id.nav_logout->startActivity(logout)
-                //R.id.nav_books->startActivity()
-                //R.id.nav_profile->startActivity()
+                R.id.nav_books->startActivity(library)
+                R.id.nav_profile->startActivity(profile)
 
 
             }

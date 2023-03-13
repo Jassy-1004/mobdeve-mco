@@ -5,10 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     companion object{
         const val FIRSTNAME_TITLE_KEY = "FIRSTNAME_TITLE_KEY"
@@ -43,5 +45,25 @@ class ProfileActivity : AppCompatActivity() {
 
             finish()
         })
+
+        val homepage : Intent = Intent(this, MainActivity::class.java);
+        val logout : Intent = Intent(this, StartPage::class.java);
+        val library:Intent= Intent (this,MyLibrary::class.java);
+        val profile:Intent= Intent (this,ProfileActivity::class.java);
+
+
+        bottomNavigationView= viewBinding.bottomNavigationView
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+            when(it.itemId){
+                R.id.nav_home->startActivity(homepage)
+                R.id.nav_logout->startActivity(logout)
+                R.id.nav_books->startActivity(library)
+                R.id.nav_profile->startActivity(profile)
+
+
+            }
+            true
+        }
     }
 }

@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 
 class BookInfoActivity : AppCompatActivity() {
+    private lateinit var backbtn: ImageButton
     companion object{
         const val BOOK_TITLE_KEY = "BOOK_TITLE_KEY"
         const val AUTHOR_KEY = "AUTHOR_KEY"
@@ -42,5 +44,15 @@ class BookInfoActivity : AppCompatActivity() {
 
             finish()
         })
-    }
+
+        backbtn= viewBinding.backbutton
+        backbtn.setOnClickListener {
+            val intent : Intent = Intent(this, MainActivity::class.java);
+            startActivity(intent)
+            
+        }
+        }
+
+
+
 }
