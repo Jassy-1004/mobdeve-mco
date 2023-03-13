@@ -24,6 +24,7 @@ class Login : AppCompatActivity() {
         signUpHere.setOnClickListener{
             val intent : Intent = Intent(this, Register1::class.java);
             startActivity(intent)
+            finish()
         }
 
         login = viewBinding.loginbtn1
@@ -32,6 +33,7 @@ class Login : AppCompatActivity() {
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){
                     val intent : Intent = Intent(this, MainActivity::class.java);
                     startActivity(intent)
+                    finish()
                 }else{
                     Toast.makeText(
                         this,

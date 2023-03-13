@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_logout->{
                     startActivity(logout)
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     startActivity(library)

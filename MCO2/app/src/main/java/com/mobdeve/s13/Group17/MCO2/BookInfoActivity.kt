@@ -35,15 +35,6 @@ class BookInfoActivity : AppCompatActivity() {
 
         val position = intent.getIntExtra(BookInfoActivity.POSITION_KEY, 0)
 
-        viewBinding.booktitletv.setOnClickListener(View.OnClickListener {
-            val intent : Intent = Intent()
-
-            intent.putExtra(BookInfoActivity.POSITION_KEY, position)
-
-            setResult(Activity.RESULT_OK, intent)
-
-            finish()
-        })
 
         backbtn= viewBinding.backbutton
         backbtn.setOnClickListener {
