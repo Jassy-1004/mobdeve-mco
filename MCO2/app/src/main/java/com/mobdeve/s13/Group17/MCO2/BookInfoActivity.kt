@@ -51,8 +51,5 @@ class BookInfoActivity : AppCompatActivity() {
             startActivity(intent)
             
         }
-        }
-
-
-
+    }
 }
