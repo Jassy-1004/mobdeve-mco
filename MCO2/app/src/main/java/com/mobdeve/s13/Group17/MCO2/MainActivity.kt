@@ -27,7 +27,8 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     // data
     private val bookList: ArrayList<Books> = DataHelper.initializeData()
-    private val profileList: ArrayList<Profile> = DataHelper.initializesData()
+
+   // private val bookReviewList: ArrayList<BookReview> = DataHelper.initializesDatas()
     private lateinit var logout: ImageButton
     // RecyclerView reference
     private lateinit var recyclerView: RecyclerView
@@ -41,13 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    /*private val profileResultLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){result : ActivityResult->
-        if(result.resultCode == RESULT_OK){
-
-        }
-
-    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set the Adapter.
         this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher)
+
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)

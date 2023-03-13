@@ -30,7 +30,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val homepage : Intent = Intent(this, MainActivity::class.java)
         val logout : Intent = Intent(this, StartPage::class.java)
-        val library:Intent= Intent (this,MyLibrary::class.java)
+       val library:Intent= Intent (this,MyLibrary::class.java)
         val profile:Intent= Intent (this,ProfileActivity::class.java)
 
 
