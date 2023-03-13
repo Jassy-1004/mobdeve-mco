@@ -10,7 +10,6 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
-    private lateinit var bottomNavigationView: BottomNavigationView
 
     companion object{
         const val FIRSTNAME_TITLE_KEY = "FIRSTNAME_TITLE_KEY"
@@ -19,8 +18,9 @@ class ProfileActivity : AppCompatActivity() {
         const val GENDER_KEY = "GENDER_KEY"
         const val BIRTHDAY_KEY = "BIRTHDAY_KEY"
         const val BIO_KEY = "BIO_KEY"
-        const val POSITION_KEY = "POSITION_KEY"
     }
+
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -28,23 +28,7 @@ class ProfileActivity : AppCompatActivity() {
         val viewBinding: ActivityProfileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.profileName.text = intent.getStringExtra(ProfileActivity.FIRSTNAME_TITLE_KEY)
-        viewBinding.profileName.text = intent.getStringExtra(ProfileActivity.LASTNAME_KEY)
-        viewBinding.profileUsername.text = intent.getStringExtra(ProfileActivity.USERNAME_KEY)
-        viewBinding.profileGender.text = intent.getStringExtra(ProfileActivity.GENDER_KEY)
-        viewBinding.profileBirthdate.text = intent.getStringExtra(ProfileActivity.BIRTHDAY_KEY)
-        viewBinding.profileBio.text = intent.getStringExtra(ProfileActivity.BIO_KEY)
-        val position = intent.getIntExtra(BookInfoActivity.POSITION_KEY, 0)
 
-        viewBinding.profileName.setOnClickListener(View.OnClickListener {
-            val intent : Intent = Intent()
-
-            intent.putExtra(ProfileActivity.POSITION_KEY, position)
-
-            setResult(Activity.RESULT_OK, intent)
-
-            finish()
-        })
 
         val homepage : Intent = Intent(this, MainActivity::class.java);
         val logout : Intent = Intent(this, StartPage::class.java);

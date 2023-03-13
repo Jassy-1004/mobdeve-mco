@@ -41,13 +41,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private val profileResultLauncher = registerForActivityResult(
+    /*private val profileResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){result : ActivityResult->
         if(result.resultCode == RESULT_OK){
 
         }
 
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView = viewBinding.recyclerView
 
         // Set the Adapter.
-        this.recyclerView.adapter = MyAdapter(bookList,profileList, bookInfoResultLauncher,profileResultLauncher)
+        this.recyclerView.adapter = MyAdapter(bookList, profileList, bookInfoResultLauncher)
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)

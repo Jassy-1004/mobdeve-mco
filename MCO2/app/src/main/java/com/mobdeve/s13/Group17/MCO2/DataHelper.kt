@@ -1,7 +1,7 @@
 package com.mobdeve.s13.Group17.MCO2
 
 class DataHelper {
-    companion object{
+    companion object {
         fun initializeData(): ArrayList<Books> {
             val data = ArrayList<Books>()
             data.add(
@@ -119,28 +119,44 @@ class DataHelper {
                     "January 1, 1956",
                     R.drawable.narnia
                 )
-
             )
+
             return data;
         }
+
         fun initializesData(): ArrayList<Profile> {
             val data = ArrayList<Profile>()
-                data.add(
-                    Profile("kayeshi120","Kaye","Shi","kayeshi120@gmail.com",
-                        "12345","Female", "May 10, 2001","Hi! Welcome to my page.")
+            data.add(
+                Profile(10001,"kayeshi120", "Kaye", "Shi", "kayeshi120@gmail.com",
+                    "12345", "Female", "May 10, 2001", "Hi! Welcome to my page."
                 )
+            )
+            data.add(
+                Profile(10002,"jasminchua1004", "Jasmin", "Chua", "jasminchua1004@gmail.com",
+                    "12345", "Female", "August 24, 2002", "Hi! Welcome to my page."
+                )
+            )
+            data.add(
+                Profile(10003,"hailytan016","Haily","Tan","hailytan016@gmail.com",
+                    "761892","Female", "December 5, 2000","Hi! Welcome to my page.")
+            )
 
-                data.add(
-                    Profile("jasminechua123","Jasmine","Chua","jasminechua123@gmail.com",
-                        "76212","Female", "September 21, 2002","Hi! Welcome to my page.")
-                )
-
-                data.add(
-                    Profile("hailytan016","Haily","Tan","hailytan016@gmail.com",
-                        "761892","Female", "December 5, 2000","Hi! Welcome to my page.")
-                )
             return data;
-            }
+        }
 
+        fun initializedData(): ArrayList<Comments>{
+            val data = ArrayList<Comments>()
+            data.add(
+                Comments("kayeshi120", "This is one of the best books that I have read!")
+            )
+            data.add(
+                Comments("hailytan016", "Would recommend this book to my friends")
+            )
+            data.add(
+                Comments("jasminchua123", "will surely read this again!!!")
+            )
+
+            return data
         }
     }
+}
