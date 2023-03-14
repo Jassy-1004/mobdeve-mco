@@ -41,7 +41,8 @@
         <activity
             android:name=".BookReviewActivity"
             android:exported="false" />
-
+        <activity android:name=".EditBookReviewActivity"
+                android:exported="false"/>
         <activity android:name=".EditProfile"
             android:exported="false"/>
         <activity
