@@ -26,7 +26,5 @@ class AddBookReview : AppCompatActivity() {
         viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
 
         viewBinding.myRatingBar.rating = 0F
-
-
     }
 }

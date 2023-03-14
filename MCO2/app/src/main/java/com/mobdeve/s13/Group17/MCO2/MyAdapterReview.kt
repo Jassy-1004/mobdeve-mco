@@ -21,18 +21,8 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         // Return a new instance of our MyViewHolder passing the View object we created
         val myViewHolder = MyViewHolderReview(view)
 
-        myViewHolder.itemView.setOnClickListener {
-            val intent = Intent(myViewHolder.itemView.context, BookReviewActivity::class.java)
-
-            myActivityResultLauncher.launch(intent)
-        }
-
         return MyViewHolderReview(view)
     }
-
-
-
-
 
 
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {

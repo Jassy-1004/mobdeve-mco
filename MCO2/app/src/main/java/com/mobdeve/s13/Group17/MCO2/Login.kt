@@ -20,6 +20,7 @@ class Login : AppCompatActivity() {
 
         val viewBinding : ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
         signUpHere = viewBinding.signuphere
         signUpHere.setOnClickListener{
             val intent : Intent = Intent(this, Register1::class.java);
