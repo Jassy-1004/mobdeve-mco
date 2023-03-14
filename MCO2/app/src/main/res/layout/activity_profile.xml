@@ -81,31 +81,6 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/profGender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="8dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="0dp"
-                android:text="Gender"
-                android:textColor="@color/pastelorange"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/profileGender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="4dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp"
-                android:text="Gender"
-                android:textColor="#636161"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/profUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
