@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:background="@drawable/bg"
+    tools:context=".ProfileActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -74,6 +75,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="0dp"
             android:text="Name"
+            android:inputType="text"
             android:textColor="@color/pastelorange"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -129,6 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Male"
+                android:textColor="@color/black"
                 android:textSize="14sp"/>
 
             <RadioButton
@@ -136,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Female"
+                android:textColor="@color/black"
                 android:textSize="14sp"/>
 
             <RadioButton
@@ -143,6 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Others"
+                android:textColor="@color/black"
                 android:textSize="14sp"/>
         </RadioGroup>
     </LinearLayout>
@@ -182,6 +187,7 @@
             android:paddingTop="4dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
+            android:inputType="text"
             android:text="Username"
             android:textColor="#636161"
             android:textSize="14sp" />
@@ -225,6 +231,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
             android:text="Birthdate"
+            android:inputType="text"
             android:textColor="#636161"
             android:textSize="14sp" />
 

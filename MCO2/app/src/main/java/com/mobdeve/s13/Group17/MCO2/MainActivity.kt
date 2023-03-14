@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, MyProfileActivity::class.java))
                     finish()
                 }
                 R.id.nav_logout->{

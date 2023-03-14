@@ -17,7 +17,7 @@ class EditProfile : AppCompatActivity() {
 
         done = viewBinding.editComplete
         done.setOnClickListener {
-            val intent: Intent = Intent(this, ProfileActivity::class.java);
+            val intent: Intent = Intent(this, MyProfileActivity::class.java);
             startActivity(intent)
             finish()
 

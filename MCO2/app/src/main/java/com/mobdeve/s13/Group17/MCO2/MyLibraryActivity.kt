@@ -43,7 +43,7 @@ class MyLibraryActivity : AppCompatActivity() {
         val homepage: Intent = Intent(this, MainActivity::class.java);
         val logout: Intent = Intent(this, StartPage::class.java);
         val library: Intent = Intent(this, MyLibraryActivity::class.java);
-        val profile: Intent = Intent(this, ProfileActivity::class.java);
+        val profile: Intent = Intent(this, MyProfileActivity::class.java);
 
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
         this.adapter = MyAdapterReview(reviewList, bookReviewResultLauncher)
@@ -79,7 +79,7 @@ class MyLibraryActivity : AppCompatActivity() {
                     finish()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, MyProfileActivity::class.java))
                     finish()
                 }
                 R.id.nav_logout->{
