@@ -18,7 +18,7 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
             // Return a new instance of our MyViewHolder passing the View object we created
             val myViewHolder = MyViewHolder(view)
 
-            myViewHolder.itemView.setOnClickListener {
+           /* myViewHolder.itemView.setOnClickListener {
                 val intent: Intent = Intent(myViewHolder.itemView.context, BookInfoActivity::class.java)
 
                 intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, view.BookTitle.text.toString())
@@ -30,14 +30,32 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
                 intent.putExtra(BookInfoActivity.RATING_KEY, view.myRating.rating.toFloat())
 
                 myActivityResultLauncher.launch(intent)
-            }
+            }*/
 
             return MyViewHolder(view)
         }
 
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            holder.bindData(data[position])
+            val book = data[position]
+
+            holder.bindData(book)
+
+            holder.itemView.setOnClickListener {
+                val intent = Intent(holder.itemView.context, BookInfoActivity::class.java)
+
+                intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, book.bookName)
+                intent.putExtra(BookInfoActivity.AUTHOR_KEY, book.bookAuthor)
+                intent.putExtra(BookInfoActivity.PUBLICATION_DATE_KEY, book.bookDate)
+                intent.putExtra(BookInfoActivity.ISBN_KEY, book.book_isbn)
+                intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, book.bookPlot)
+                intent.putExtra(BookInfoActivity.POSITION_KEY, position)
+                intent.putExtra(BookInfoActivity.RATING_KEY, book.bookRating)
+                intent.putExtra(BookInfoActivity.IMG_KEY, book.bookImage)
+
+                myActivityResultLauncher.launch(intent)
+            }
+
         }
 
         override fun getItemCount(): Int {
