@@ -2,6 +2,7 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 
 class EditBookReviewActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class EditBookReviewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
-        val viewBinding: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(layoutInflater)
+        val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
     }
 }

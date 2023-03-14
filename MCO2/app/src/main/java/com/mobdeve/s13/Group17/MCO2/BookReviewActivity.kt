@@ -18,6 +18,7 @@ class BookReviewActivity: AppCompatActivity() {
     }
 
     private lateinit var editBtn: Button
+    private lateinit var deleteBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -32,8 +33,11 @@ class BookReviewActivity: AppCompatActivity() {
             finish()
         }
 
+        deleteBtn = viewBinding.deletebtn
         viewBinding.deletebtn.setOnClickListener{
-
+            val delete: Intent = Intent (this, DeleteBookReviewActivity::class.java)
+            startActivity(delete)
+            finish()
         }
     }
 }

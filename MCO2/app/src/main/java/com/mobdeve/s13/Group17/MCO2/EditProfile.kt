@@ -26,7 +26,6 @@ class EditProfile : AppCompatActivity() {
             val intent: Intent = Intent(this, MyProfileActivity::class.java);
             startActivity(intent)
             finish()
-
         }
         //Date Picker
         initDatePicker();
