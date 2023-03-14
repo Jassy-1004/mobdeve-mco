@@ -16,14 +16,16 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
             // Create a LayoutInflater using the parent's context
             val inflater = LayoutInflater.from(parent.context)
             // Inflate a new View given the item_layout2.xml item view we created.
-            val view: ItemLayoutBinding = ItemLayoutBinding.inflate(inflater, parent,false)
-            val views: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(inflater,parent,false)
-            val vw: ActivityProfileBinding = ActivityProfileBinding.inflate(inflater,parent,false)
+            val view: ItemLayoutBinding = ItemLayoutBinding.inflate(inflater, parent, false)
+            val views: ActivityMyreviewBinding =
+                ActivityMyreviewBinding.inflate(inflater, parent, false)
+            val vw: ActivityProfileBinding = ActivityProfileBinding.inflate(inflater, parent, false)
             // Return a new instance of our MyViewHolder passing the View object we created
-            val myViewHolder = MyViewHolder(view,views,vw)
+            val myViewHolder = MyViewHolder(view)
 
-            myViewHolder.itemView.setOnClickListener{
-                val intent : Intent = Intent(myViewHolder.itemView.context, BookInfoActivity::class.java)
+            myViewHolder.itemView.setOnClickListener {
+                val intent: Intent =
+                    Intent(myViewHolder.itemView.context, BookInfoActivity::class.java)
 
                 intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, view.BookTitle.text.toString())
                 intent.putExtra(BookInfoActivity.AUTHOR_KEY, view.author.text.toString())
@@ -35,7 +37,8 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
 
                 myActivityResultLauncher.launch(intent)
             }
-            myViewHolder.itemView.setOnClickListener{
+
+          /*  myViewHolder.itemView.setOnClickListener{
                 val intent : Intent = Intent(myViewHolder.itemView.context, BookReviewActivity::class.java)
 
                 intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, views.booktitletv.text.toString())
@@ -46,9 +49,9 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
                 intent.putExtra(BookReviewActivity.POSITION_KEY,myViewHolder.adapterPosition)
 
                 myActivityResultLauncher.launch(intent)
-            }
+            }*/
 
-            myViewHolder.itemView.setOnClickListener{
+           /* myViewHolder.itemView.setOnClickListener{
                 val intent : Intent = Intent(myViewHolder.itemView.context, ProfileActivity::class.java)
 
                 intent.putExtra(ProfileActivity.FIRSTNAME_TITLE_KEY, vw.profileName.text.toString())
@@ -60,9 +63,9 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
                 intent.putExtra(BookReviewActivity.POSITION_KEY,myViewHolder.adapterPosition)
 
                 myActivityResultLauncher.launch(intent)
-            }
+            }*/
 
-            return MyViewHolder(view,views,vw)
+            return MyViewHolder(view)
         }
 
 

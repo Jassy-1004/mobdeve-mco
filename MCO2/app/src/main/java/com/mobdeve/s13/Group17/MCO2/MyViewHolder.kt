@@ -8,7 +8,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
-class MyViewHolder(private val viewBinding: ItemLayoutBinding,private val viewBindings: ActivityMyreviewBinding, private val viewsBinding: ActivityProfileBinding): RecyclerView.ViewHolder(viewBinding.root) {
+class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
     //  Method that accepts a Character object and sets our views' info accordingly.
     fun bindData(books: Books) {
         this.viewBinding.ISBN.text = books.book_isbn
@@ -20,7 +20,7 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding,private val viewBi
         this.viewBinding.Date.text = books.bookDate
     }
 
-    fun bindsData(bookReview: BookReview){
+   /* fun bindsData(bookReview: BookReview){
         this.viewBindings.booktitletv.text = bookReview.book_Title
         this.viewBindings.authortv.text = bookReview.book_Author
         this.viewBindings.descriptiontv.text = bookReview.book_Description
@@ -35,6 +35,6 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding,private val viewBi
         this.viewsBinding.profileGender.text = profile.gender
         this.viewsBinding.profileBirthdate.text = profile.birthday
         this.viewsBinding.profileBio.text = profile.bio
-    }
+    }*/
 
 }

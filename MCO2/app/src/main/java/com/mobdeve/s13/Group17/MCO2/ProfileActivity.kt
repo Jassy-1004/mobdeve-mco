@@ -1,15 +1,22 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
 
-    companion object{
+    /*  companion object{
         const val FIRSTNAME_TITLE_KEY = "FIRSTNAME_TITLE_KEY"
         const val LASTNAME_KEY = "LASTNAME_KEY"
         const val USERNAME_KEY = "USERNAME_KEY"
@@ -32,6 +39,23 @@ class ProfileActivity : AppCompatActivity() {
         viewBinding.profileBio.text = intent.getStringExtra(ProfileActivity.BIO_KEY)
 
         val position = intent.getIntExtra(BookReviewActivity.POSITION_KEY, 0)
+
+    }*/
+
+    private lateinit var editProfile:Button
+
+
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        val viewBinding: ActivityProfileBinding = ActivityProfileBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+        editProfile = viewBinding.editProfile
+        editProfile.setOnClickListener {
+            val intent: Intent = Intent(this, EditProfile::class.java);
+            startActivity(intent)
+            finish()
+
+    }
 
     }
 }
