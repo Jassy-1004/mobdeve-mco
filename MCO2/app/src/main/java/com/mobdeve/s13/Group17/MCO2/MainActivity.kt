@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         val homepage : Intent = Intent(this, MainActivity::class.java);
         val logout : Intent = Intent(this, StartPage::class.java);
         val library:Intent= Intent (this,MyLibraryActivity::class.java);
-        val profile:Intent= Intent (this,ProfileActivity::class.java);
+        val profile:Intent= Intent (this,MyProfileActivity::class.java);
 
         dropdown.adapter = adapter
 
