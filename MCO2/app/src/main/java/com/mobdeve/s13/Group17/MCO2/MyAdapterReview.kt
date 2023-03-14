@@ -2,8 +2,10 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
@@ -19,12 +21,10 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         // Return a new instance of our MyViewHolder passing the View object we created
         val myViewHolder = MyViewHolderReview(view)
 
-        myViewHolder.itemView.setOnClickListener{
-            val intent : Intent = Intent(myViewHolder.itemView.context, BookReviewActivity::class.java)
+        myViewHolder.itemView.setOnClickListener {
+            val intent = Intent(myViewHolder.itemView.context, BookReviewActivity::class.java)
 
-
-
-            this.myActivityResultLauncher.launch(intent)
+            myActivityResultLauncher.launch(intent)
         }
 
         return MyViewHolderReview(view)

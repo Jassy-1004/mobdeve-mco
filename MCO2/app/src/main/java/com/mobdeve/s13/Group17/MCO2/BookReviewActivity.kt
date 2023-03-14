@@ -20,8 +20,5 @@ class BookReviewActivity: AppCompatActivity() {
 
         val viewBinding: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
-
-
     }
 }
