@@ -12,10 +12,10 @@
         android:theme="@style/Theme.MCO2"
         tools:targetApi="31">
         <activity
-            android:name=".MyLibrary"
+            android:name=".ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".Homepage"
+            android:name=".MyLibraryActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

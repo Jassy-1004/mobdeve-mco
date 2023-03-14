@@ -27,6 +27,7 @@ class Register4 : AppCompatActivity() {
         Reg4Btn.setOnClickListener {
             val intent: Intent = Intent(this, Login::class.java)
             startActivity(intent)
+            finishAffinity()
         }
 
         //Date Picker

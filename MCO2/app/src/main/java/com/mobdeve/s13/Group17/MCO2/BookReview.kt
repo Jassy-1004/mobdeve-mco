@@ -6,5 +6,6 @@ class BookReview (
     val book_Description: String,
     val book_Rating:Float,
     val book_Review: String,
-    val bookImage: Int
+    val bookImage: Int,
+    val datePosted: String
 )

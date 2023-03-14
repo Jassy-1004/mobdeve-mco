@@ -144,41 +144,26 @@ class DataHelper {
             return data;
         }
 
-        fun initializedData(): ArrayList<Comments>{
-            val data = ArrayList<Comments>()
-            data.add(
-                Comments("kayeshi120", "This is one of the best books that I have read!")
-            )
-            data.add(
-                Comments("hailytan016", "Would recommend this book to my friends")
-            )
-            data.add(
-                Comments("jasminchua123", "will surely read this again!!!")
-            )
-
-            return data
-        }
-
-        fun initializesDatas(): ArrayList<BookReview>{
+        fun initializedData(): ArrayList<BookReview>{
             val data = ArrayList<BookReview>()
             data.add(
                 BookReview("Divergent", "Veronica Roth","Divergent follows the story of Beatrice (Tris), who has a " +
                         "choice to make among the 5 factions of her nation, which will map out certain actions in her life: Abnegation (the selfless)," +
                         " Amity (the peaceful), Candor (the honest), Dauntless (the brave), and Erudite (the intellectual).",
-                        3.0F,"This book is so interesting. It didn't disappoint me", R.drawable.divergent)
+                        3.0F,"This book is so interesting. It didn't disappoint me", R.drawable.divergent, "October 20, 2022")
             )
             data.add(
                 BookReview("Harry Potter", "J.K. Rowling","The novels follow Harry Potter, " +
                         "an 11-year-old boy who discovers he is the son of famous wizards " +
                         "and will attend Hogwarts School of Witchcraft and Wizardry. Harry " +
                         "learns of an entire society of wizards and witches.",4.5F,"I would love to read more " +
-                        "books with the same plot. I totally love it. Would recommend it to my friends",R.drawable.harry)
+                        "books with the same plot. I totally love it. Would recommend it to my friends",R.drawable.harry, "January 10, 2023")
             )
             data.add(
                 BookReview("Hunger Games", "Suzanne Collins","The Hunger Games is an annual event in which one boy and one girl aged " +
                         "12–18 from each of the twelve districts surrounding the Capitol are selected by lottery " +
                         "to compete in a televised battle royale to the death.", 4.8F,"Would love to read it again!",
-                        R.drawable.hunger_games)
+                        R.drawable.hunger_games, "June 15, 2021")
             )
 
             return data

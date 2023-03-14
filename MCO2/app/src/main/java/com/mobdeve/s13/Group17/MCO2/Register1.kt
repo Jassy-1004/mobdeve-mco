@@ -52,7 +52,6 @@ class Register1 : AppCompatActivity() {
                 ).show()
             }
         }
-
     }
 
 }

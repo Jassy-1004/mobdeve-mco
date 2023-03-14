@@ -1,11 +1,11 @@
 package com.mobdeve.s13.Group17.MCO2
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 
-class BookReviewActivity: AppCompatActivity() {
+class EditBookReviewActivity : AppCompatActivity() {
+
     companion object{
         const val BOOK_TITLE_KEY = "BOOK_TITLE_KEY"
         const val AUTHOR_KEY = "AUTHOR_KEY"

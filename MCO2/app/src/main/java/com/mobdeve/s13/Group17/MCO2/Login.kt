@@ -33,7 +33,7 @@ class Login : AppCompatActivity() {
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){
                     val intent : Intent = Intent(this, MainActivity::class.java);
                     startActivity(intent)
-                    finish()
+                    finishAffinity()
                 }else{
                     Toast.makeText(
                         this,

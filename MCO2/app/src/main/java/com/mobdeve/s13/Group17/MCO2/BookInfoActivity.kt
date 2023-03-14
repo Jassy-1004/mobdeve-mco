@@ -1,9 +1,7 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
@@ -31,15 +29,23 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.publishdatetv.text = intent.getStringExtra(BookInfoActivity.PUBLICATION_DATE_KEY)
         viewBinding.ISBNtv.text = intent.getStringExtra(BookInfoActivity.ISBN_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(BookInfoActivity.DESCRIPTION_KEY)
-        viewBinding.myRatingBar.rating = intent.getIntExtra(BookInfoActivity.RATING_KEY, 0).toFloat()
-
-        val position = intent.getIntExtra(BookInfoActivity.POSITION_KEY, 0)
+        viewBinding.myRatingBar.rating = intent.getFloatExtra(BookInfoActivity.RATING_KEY, 0.0F)
 
 
         backbtn= viewBinding.backbutton
         backbtn.setOnClickListener {
             finish()
             
+        }
+
+        viewBinding.addbtnFab.setOnClickListener{
+            val intent: Intent = Intent(this, AddBookReviewActivity::class.java)
+
+            intent.putExtra(EditBookReviewActivity.BOOK_TITLE_KEY, viewBinding.booktitletv.text)
+            intent.putExtra(EditBookReviewActivity.AUTHOR_KEY, viewBinding.authortv.text)
+            intent.putExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY, viewBinding.descriptiontv.text)
+
+            startActivity(intent)
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -19,22 +18,4 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.myRating.rating = books.bookRating
         this.viewBinding.Date.text = books.bookDate
     }
-
-   /* fun bindsData(bookReview: BookReview){
-        this.viewBindings.booktitletv.text = bookReview.book_Title
-        this.viewBindings.authortv.text = bookReview.book_Author
-        this.viewBindings.descriptiontv.text = bookReview.book_Description
-        this.viewBindings.myRating.rating = bookReview.book_Rating
-        this.viewBindings.myReviewtv.text = bookReview.book_Review
-    }
-
-    fun bindDatas(profile: Profile){
-        this.viewsBinding.profileName.text = profile.firstName
-        this.viewsBinding.profileName.text = profile.lastName
-        this.viewsBinding.profileUsername.text = profile.username
-        this.viewsBinding.profileGender.text = profile.gender
-        this.viewsBinding.profileBirthdate.text = profile.birthday
-        this.viewsBinding.profileBio.text = profile.bio
-    }*/
-
 }

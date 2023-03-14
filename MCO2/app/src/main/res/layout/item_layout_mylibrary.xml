@@ -14,9 +14,7 @@
     <RelativeLayout
         android:id="@+id/llContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgBook"
@@ -35,27 +33,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
                 android:maxLines="1"
-                android:padding="0dp"
 
+                android:padding="0dp"
                 android:text="You posted:"
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/review_tv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="0dp"
-                android:maxLines="2"
-                android:padding="0dp"
-
-
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida dictum fusce ut placerat. Interdum posuere lorem ipsum dolor sit amet. Interdum posuere lorem ipsum dolor. Purus in massa tempor nec. Nibh sed pulvinar proin gravida. Morbi quis commodo odio aenean sed adipiscing diam donec. Placerat vestibulum lectus mauris ultrices. Eu lobortis elementum nibh tellus molestie nunc. In vitae turpis massa sed. Odio tempor orci dapibus ultrices in iaculis nunc. Purus ut faucibus pulvinar elementum integer enim neque. Aliquam etiam erat velit scelerisque in dictum non consectetur. Malesuada fames ac turpis egestas maecenas pharetra convallis posuere morbi. Non odio euismod lacinia at quis risus sed vulputate. Vulputate enim nulla aliquet porttitor. Suspendisse ultrices gravida dictum fusce ut placerat."
-                android:textColor="#9A9796"
-                android:textSize="12sp"
-                android:textStyle="normal" />
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="3dp"
+                android:text="review" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -65,10 +59,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="100dp"
+                    android:layout_marginTop="3dp"
                     android:layout_marginBottom="3dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toTopOf="@+id/myRating"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:id="@+id/textView12"
@@ -86,6 +82,7 @@
                         android:layout_weight="1"
                         android:text="date"
                         android:textSize="12sp" />
+
                 </LinearLayout>
 
                 <RatingBar
@@ -93,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="100dp"
+                    android:layout_marginBottom="1dp"
                     android:contentDescription="rating"
                     android:numStars="5"
                     android:rating="0"
@@ -100,8 +98,6 @@
                     android:scaleY="0.5"
                     android:transformPivotX="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
