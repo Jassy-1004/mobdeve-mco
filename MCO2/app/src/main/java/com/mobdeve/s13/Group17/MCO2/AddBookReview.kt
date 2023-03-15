@@ -1,6 +1,9 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
@@ -21,10 +24,18 @@ class AddBookReview : AppCompatActivity() {
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.booktitletv.text = intent.getStringExtra(AddBookReview.BOOK_TITLE_KEY)
-        viewBinding.authortv.text = intent.getStringExtra(AddBookReview.AUTHOR_KEY)
-        viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
-
         viewBinding.myRatingBar.rating = 0F
+
+        viewBinding.savebtn.setOnClickListener(){
+            val intent: Intent = Intent()
+
+            setResult(Activity.RESULT_OK, intent)
+
+            finish()
+        }
+
+        viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
+            finish()
+        })
     }
 }

@@ -18,7 +18,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 class MyProfileActivity : AppCompatActivity() {
-    //data
+    //navigaton
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 

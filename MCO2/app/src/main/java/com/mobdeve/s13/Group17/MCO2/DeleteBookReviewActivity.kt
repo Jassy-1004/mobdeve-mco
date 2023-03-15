@@ -18,7 +18,7 @@ class DeleteBookReviewActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
          yes = viewBinding.yesBtn
          yes.setOnClickListener {
-             val intent: Intent = Intent(this, BookReviewActivity::class.java);
+             val intent: Intent = Intent(this, MyLibraryActivity::class.java);
              startActivity(intent)
              finish()
          }

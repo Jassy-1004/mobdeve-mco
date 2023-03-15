@@ -23,7 +23,6 @@ class MyLibraryActivity : AppCompatActivity() {
     private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
 
     private lateinit var recyclerViewLibrary: RecyclerView
-    private lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var adapter: MyAdapterReview
 

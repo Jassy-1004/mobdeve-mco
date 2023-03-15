@@ -27,21 +27,14 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
 
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
         val bookReview = data[position]
+
+        holder.bindData(bookReview)
+
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.itemView.context, BookReviewActivity::class.java)
 
-            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, bookReview.book_Title)
-            intent.putExtra(BookReviewActivity.AUTHOR_KEY, bookReview.book_Author)
-            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY,bookReview.book_Author)
-            intent.putExtra(BookReviewActivity.RATING_KEY, bookReview.book_Rating)
-            intent.putExtra(BookReviewActivity.REVIEW_KEY, bookReview.book_Review)
-            intent.putExtra(BookReviewActivity.POSITION_KEY, position)
-
             myActivityResultLauncher.launch(intent)
         }
-
-
-        holder.bindData(bookReview)
     }
 
     override fun getItemCount(): Int {
