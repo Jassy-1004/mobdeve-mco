@@ -46,6 +46,8 @@ class MyLibraryActivity : AppCompatActivity() {
 
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
         this.adapter = MyAdapterReview(reviewList, bookReviewResultLauncher)
+
+
         this.recyclerViewLibrary.adapter = adapter
 
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)

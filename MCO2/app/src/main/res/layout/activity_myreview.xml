@@ -53,7 +53,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="Titlte"
+                    android:text="Title"
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />

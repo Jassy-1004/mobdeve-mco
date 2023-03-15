@@ -22,8 +22,10 @@ class BookReviewActivity: AppCompatActivity() {
         const val RATING_KEY = "RATING_KEY"
         const val REVIEW_KEY = "REVIEW_KEY"
         const val POSITION_KEY = "POSITION_KEY"
+        const val IMAGE_KEY="IMAGE_KEY"
         private val reviewList = ArrayList<BookReview>()
     }
+
 
     private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
 
@@ -45,6 +47,15 @@ class BookReviewActivity: AppCompatActivity() {
 
         val viewBinding: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewBinding.booktitletv.text = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
+        viewBinding.authortv.text = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
+        viewBinding.descriptiontv.text = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
+        viewBinding.myRating.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
+        viewBinding.reviewTv.text= intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
+        viewBinding.bookImage.setImageResource(intent.getIntExtra(BookReviewActivity.IMAGE_KEY, R.drawable.hob_logo))
+
+
 
         editBtn = viewBinding.editbtn
         editBtn.setOnClickListener {
