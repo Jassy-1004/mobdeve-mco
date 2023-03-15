@@ -165,5 +165,20 @@ class DataHelper {
 
             return data
         }
+
+        fun initializeDatum(): ArrayList<Comment>{
+            val data = ArrayList<Comment>()
+            data.add(
+                Comment("kayeshi", "i love this book so much!!!")
+            )
+            data.add(
+                Comment("jasminchua", "will recommend this to all of my book lover friends")
+            )
+            data.add(
+                Comment("hailytan", "worth my time and money")
+            )
+
+            return data
+        }
     }
 }

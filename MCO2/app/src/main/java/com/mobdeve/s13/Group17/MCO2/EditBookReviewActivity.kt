@@ -16,6 +16,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val BOOK_DESCRIPTION_KEY = "BOOK_DESCRIPTION_KEY"
         const val RATING_KEY = "RATING_KEY"
         const val REVIEW_KEY = "REVIEW_KEY"
+        const val IMG_KEY = "IMG_KEY"
         const val POSITION_KEY = "POSITION_KEY"
     }
 
@@ -25,11 +26,12 @@ class EditBookReviewActivity : AppCompatActivity() {
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        viewBinding.booktitletv.text = intent.getStringExtra(AddBookReview.BOOK_TITLE_KEY)
-        viewBinding.authortv.text = intent.getStringExtra(AddBookReview.AUTHOR_KEY)
-        viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
-
-        viewBinding.myRatingBar.rating = 0F
+        viewBinding.booktitletv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_TITLE_KEY)
+        viewBinding.authortv.text = intent.getStringExtra(EditBookReviewActivity.AUTHOR_KEY)
+        viewBinding.descriptiontv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
+        viewBinding.bookimg.setImageResource(intent.getIntExtra(EditBookReviewActivity.IMG_KEY, R.drawable.hob_logo))
+        viewBinding.myRatingBar.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
+        viewBinding.commentEt.setText(intent.getStringExtra(EditBookReviewActivity.REVIEW_KEY))
 
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()

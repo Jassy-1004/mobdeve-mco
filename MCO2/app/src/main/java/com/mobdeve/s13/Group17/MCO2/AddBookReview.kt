@@ -24,6 +24,11 @@ class AddBookReview : AppCompatActivity() {
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        viewBinding.authortv.text = intent.getStringExtra(AddBookReview.AUTHOR_KEY)
+        viewBinding.booktitletv.text = intent.getStringExtra(AddBookReview.BOOK_TITLE_KEY)
+        viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
+        viewBinding.bookimg.setImageResource(intent.getIntExtra(AddBookReview.IMG_KEY, R.drawable.hob_logo))
+
         viewBinding.myRatingBar.rating = 0F
 
         viewBinding.savebtn.setOnClickListener(){

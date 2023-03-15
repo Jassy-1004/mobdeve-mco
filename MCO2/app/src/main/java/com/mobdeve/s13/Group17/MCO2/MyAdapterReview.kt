@@ -2,12 +2,9 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 
 class MyAdapterReview(private val data: ArrayList<BookReview>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>): RecyclerView.Adapter<MyViewHolderReview>() {

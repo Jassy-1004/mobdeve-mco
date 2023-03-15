@@ -48,6 +48,13 @@ class BookReviewActivity: AppCompatActivity() {
         val viewBinding: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        val title = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
+        val author = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
+        val description = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
+        val rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
+        val review = intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
+        val image = intent.getIntExtra(BookReviewActivity.IMAGE_KEY, R.drawable.hob_logo)
+
         viewBinding.booktitletv.text = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
         viewBinding.authortv.text = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
@@ -60,6 +67,14 @@ class BookReviewActivity: AppCompatActivity() {
         editBtn = viewBinding.editbtn
         editBtn.setOnClickListener {
             val edit: Intent = Intent(this, EditBookReviewActivity::class.java)
+
+            edit.putExtra(EditBookReviewActivity.BOOK_TITLE_KEY, title)
+            edit.putExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY, description)
+            edit.putExtra(EditBookReviewActivity.RATING_KEY, rating)
+            edit.putExtra(EditBookReviewActivity.REVIEW_KEY, review)
+            edit.putExtra(EditBookReviewActivity.IMG_KEY, image)
+            edit.putExtra(EditBookReviewActivity.AUTHOR_KEY, author)
+
             startActivity(edit)
             finish()
         }

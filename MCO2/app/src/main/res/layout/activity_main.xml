@@ -45,6 +45,7 @@
                 android:layout_marginRight="10dp"
                 android:drawableLeft="@drawable/baseline_search_24"
                 android:ems="10"
+                android:focusableInTouchMode="true"
                 android:hint="Search"
                 android:inputType="textPersonName"
                 android:textColor="#6A6565"
