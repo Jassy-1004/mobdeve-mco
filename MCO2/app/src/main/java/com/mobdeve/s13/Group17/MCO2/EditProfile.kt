@@ -36,10 +36,12 @@ class EditProfile : AppCompatActivity() {
         val viewBinding: ActivityEditprofileBinding = ActivityEditprofileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // putting data to views
         viewBinding.profileUsername.setText(intent.getStringExtra(USERNAME_KEY))
         viewBinding.profileName.setText(intent.getStringExtra(NAME_KEY))
         viewBinding.profileBio.setText(intent.getStringExtra(BIO_KEY))
 
+        // clicking the done button would start activity to MyProfileActivity
         done = viewBinding.editComplete
         done.setOnClickListener {
             val intent: Intent = Intent(this, MyProfileActivity::class.java);
@@ -47,6 +49,7 @@ class EditProfile : AppCompatActivity() {
             finishAffinity()
         }
 
+        // clicking the discard button would finish the current activity
         discard = viewBinding.discardBtn
         discard.setOnClickListener{
             finish()

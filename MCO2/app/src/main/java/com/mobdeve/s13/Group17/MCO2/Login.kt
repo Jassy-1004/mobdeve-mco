@@ -21,6 +21,7 @@ class Login : AppCompatActivity() {
         val viewBinding : ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // clicking the signUp button would start activity for Register1
         signUpHere = viewBinding.signuphere
         signUpHere.setOnClickListener{
             val intent : Intent = Intent(this, Register1::class.java);
@@ -30,6 +31,8 @@ class Login : AppCompatActivity() {
 
         login = viewBinding.loginbtn1
         login.setOnClickListener{
+
+            // check if the data is empty or data has a incorrect format, then asks the user to enter the correct format
             if(!TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) &&
                 !TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){ // check if edit texts are not empty
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){ //check if email is in the correct format

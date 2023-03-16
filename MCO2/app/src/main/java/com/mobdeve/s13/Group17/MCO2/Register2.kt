@@ -16,6 +16,10 @@ class Register2 : AppCompatActivity() {
         val viewBinding : ActivityRegister2Binding = ActivityRegister2Binding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // clicking the next page button would start activity for Register 3 after
+        // ensuring that all values inputted are correct
+        // e.g. password and confirm password is a match
+
         Reg2Btn = viewBinding.nextpage2
         Reg2Btn.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.editTextTextPassword.text.toString()) &&

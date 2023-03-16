@@ -82,6 +82,7 @@ class Register3 : AppCompatActivity() {
             popupWindow.showAtLocation(dpBtn, Gravity.CENTER, 0, 0)
         }
 
+        // clicking the next button would start the activity for Register4 after entering the values that are required
         Reg3Btn = viewBinding.nextpage3
         Reg3Btn.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.firstnametext.text.toString()) &&

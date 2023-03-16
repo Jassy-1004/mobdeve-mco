@@ -28,7 +28,8 @@ class BookReviewActivity: AppCompatActivity() {
     }
 
 
-    private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
+
+    //private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
 
     private lateinit var editBtn: Button
     private lateinit var deleteBtn: Button

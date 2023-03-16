@@ -15,12 +15,14 @@ class StartPage : AppCompatActivity() {
         val viewBinding : ActivityStartpageBinding = ActivityStartpageBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // clicking the register button would start the Register1 activity
         homeRegBtn = viewBinding.registerbtn
         homeRegBtn.setOnClickListener{
             val intent : Intent = Intent(this, Register1::class.java);
             startActivity(intent)
         }
 
+        // clicking the login button would start the Login activity
         loginbtn = viewBinding.loginbtn
         loginbtn.setOnClickListener{
             val intent : Intent = Intent(this, Login::class.java);

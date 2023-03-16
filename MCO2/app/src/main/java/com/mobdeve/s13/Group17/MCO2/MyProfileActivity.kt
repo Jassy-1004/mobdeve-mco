@@ -18,7 +18,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 class MyProfileActivity : AppCompatActivity() {
-    //navigaton
+    //navigation
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
@@ -33,6 +33,7 @@ class MyProfileActivity : AppCompatActivity() {
         editProfile.setOnClickListener {
             val intent: Intent = Intent(this, EditProfile::class.java);
 
+            // putting data to views
             val username = viewBinding.profileUsername.text
             val name = viewBinding.profileName.text
             val bio = viewBinding.profileBio.text

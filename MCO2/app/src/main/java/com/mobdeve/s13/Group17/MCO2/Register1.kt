@@ -19,6 +19,7 @@ class Register1 : AppCompatActivity() {
         val viewBinding : ActivityRegister1Binding = ActivityRegister1Binding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // clicking the next button would start activity of register2 after checking if data entered is the correct format
         Reg1Btn = viewBinding.nextpage1
         Reg1Btn.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.usertext.text.toString()) &&

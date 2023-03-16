@@ -26,6 +26,7 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
 
         holder.bindData(bookReview)
 
+        //clicking itemView would start activity for BookReviewActivity
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.itemView.context, BookReviewActivity::class.java)
             intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, bookReview.book_Title)

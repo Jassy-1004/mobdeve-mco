@@ -16,12 +16,16 @@ class DeleteBookReviewActivity : AppCompatActivity() {
 
          val viewBinding: DialogDeletionBinding = DialogDeletionBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+         //clicking the yes button would start activity for MyLibraryActivity
          yes = viewBinding.yesBtn
          yes.setOnClickListener {
              val intent: Intent = Intent(this, MyLibraryActivity::class.java);
              startActivity(intent)
              finishAffinity()
          }
+
+         //clicking the no button would start activity for BookReviewActivity
          no = viewBinding.noBtn
          no.setOnClickListener{
              val intent: Intent = Intent (this, BookReviewActivity::class.java)

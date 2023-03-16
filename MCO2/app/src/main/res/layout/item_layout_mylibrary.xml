@@ -39,7 +39,9 @@
 
                 android:padding="0dp"
                 android:text="You posted:"
-                android:textSize="14sp" />
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/review_tv"
