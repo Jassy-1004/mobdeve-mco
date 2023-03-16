@@ -14,7 +14,7 @@ import com.google.android.material.navigation.NavigationView
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 
 class BookInfoActivity : AppCompatActivity() {
-    private lateinit var backbtn: ImageButton
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 

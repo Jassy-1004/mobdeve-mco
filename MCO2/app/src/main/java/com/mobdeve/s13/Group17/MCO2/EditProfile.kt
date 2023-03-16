@@ -98,11 +98,6 @@ class EditProfile : AppCompatActivity() {
 
     }
 
-
-
-
-
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
