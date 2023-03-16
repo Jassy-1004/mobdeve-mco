@@ -29,9 +29,9 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="My Review"
+                android:text="MY REVIEW"
                 android:textColor="@color/pastelorange"
-                android:textSize="34sp" />
+                android:textSize="24sp" />
 
             <ImageView
                 android:id="@+id/bookImage"
@@ -65,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:gravity="center_horizontal"
                     android:text="Author"
                     android:textColor="@color/pastelorange"
