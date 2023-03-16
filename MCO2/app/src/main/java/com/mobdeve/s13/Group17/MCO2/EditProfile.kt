@@ -19,14 +19,25 @@ import java.util.*
 class EditProfile : AppCompatActivity() {
     private lateinit var done: Button
 
+    companion object{
+        const val USERNAME_KEY = "USERNAME_KEY"
+        const val NAME_KEY = "NAME_KEY"
+        const val BIO_KEY = "BIO_KEY"
+    }
+
     private var datePickerDialog: DatePickerDialog? = null
     private lateinit  var dateButton2: Button
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val viewBinding: ActivityEditprofileBinding = ActivityEditprofileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        viewBinding.profileUsername.setText(intent.getStringExtra(USERNAME_KEY))
+        viewBinding.profileName.setText(intent.getStringExtra(NAME_KEY))
+        viewBinding.profileBio.setText(intent.getStringExtra(BIO_KEY))
 
         done = viewBinding.editComplete
         done.setOnClickListener {
@@ -57,20 +68,20 @@ class EditProfile : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
             }
             // Close the drawer

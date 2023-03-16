@@ -32,14 +32,17 @@ class MyProfileActivity : AppCompatActivity() {
         editProfile = viewBinding.editProfile
         editProfile.setOnClickListener {
             val intent: Intent = Intent(this, EditProfile::class.java);
-            startActivity(intent)
-            finish()
-        }
 
-        val homepage: Intent = Intent(this, MainActivity::class.java);
-        val logout: Intent = Intent(this, StartPage::class.java);
-        val library: Intent = Intent(this, MyLibraryActivity::class.java);
-        val profile: Intent = Intent(this, MyProfileActivity::class.java);
+            val username = viewBinding.profileUsername.text
+            val name = viewBinding.profileName.text
+            val bio = viewBinding.profileBio.text
+
+            intent.putExtra(EditProfile.NAME_KEY, name)
+            intent.putExtra(EditProfile.USERNAME_KEY, username)
+            intent.putExtra(EditProfile.BIO_KEY, bio)
+
+            startActivity(intent)
+        }
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer

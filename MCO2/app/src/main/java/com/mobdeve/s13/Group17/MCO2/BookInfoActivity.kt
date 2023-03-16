@@ -49,23 +49,17 @@ class BookInfoActivity : AppCompatActivity() {
 
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
 
-        viewBinding.bookimg.setImageResource(
-            intent.getIntExtra(
-                IMG_KEY,
-                R.drawable.hob_logo
-            )
-        )
-
         val title = intent.getStringExtra(BookInfoActivity.BOOK_TITLE_KEY)
         val author = intent.getStringExtra(BookInfoActivity.AUTHOR_KEY)
         val description = intent.getStringExtra(BookInfoActivity.DESCRIPTION_KEY)
         val image = intent.getIntExtra(BookInfoActivity.IMG_KEY, R.drawable.hob_logo)
 
-        viewBinding.booktitletv.text = intent.getStringExtra(BOOK_TITLE_KEY)
-        viewBinding.authortv.text = intent.getStringExtra(AUTHOR_KEY)
+        viewBinding.bookimg.setImageResource(image)
+        viewBinding.booktitletv.text = title
+        viewBinding.authortv.text = author
         viewBinding.publishdatetv.text = intent.getStringExtra(PUBLICATION_DATE_KEY)
         viewBinding.ISBNtv.text = intent.getStringExtra(ISBN_KEY)
-        viewBinding.descriptiontv.text = intent.getStringExtra(DESCRIPTION_KEY)
+        viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
         val position = intent.getIntExtra(POSITION_KEY, 0)
 

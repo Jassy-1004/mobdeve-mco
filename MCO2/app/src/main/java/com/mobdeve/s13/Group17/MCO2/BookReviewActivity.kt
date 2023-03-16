@@ -25,7 +25,6 @@ class BookReviewActivity: AppCompatActivity() {
         const val REVIEW_KEY = "REVIEW_KEY"
         const val POSITION_KEY = "POSITION_KEY"
         const val IMAGE_KEY="IMAGE_KEY"
-        private val reviewList = ArrayList<BookReview>()
     }
 
 

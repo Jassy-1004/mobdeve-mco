@@ -38,7 +38,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.descriptiontv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
         viewBinding.bookimg.setImageResource(intent.getIntExtra(EditBookReviewActivity.IMG_KEY, R.drawable.hob_logo))
         viewBinding.myRatingBar.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
-        viewBinding.commentEt.setText(intent.getStringExtra(EditBookReviewActivity.REVIEW_KEY))
+        viewBinding.commentEt.setText(intent.getStringExtra(REVIEW_KEY))
 
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()
