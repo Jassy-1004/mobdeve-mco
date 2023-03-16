@@ -86,7 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Rate This Book" />
+                android:fontFamily="sans-serif"
+                android:text="Rate This Book"
+                android:textStyle="bold" />
 
             <RatingBar
                 android:id="@+id/myRatingBar"
@@ -110,7 +112,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:text="Say Something About This Book"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/comment_et"
@@ -128,7 +131,7 @@
 
             <Button
                 android:id="@+id/savebtn"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
@@ -137,7 +140,7 @@
 
             <Button
                 android:id="@+id/discardbtn"
-                android:layout_width="100dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
