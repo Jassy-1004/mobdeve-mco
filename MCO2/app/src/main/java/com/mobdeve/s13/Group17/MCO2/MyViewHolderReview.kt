@@ -12,6 +12,4 @@ class MyViewHolderReview (private val viewBinding: ItemLayoutMylibraryBinding): 
         this.viewBinding.myRating.rating = review.book_Rating
         this.viewBinding.imgBook.setImageResource(review.bookImage)
     }
-
-
 }

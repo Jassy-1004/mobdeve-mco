@@ -64,20 +64,20 @@ class MyProfileActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books -> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 // Add more items as needed
             }

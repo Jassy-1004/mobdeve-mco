@@ -41,34 +41,30 @@ class BookInfoActivity : AppCompatActivity() {
         val viewBinding: ActivityBookinfoBinding = ActivityBookinfoBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // set up recycler view
         this.recyclerViewComment = viewBinding.recyclerView2
         this.adapter = MyAdapterComment(commentList)
-
-
         this.recyclerViewComment.adapter = adapter
-
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
 
+        // putting intent to variable
         val title = intent.getStringExtra(BookInfoActivity.BOOK_TITLE_KEY)
         val author = intent.getStringExtra(BookInfoActivity.AUTHOR_KEY)
         val description = intent.getStringExtra(BookInfoActivity.DESCRIPTION_KEY)
         val image = intent.getIntExtra(BookInfoActivity.IMG_KEY, R.drawable.hob_logo)
+        val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
+        val isbn = intent.getStringExtra(ISBN_KEY)
 
+        // putting data to views
         viewBinding.bookimg.setImageResource(image)
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
-        viewBinding.publishdatetv.text = intent.getStringExtra(PUBLICATION_DATE_KEY)
-        viewBinding.ISBNtv.text = intent.getStringExtra(ISBN_KEY)
+        viewBinding.publishdatetv.text = date
+        viewBinding.ISBNtv.text = isbn
         viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
-        val position = intent.getIntExtra(POSITION_KEY, 0)
 
-        backbtn = viewBinding.backbutton
-        backbtn.setOnClickListener {
-            finish()
-
-        }
-
+        // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
             val intent: Intent = Intent(this, AddBookReview::class.java)
 
@@ -99,20 +95,20 @@ class BookInfoActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
             }
             // Close the drawer

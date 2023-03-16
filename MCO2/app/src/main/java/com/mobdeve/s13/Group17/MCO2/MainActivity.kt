@@ -49,11 +49,6 @@ class MainActivity : AppCompatActivity() {
         val items = arrayOf("Most Rated", "Latest Books", "Oldest Books")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
 
-        val homepage : Intent = Intent(this, MainActivity::class.java);
-        val logout : Intent = Intent(this, StartPage::class.java);
-        val library:Intent= Intent (this,MyLibraryActivity::class.java);
-        val profile:Intent= Intent (this,MyProfileActivity::class.java);
-
         dropdown.adapter = adapter
 
         // Initialize the RecyclerView
@@ -84,20 +79,20 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
             }
             // Close the drawer
@@ -106,11 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

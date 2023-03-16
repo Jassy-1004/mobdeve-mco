@@ -18,6 +18,7 @@ import java.util.*
 
 class EditProfile : AppCompatActivity() {
     private lateinit var done: Button
+    private lateinit var discard: Button
 
     companion object{
         const val USERNAME_KEY = "USERNAME_KEY"
@@ -43,8 +44,14 @@ class EditProfile : AppCompatActivity() {
         done.setOnClickListener {
             val intent: Intent = Intent(this, MyProfileActivity::class.java);
             startActivity(intent)
+            finishAffinity()
+        }
+
+        discard = viewBinding.discardBtn
+        discard.setOnClickListener{
             finish()
         }
+
         //Date Picker
         initDatePicker();
         dateButton2 = viewBinding.datePickerButton2

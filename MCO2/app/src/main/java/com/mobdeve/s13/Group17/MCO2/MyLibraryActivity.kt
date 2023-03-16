@@ -38,14 +38,9 @@ class MyLibraryActivity : AppCompatActivity() {
         val viewBinding: ActivityMylibraryBinding = ActivityMylibraryBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val homepage: Intent = Intent(this, MainActivity::class.java);
-        val logout: Intent = Intent(this, StartPage::class.java);
-        val library: Intent = Intent(this, MyLibraryActivity::class.java);
-        val profile: Intent = Intent(this, MyProfileActivity::class.java);
-
+        // setup recycler view
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
         this.adapter = MyAdapterReview(reviewList, bookReviewResultLauncher)
-
 
         this.recyclerViewLibrary.adapter = adapter
 
@@ -71,20 +66,20 @@ class MyLibraryActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books -> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 // Add more items as needed
             }

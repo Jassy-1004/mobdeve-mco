@@ -21,7 +21,6 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         return MyViewHolderReview(view)
     }
 
-
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
         val bookReview = data[position]
 

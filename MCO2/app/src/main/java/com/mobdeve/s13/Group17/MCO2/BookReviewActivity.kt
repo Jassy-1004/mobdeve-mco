@@ -36,9 +36,7 @@ class BookReviewActivity: AppCompatActivity() {
     private val addBookReviewLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
-        if (result.resultCode == RESULT_CANCELED) {
-
-        } else if (result.resultCode == RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             //add in arraylist
         }
     }
@@ -49,6 +47,7 @@ class BookReviewActivity: AppCompatActivity() {
         val viewBinding: ActivityMyreviewBinding = ActivityMyreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // put intent information to variable
         val title = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
         val author = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
         val description = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
@@ -56,15 +55,15 @@ class BookReviewActivity: AppCompatActivity() {
         val review = intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
         val image = intent.getIntExtra(BookReviewActivity.IMAGE_KEY, R.drawable.hob_logo)
 
-        viewBinding.booktitletv.text = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
-        viewBinding.authortv.text = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
-        viewBinding.descriptiontv.text = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
-        viewBinding.myRating.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
-        viewBinding.reviewTv.text= intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
-        viewBinding.bookImage.setImageResource(intent.getIntExtra(BookReviewActivity.IMAGE_KEY, R.drawable.hob_logo))
+        // put information to view
+        viewBinding.booktitletv.text = title
+        viewBinding.authortv.text = author
+        viewBinding.descriptiontv.text = description
+        viewBinding.myRating.rating = rating
+        viewBinding.reviewTv.text= review
+        viewBinding.bookImage.setImageResource(image)
 
-
-
+        //pressing editBtn will go to Edit Book Review Activity
         editBtn = viewBinding.editbtn
         editBtn.setOnClickListener {
             val edit: Intent = Intent(this, EditBookReviewActivity::class.java)
@@ -77,7 +76,6 @@ class BookReviewActivity: AppCompatActivity() {
             edit.putExtra(EditBookReviewActivity.AUTHOR_KEY, author)
 
             startActivity(edit)
-            finish()
         }
 
         deleteBtn = viewBinding.deletebtn
@@ -104,20 +102,20 @@ class BookReviewActivity: AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
             }
             // Close the drawer

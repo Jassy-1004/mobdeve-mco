@@ -18,7 +18,8 @@ class Register2 : AppCompatActivity() {
 
         Reg2Btn = viewBinding.nextpage2
         Reg2Btn.setOnClickListener{
-            if(!TextUtils.isEmpty(viewBinding.editTextTextPassword.text.toString()) && !TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString())){
+            if(!TextUtils.isEmpty(viewBinding.editTextTextPassword.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString())){
                 if(viewBinding.editTextTextPassword.text.toString() == viewBinding.editTextTextPassword2.text.toString()){
                     val intent : Intent = Intent(this, Register3::class.java);
                     startActivity(intent)

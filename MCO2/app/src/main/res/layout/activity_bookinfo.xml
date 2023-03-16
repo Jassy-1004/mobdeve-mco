@@ -31,20 +31,12 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/backbutton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="#00FFFFFF"
-                    android:contentDescription="back"
-                    android:src="@drawable/baseline_arrow_back_24" />
-
                 <TextView
                     android:id="@+id/textView10"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginStart="100dp"
                     android:gravity="center_vertical"
                     android:text="BOOK INFORMATION"
                     android:textColor="@color/pastelorange"

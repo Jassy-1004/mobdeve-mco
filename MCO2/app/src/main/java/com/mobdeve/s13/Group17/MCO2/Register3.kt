@@ -82,11 +82,10 @@ class Register3 : AppCompatActivity() {
             popupWindow.showAtLocation(dpBtn, Gravity.CENTER, 0, 0)
         }
 
-
-
         Reg3Btn = viewBinding.nextpage3
         Reg3Btn.setOnClickListener{
-            if(!TextUtils.isEmpty(viewBinding.firstnametext.text.toString()) && !TextUtils.isEmpty(viewBinding.lastnametext.text.toString())){
+            if(!TextUtils.isEmpty(viewBinding.firstnametext.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.lastnametext.text.toString())){
                 val intent : Intent = Intent(this, Register4::class.java);
                 startActivity(intent)
             } else if (TextUtils.isEmpty(viewBinding.firstnametext.text.toString())) {

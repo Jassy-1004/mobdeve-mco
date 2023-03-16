@@ -20,13 +20,13 @@ class DeleteBookReviewActivity : AppCompatActivity() {
          yes.setOnClickListener {
              val intent: Intent = Intent(this, MyLibraryActivity::class.java);
              startActivity(intent)
-             finish()
+             finishAffinity()
          }
          no = viewBinding.noBtn
          no.setOnClickListener{
              val intent: Intent = Intent (this, BookReviewActivity::class.java)
              startActivity(intent)
-             finish()
+             finishAffinity()
          }
     }
 

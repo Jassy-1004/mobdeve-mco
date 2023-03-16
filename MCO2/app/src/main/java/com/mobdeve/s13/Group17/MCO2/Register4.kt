@@ -36,13 +36,6 @@ class Register4 : AppCompatActivity() {
         dateButton.setText(getTodaysDate());
     }
 
-
-
-
-
-
-
-
     //DATE PICKER
     private fun getTodaysDate(): String? {
         val cal: Calendar = Calendar.getInstance()

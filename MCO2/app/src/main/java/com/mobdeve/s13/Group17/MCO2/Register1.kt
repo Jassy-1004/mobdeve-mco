@@ -21,7 +21,8 @@ class Register1 : AppCompatActivity() {
 
         Reg1Btn = viewBinding.nextpage1
         Reg1Btn.setOnClickListener{
-            if(!TextUtils.isEmpty(viewBinding.usertext.text.toString()) && !TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
+            if(!TextUtils.isEmpty(viewBinding.usertext.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.emailtext.text).matches()){
                     val intent : Intent = Intent(this, Register2::class.java);
                     startActivity(intent)
@@ -32,7 +33,8 @@ class Register1 : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
                 }
-            } else if(TextUtils.isEmpty(viewBinding.usertext.text.toString()) && TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
+            } else if(TextUtils.isEmpty(viewBinding.usertext.text.toString()) &&
+                TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
                 Toast.makeText(
                     this,
                     "please enter a username and an email",

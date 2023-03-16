@@ -30,8 +30,9 @@ class Login : AppCompatActivity() {
 
         login = viewBinding.loginbtn1
         login.setOnClickListener{
-            if(!TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) && !TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){
-                if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){
+            if(!TextUtils.isEmpty(viewBinding.loginemailtext.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.loginpasswordtext.text.toString())){ // check if edit texts are not empty
+                if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.loginemailtext.text).matches()){ //check if email is in the correct format
                     val intent : Intent = Intent(this, MainActivity::class.java);
                     startActivity(intent)
                     finishAffinity()

@@ -14,6 +14,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 
 class AddBookReview : AppCompatActivity() {
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
@@ -31,21 +32,21 @@ class AddBookReview : AppCompatActivity() {
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        //Putting different parts of the page
         viewBinding.authortv.text = intent.getStringExtra(AddBookReview.AUTHOR_KEY)
         viewBinding.booktitletv.text = intent.getStringExtra(AddBookReview.BOOK_TITLE_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
         viewBinding.bookimg.setImageResource(intent.getIntExtra(AddBookReview.IMG_KEY, R.drawable.hob_logo))
-
         viewBinding.myRatingBar.rating = 0F
 
+        //Save button
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()
-
             setResult(Activity.RESULT_OK, intent)
-
             finish()
         }
 
+        //Discard button will exit the add book review activity
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
             finish()
         })
@@ -69,20 +70,20 @@ class AddBookReview : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     startActivity(Intent(this, MyLibraryActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_profile->{
                     startActivity(Intent(this, MyProfileActivity::class.java))
-                    finish()
+                    finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
-                    finish()
+                    finishAffinity()
                 }
             }
             // Close the drawer
@@ -91,11 +92,6 @@ class AddBookReview : AppCompatActivity() {
         }
 
     }
-
-
-
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
