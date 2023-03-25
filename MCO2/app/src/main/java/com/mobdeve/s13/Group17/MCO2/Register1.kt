@@ -20,12 +20,12 @@ class Register1 : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         // clicking the next button would start activity of register2 after checking if data entered is the correct format
-        Reg1Btn = viewBinding.nextpage1
+        Reg1Btn = viewBinding.nextpage4
         Reg1Btn.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.usertext.text.toString()) &&
                 !TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.emailtext.text).matches()){
-                    val intent : Intent = Intent(this, Register2::class.java);
+                    val intent : Intent = Intent(this, Login::class.java);
                     startActivity(intent)
                 }else{
                     Toast.makeText(
@@ -54,6 +54,40 @@ class Register1 : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
             }
+            else if (viewBinding.editTextTextPassword.text.toString() != viewBinding.editTextTextPassword2.text.toString()){
+                    Toast.makeText(
+                        this,
+                        "password and confirm password do not match",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+            } else if (TextUtils.isEmpty(viewBinding.editTextTextPassword.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter a password",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter the password again",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            else if (TextUtils.isEmpty(viewBinding.firstnametext.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter your first name",
+                    Toast.LENGTH_LONG
+                ).show()
+            } else if (TextUtils.isEmpty(viewBinding.lastnametext.text.toString())) {
+                Toast.makeText(
+                    this,
+                    "please enter your last name",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
         }
     }
 
