@@ -23,7 +23,9 @@ class Register1 : AppCompatActivity() {
         Reg1Btn = viewBinding.nextpage4
         Reg1Btn.setOnClickListener{
             if(!TextUtils.isEmpty(viewBinding.usertext.text.toString()) &&
-                !TextUtils.isEmpty(viewBinding.emailtext.text.toString())){
+                !TextUtils.isEmpty(viewBinding.emailtext.text.toString()) && !TextUtils.isEmpty(viewBinding.editTextTextPassword.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString()) && !TextUtils.isEmpty(viewBinding.firstnametext.text.toString()) &&
+                !TextUtils.isEmpty(viewBinding.lastnametext.text.toString())){
                 if(Patterns.EMAIL_ADDRESS.matcher(viewBinding.emailtext.text).matches()){
                     val intent : Intent = Intent(this, Login::class.java);
                     startActivity(intent)
