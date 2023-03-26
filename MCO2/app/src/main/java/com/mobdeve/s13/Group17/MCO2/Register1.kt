@@ -189,7 +189,7 @@ class Register1 : AppCompatActivity() {
 
         }
 
-        else if(EditTextEmptyHolder==3) {
+        else if(EditTextEmptyHolder==0) {
             // Printing toast message if any of EditText is empty.
             Toast.makeText(
                 this@Register1,
