@@ -17,10 +17,11 @@ class DatabaseHelper(context: Context) :
         const val Table_Column_4_ConPassword = "conpassword"
         const val Table_Column_6_lastName = "lastname"
         const val Table_Column_5_firstName = "firstname"
+        const val Table_Column_7_bio = "bio"
     }
 
     override fun onCreate(database: SQLiteDatabase) {
-        val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ( $Table_Column_ID INTEGER PRIMARY KEY AUTOINCREMENT, $Table_Column_1_username VARCHAR, $Table_Column_2_Email VARCHAR, $Table_Column_3_Password VARCHAR, $Table_Column_4_ConPassword VARCHAR, $Table_Column_5_firstName VARCHAR, $Table_Column_6_lastName VARCHAR )"
+        val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ( $Table_Column_ID INTEGER PRIMARY KEY AUTOINCREMENT, $Table_Column_1_username VARCHAR, $Table_Column_2_Email VARCHAR, $Table_Column_3_Password VARCHAR, $Table_Column_4_ConPassword VARCHAR, $Table_Column_5_firstName VARCHAR, $Table_Column_6_lastName VARCHAR, $Table_Column_7_bio VARCHAR)"
         database.execSQL(CREATE_TABLE)
     }
 

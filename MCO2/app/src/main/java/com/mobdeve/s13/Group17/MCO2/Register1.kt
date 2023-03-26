@@ -24,6 +24,7 @@ class Register1 : AppCompatActivity() {
     private lateinit var ConPassHolder: String
     private lateinit var FirstNameHolder: String
     private lateinit var LastNameHolder: String
+    private lateinit var BioHolder: String
 
     private var EditTextEmptyHolder: Int =0
     private lateinit var sqLiteDatabaseObj: SQLiteDatabase
@@ -47,6 +48,7 @@ class Register1 : AppCompatActivity() {
         ConPassHolder=viewBinding.editTextTextPassword2.text.toString()
         LastNameHolder=viewBinding.lastnametext.text.toString()
         FirstNameHolder=viewBinding.firstnametext.text.toString()
+        BioHolder=viewBinding.biotext.text.toString()
 
         // clicking the next button would start activity of register2 after checking if data entered is the correct format
         Reg1Btn = viewBinding.nextpage4
@@ -136,7 +138,7 @@ class Register1 : AppCompatActivity() {
 
     // SQLite table build method.
     fun SQLiteTableBuild() {
-        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelper.TABLE_NAME}(${DatabaseHelper.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelper.Table_Column_1_username} VARCHAR, ${DatabaseHelper.Table_Column_2_Email} VARCHAR, ${DatabaseHelper.Table_Column_3_Password} VARCHAR, ${DatabaseHelper.Table_Column_4_ConPassword} VARCHAR, ${DatabaseHelper.Table_Column_5_firstName} VARCHAR, ${DatabaseHelper.Table_Column_6_lastName} VARCHAR)")
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelper.TABLE_NAME}(${DatabaseHelper.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelper.Table_Column_1_username} VARCHAR, ${DatabaseHelper.Table_Column_2_Email} VARCHAR, ${DatabaseHelper.Table_Column_3_Password} VARCHAR, ${DatabaseHelper.Table_Column_4_ConPassword} VARCHAR, ${DatabaseHelper.Table_Column_5_firstName} VARCHAR, ${DatabaseHelper.Table_Column_6_lastName} VARCHAR, ${DatabaseHelper.Table_Column_7_bio})")
     }
 
 
@@ -150,7 +152,7 @@ class Register1 : AppCompatActivity() {
 
             // SQLite query to insert data into table.
            SQLiteDataBaseQueryHolder =
-                "INSERT INTO " + DatabaseHelper.TABLE_NAME + " (username,email,password,conpassword,firstname,lastname) VALUES('$NameHolder', '$EmailHolder', '$PasswordHolder', '$ConPassHolder', '$FirstNameHolder', '$LastNameHolder');"
+                "INSERT INTO " + DatabaseHelper.TABLE_NAME + " (username,email,password,conpassword,firstname,lastname,bio) VALUES('$NameHolder', '$EmailHolder', '$PasswordHolder', '$ConPassHolder', '$FirstNameHolder', '$LastNameHolder', '$BioHolder');"
 
             // Executing query.
             sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder)
@@ -211,6 +213,7 @@ class Register1 : AppCompatActivity() {
         viewBinding.editTextTextPassword2.text.clear()
         viewBinding.lastnametext.text.clear()
         viewBinding.firstnametext.text.clear()
+        viewBinding.biotext.text.clear()
 
 
     }
@@ -224,6 +227,7 @@ class Register1 : AppCompatActivity() {
         ConPassHolder = viewBinding.editTextTextPassword2.text.toString()
         LastNameHolder = viewBinding.lastnametext.text.toString()
         FirstNameHolder= viewBinding.firstnametext.text.toString()
+        BioHolder= viewBinding.biotext.text.toString()
 
         if (TextUtils.isEmpty(NameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) || TextUtils.isEmpty(ConPassHolder) || TextUtils.isEmpty(FirstNameHolder) || TextUtils.isEmpty(LastNameHolder)) {
             EditTextEmptyHolder = 0
