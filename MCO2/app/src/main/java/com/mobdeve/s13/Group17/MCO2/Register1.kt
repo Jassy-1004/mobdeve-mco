@@ -122,7 +122,7 @@ class Register1 : AppCompatActivity() {
 
             checkEditTextStatus(viewBinding)
 
-            CheckingEmailAlreadyExistsOrNot()
+            CheckingEmailAndUsernameAlreadyExistsOrNot()
 
             EmptyEditTextAfterDataInsert(viewBinding)
 
@@ -224,13 +224,13 @@ class Register1 : AppCompatActivity() {
     // Method to check EditText is empty or Not.
     fun checkEditTextStatus(viewBinding: ActivityRegister1Binding) {
 // Getting value from All EditText and storing into String Variables.
-        NameHolder = viewBinding.usertext.text.toString()
+        UsernameHolder = viewBinding.usertext.text.toString()
         EmailHolder = viewBinding.emailtext.text.toString()
         PasswordHolder = viewBinding.editTextTextPassword.text.toString()
         NameHolder = viewBinding.firstnametext.text.toString()+" "+viewBinding.lastnametext.text.toString()
         BioHolder= viewBinding.biotext.text.toString()
 
-        if (TextUtils.isEmpty(NameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) || TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString()) || TextUtils.isEmpty(viewBinding.firstnametext.text.toString())|| TextUtils.isEmpty(viewBinding.lastnametext.text.toString())) {
+        if (TextUtils.isEmpty(UsernameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) || TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString()) || TextUtils.isEmpty(viewBinding.firstnametext.text.toString())|| TextUtils.isEmpty(viewBinding.lastnametext.text.toString())) {
             EditTextEmptyHolder = 0
         }
 
@@ -256,9 +256,10 @@ class Register1 : AppCompatActivity() {
 
 
     // Checking Email is already exists or not.
-    fun CheckingEmailAlreadyExistsOrNot() {
+    fun CheckingEmailAndUsernameAlreadyExistsOrNot() {
         // Opening SQLite database write permission.
         sqLiteDatabaseObj = sqLiteHelper.writableDatabase
+
         // Adding search email query to cursor.
         cursor = sqLiteDatabaseObj.query(DatabaseHelperAccount.TABLE_NAME, null, " " + DatabaseHelperAccount.Table_Column_2_Email + "=?", arrayOf(EmailHolder), null, null, null)
         while (cursor.moveToNext() == true) {
@@ -270,21 +271,39 @@ class Register1 : AppCompatActivity() {
                 cursor.close()
             }
         }
+
+        // Adding search username query to cursor.
+        cursor = sqLiteDatabaseObj.query(DatabaseHelperAccount.TABLE_NAME, null, " " + DatabaseHelperAccount.Table_Column_1_username + "=?", arrayOf(UsernameHolder), null, null, null)
+        while (cursor.moveToNext() == true) {
+            if (cursor.isFirst) {
+                cursor.moveToFirst()
+                // If username is already exists then Result variable value set as Username Found.
+                F_Result = "Username Found"
+                // Closing cursor.
+                cursor.close()
+            }
+        }
+
         // Calling method to check final result and insert data into SQLite database.
         CheckFinalResult()
     }
 
+
     // Checking result
     fun CheckFinalResult() {
-        // Checking whether email is already exists or not.
+        // Checking whether email and username already exist or not.
         if (F_Result.equals("Email Found", ignoreCase = true)) {
-            // If email is exists then toast msg will display.
+            // If email already exists then toast msg will display.
             Toast.makeText(this,"Email Already Exists", Toast.LENGTH_LONG).show()
+        } else if (F_Result.equals("Username Found", ignoreCase = true)) {
+            // If username already exists then toast msg will display.
+            Toast.makeText(this,"Username Already Exists", Toast.LENGTH_LONG).show()
         } else {
-            // If email already dose n't exists then user registration details will entered to SQLite database.
+            // If email and username don't already exist then user registration details will be entered into the SQLite database.
             InsertDataIntoSQLiteDatabase()
         }
         F_Result = "Not_Found"
     }
+
 }
 
