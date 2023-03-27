@@ -18,12 +18,10 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityRegister1Binding
 
 class Register1 : AppCompatActivity() {
     private lateinit var Reg1Btn: Button
-    private lateinit var NameHolder: String
+    private lateinit var UsernameHolder: String
     private lateinit var EmailHolder: String
     private lateinit var PasswordHolder: String
-    private lateinit var ConPassHolder: String
-    private lateinit var FirstNameHolder: String
-    private lateinit var LastNameHolder: String
+    private lateinit var NameHolder: String
     private lateinit var BioHolder: String
 
     private var EditTextEmptyHolder: Int =0
@@ -42,12 +40,10 @@ class Register1 : AppCompatActivity() {
         setContentView(viewBinding.root)
         sqLiteHelper = DatabaseHelperAccount(this)
 
-        NameHolder=viewBinding.usertext.text.toString()
+        UsernameHolder=viewBinding.usertext.text.toString()
         EmailHolder=viewBinding.emailtext.text.toString()
         PasswordHolder=viewBinding.editTextTextPassword.text.toString()
-        ConPassHolder=viewBinding.editTextTextPassword2.text.toString()
-        LastNameHolder=viewBinding.lastnametext.text.toString()
-        FirstNameHolder=viewBinding.firstnametext.text.toString()
+        NameHolder=viewBinding.firstnametext.text.toString() +" "+ viewBinding.lastnametext.text.toString()
         BioHolder=viewBinding.biotext.text.toString()
 
         // clicking the next button would start activity of register2 after checking if data entered is the correct format
@@ -138,7 +134,7 @@ class Register1 : AppCompatActivity() {
 
     // SQLite table build method.
     fun SQLiteTableBuild() {
-        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelperAccount.TABLE_NAME}(${DatabaseHelperAccount.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelperAccount.Table_Column_1_username} VARCHAR, ${DatabaseHelperAccount.Table_Column_2_Email} VARCHAR, ${DatabaseHelperAccount.Table_Column_3_Password} VARCHAR, ${DatabaseHelperAccount.Table_Column_4_ConPassword} VARCHAR, ${DatabaseHelperAccount.Table_Column_5_firstName} VARCHAR, ${DatabaseHelperAccount.Table_Column_6_lastName} VARCHAR, ${DatabaseHelperAccount.Table_Column_7_bio})")
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelperAccount.TABLE_NAME}(${DatabaseHelperAccount.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelperAccount.Table_Column_1_username} VARCHAR, ${DatabaseHelperAccount.Table_Column_2_Email} VARCHAR, ${DatabaseHelperAccount.Table_Column_3_Password} VARCHAR, ${DatabaseHelperAccount.Table_Column_4_Name} VARCHAR, ${DatabaseHelperAccount.Table_Column_5_bio} VARCHAR)")
     }
 
 
@@ -152,7 +148,7 @@ class Register1 : AppCompatActivity() {
 
             // SQLite query to insert data into table.
            SQLiteDataBaseQueryHolder =
-                "INSERT INTO " + DatabaseHelperAccount.TABLE_NAME + " (username,email,password,conpassword,firstname,lastname,bio) VALUES('$NameHolder', '$EmailHolder', '$PasswordHolder', '$ConPassHolder', '$FirstNameHolder', '$LastNameHolder', '$BioHolder');"
+                "INSERT INTO " + DatabaseHelperAccount.TABLE_NAME + " (username,email,password,Name,bio) VALUES('$UsernameHolder', '$EmailHolder', '$PasswordHolder', '$NameHolder', '$BioHolder');"
 
             // Executing query.
             sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder)
@@ -187,6 +183,13 @@ class Register1 : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
 
+        }
+        else if(EditTextEmptyHolder==4){
+            Toast.makeText(
+                this@Register1,
+                "Password must have a minimum of 8 characters",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         else if(EditTextEmptyHolder==0) {
@@ -224,12 +227,10 @@ class Register1 : AppCompatActivity() {
         NameHolder = viewBinding.usertext.text.toString()
         EmailHolder = viewBinding.emailtext.text.toString()
         PasswordHolder = viewBinding.editTextTextPassword.text.toString()
-        ConPassHolder = viewBinding.editTextTextPassword2.text.toString()
-        LastNameHolder = viewBinding.lastnametext.text.toString()
-        FirstNameHolder= viewBinding.firstnametext.text.toString()
+        NameHolder = viewBinding.firstnametext.text.toString()+" "+viewBinding.lastnametext.text.toString()
         BioHolder= viewBinding.biotext.text.toString()
 
-        if (TextUtils.isEmpty(NameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) || TextUtils.isEmpty(ConPassHolder) || TextUtils.isEmpty(FirstNameHolder) || TextUtils.isEmpty(LastNameHolder)) {
+        if (TextUtils.isEmpty(NameHolder) || TextUtils.isEmpty(EmailHolder) || TextUtils.isEmpty(PasswordHolder) || TextUtils.isEmpty(viewBinding.editTextTextPassword2.text.toString()) || TextUtils.isEmpty(viewBinding.firstnametext.text.toString())|| TextUtils.isEmpty(viewBinding.lastnametext.text.toString())) {
             EditTextEmptyHolder = 0
         }
 
@@ -238,8 +239,13 @@ class Register1 : AppCompatActivity() {
 
         }
 
-        else if (PasswordHolder != ConPassHolder) {
+        else if (PasswordHolder != viewBinding.editTextTextPassword2.text.toString()) {
             EditTextEmptyHolder=2
+
+        }
+
+        else if (PasswordHolder.length <8) {
+            EditTextEmptyHolder=4
 
         }
 

@@ -69,7 +69,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Username"
+                android:text="Username*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Email"
+                android:text="Email*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -133,7 +133,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Password"
+                android:text="Password*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -151,6 +151,7 @@
                 android:paddingBottom="8dp"
                 android:textColor="#D5CFCF"
                 android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/conpasswordtv"
                 android:layout_width="match_parent"
@@ -159,7 +160,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Confirm Password"
+                android:text="Confirm Password*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -199,7 +200,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="First Name"
+                android:text="First Name*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -224,7 +225,7 @@
                 android:paddingTop="8dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="8dp"
-                android:text="Last Name"
+                android:text="Last Name*"
                 android:textColor="@color/pastelorange"
                 android:textSize="14sp"
                 android:textStyle="bold" />
