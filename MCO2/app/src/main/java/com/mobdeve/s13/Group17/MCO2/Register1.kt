@@ -13,7 +13,7 @@ import android.util.Patterns
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shashank.login.DatabaseHelper
+import com.example.shashank.login.DatabaseHelperAccount
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityRegister1Binding
 
 class Register1 : AppCompatActivity() {
@@ -28,7 +28,7 @@ class Register1 : AppCompatActivity() {
 
     private var EditTextEmptyHolder: Int =0
     private lateinit var sqLiteDatabaseObj: SQLiteDatabase
-    private lateinit var sqLiteHelper: DatabaseHelper
+    private lateinit var sqLiteHelper: DatabaseHelperAccount
     private lateinit var cursor: Cursor
     private lateinit var SQLiteDataBaseQueryHolder:String
     private var F_Result = "Not_Found"
@@ -40,7 +40,7 @@ class Register1 : AppCompatActivity() {
 
         val viewBinding : ActivityRegister1Binding = ActivityRegister1Binding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        sqLiteHelper = DatabaseHelper(this)
+        sqLiteHelper = DatabaseHelperAccount(this)
 
         NameHolder=viewBinding.usertext.text.toString()
         EmailHolder=viewBinding.emailtext.text.toString()
@@ -133,12 +133,12 @@ class Register1 : AppCompatActivity() {
         }
     }
     fun SQLiteDataBaseBuild() {
-        sqLiteDatabaseObj = openOrCreateDatabase(DatabaseHelper.DATABASE_NAME, Context.MODE_PRIVATE, null)
+        sqLiteDatabaseObj = openOrCreateDatabase(DatabaseHelperAccount.DATABASE_NAME, Context.MODE_PRIVATE, null)
     }
 
     // SQLite table build method.
     fun SQLiteTableBuild() {
-        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelper.TABLE_NAME}(${DatabaseHelper.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelper.Table_Column_1_username} VARCHAR, ${DatabaseHelper.Table_Column_2_Email} VARCHAR, ${DatabaseHelper.Table_Column_3_Password} VARCHAR, ${DatabaseHelper.Table_Column_4_ConPassword} VARCHAR, ${DatabaseHelper.Table_Column_5_firstName} VARCHAR, ${DatabaseHelper.Table_Column_6_lastName} VARCHAR, ${DatabaseHelper.Table_Column_7_bio})")
+        sqLiteDatabaseObj.execSQL("CREATE TABLE IF NOT EXISTS ${DatabaseHelperAccount.TABLE_NAME}(${DatabaseHelperAccount.Table_Column_ID} INTEGER PRIMARY KEY AUTOINCREMENT, ${DatabaseHelperAccount.Table_Column_1_username} VARCHAR, ${DatabaseHelperAccount.Table_Column_2_Email} VARCHAR, ${DatabaseHelperAccount.Table_Column_3_Password} VARCHAR, ${DatabaseHelperAccount.Table_Column_4_ConPassword} VARCHAR, ${DatabaseHelperAccount.Table_Column_5_firstName} VARCHAR, ${DatabaseHelperAccount.Table_Column_6_lastName} VARCHAR, ${DatabaseHelperAccount.Table_Column_7_bio})")
     }
 
 
@@ -152,7 +152,7 @@ class Register1 : AppCompatActivity() {
 
             // SQLite query to insert data into table.
            SQLiteDataBaseQueryHolder =
-                "INSERT INTO " + DatabaseHelper.TABLE_NAME + " (username,email,password,conpassword,firstname,lastname,bio) VALUES('$NameHolder', '$EmailHolder', '$PasswordHolder', '$ConPassHolder', '$FirstNameHolder', '$LastNameHolder', '$BioHolder');"
+                "INSERT INTO " + DatabaseHelperAccount.TABLE_NAME + " (username,email,password,conpassword,firstname,lastname,bio) VALUES('$NameHolder', '$EmailHolder', '$PasswordHolder', '$ConPassHolder', '$FirstNameHolder', '$LastNameHolder', '$BioHolder');"
 
             // Executing query.
             sqLiteDatabaseObj.execSQL(SQLiteDataBaseQueryHolder)
@@ -254,7 +254,7 @@ class Register1 : AppCompatActivity() {
         // Opening SQLite database write permission.
         sqLiteDatabaseObj = sqLiteHelper.writableDatabase
         // Adding search email query to cursor.
-        cursor = sqLiteDatabaseObj.query(DatabaseHelper.TABLE_NAME, null, " " + DatabaseHelper.Table_Column_2_Email + "=?", arrayOf(EmailHolder), null, null, null)
+        cursor = sqLiteDatabaseObj.query(DatabaseHelperAccount.TABLE_NAME, null, " " + DatabaseHelperAccount.Table_Column_2_Email + "=?", arrayOf(EmailHolder), null, null, null)
         while (cursor.moveToNext() == true) {
             if (cursor.isFirst) {
                 cursor.moveToFirst()
