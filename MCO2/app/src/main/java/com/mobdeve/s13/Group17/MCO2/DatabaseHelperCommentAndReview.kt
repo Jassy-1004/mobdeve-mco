@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.shashank.login.DatabaseHelperAccount
 
-class DatabaseHelperComment (context: Context) :
+class DatabaseHelperCommentAndReview (context: Context) :
     SQLiteOpenHelper(context, DatabaseHelperAccount.DATABASE_NAME, null, 1) {
 
     companion object {
@@ -14,10 +14,11 @@ class DatabaseHelperComment (context: Context) :
         const val Table_Column_ID = "id"
         const val Table_Column_1_BookTitle = "book"
         const val Table_Column_2_Comment = "comment"
+        const val Table_Column_3_Review = "review"
     }
 
     override fun onCreate(database: SQLiteDatabase) {
-        val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ( $Table_Column_ID INTEGER PRIMARY KEY AUTOINCREMENT, $Table_Column_1_BookTitle VARCHAR, $Table_Column_2_Comment VARCHAR)"
+        val CREATE_TABLE = "CREATE TABLE IF NOT EXISTS $TABLE_NAME ( $Table_Column_ID INTEGER PRIMARY KEY AUTOINCREMENT, $Table_Column_1_BookTitle VARCHAR, $Table_Column_2_Comment VARCHAR, $Table_Column_3_Review FLOAT)"
         database.execSQL(CREATE_TABLE)
     }
 
