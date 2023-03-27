@@ -12,7 +12,7 @@ import android.util.Patterns
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.shashank.login.DatabaseHelper
+import com.example.shashank.login.DatabaseHelperAccount
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding
 
 class Login : AppCompatActivity() {
@@ -23,7 +23,7 @@ class Login : AppCompatActivity() {
     private lateinit var passwordHolder: String
     var editTextEmptyHolder: Boolean = false
     private lateinit var sqLiteDatabaseObj: SQLiteDatabase
-    private lateinit var sqLiteHelper: DatabaseHelper
+    private lateinit var sqLiteHelper: DatabaseHelperAccount
     private lateinit var cursor: Cursor
     var tempPassword: String = "NOT_FOUND"
 
@@ -32,7 +32,7 @@ class Login : AppCompatActivity() {
 
         val viewBinding : ActivityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-        sqLiteHelper = DatabaseHelper(this)
+        sqLiteHelper = DatabaseHelperAccount(this)
 
         emailHolder=viewBinding.loginemailtext.text.toString()
         passwordHolder=viewBinding.loginpasswordtext.text.toString()
@@ -92,16 +92,16 @@ class Login : AppCompatActivity() {
             sqLiteDatabaseObj = sqLiteHelper.writableDatabase
             // Adding search email query to cursor.
             cursor = sqLiteDatabaseObj.query(
-                DatabaseHelper.TABLE_NAME,
+                DatabaseHelperAccount.TABLE_NAME,
                 null,
-                " " +DatabaseHelper.Table_Column_2_Email + "=?",
+                " " +DatabaseHelperAccount.Table_Column_2_Email + "=?",
                 arrayOf(emailHolder),
                 null,
                 null,
                 null
             )
             while (cursor.moveToNext()) {
-                val columnIndex = cursor.getColumnIndex(DatabaseHelper.Table_Column_3_Password)
+                val columnIndex = cursor.getColumnIndex(DatabaseHelperAccount.Table_Column_3_Password)
                 if (columnIndex >= 0) {
                     if (cursor.isFirst) {
                         cursor.moveToFirst()
@@ -112,7 +112,7 @@ class Login : AppCompatActivity() {
                     }
                 }
                 else {
-                        Log.e("CursorError", "Column not found in cursor: ${DatabaseHelper.Table_Column_3_Password}")
+                        Log.e("CursorError", "Column not found in cursor: ${DatabaseHelperAccount.Table_Column_3_Password}")
                     }
             }
             // Calling method to check final result ..
