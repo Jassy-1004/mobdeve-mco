@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -38,6 +39,10 @@ class MyLibraryActivity : AppCompatActivity() {
         val viewBinding: ActivityMylibraryBinding = ActivityMylibraryBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        val emptyView = viewBinding.empty
+
+
+
         // setup recycler view
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
         this.adapter = MyAdapterReview(reviewList, bookReviewResultLauncher)
@@ -45,6 +50,16 @@ class MyLibraryActivity : AppCompatActivity() {
         this.recyclerViewLibrary.adapter = adapter
 
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)
+
+
+        // if there are no reviews
+        if (adapter.itemCount == 0) {
+            recyclerViewLibrary.visibility = View.GONE
+            emptyView.visibility = View.VISIBLE
+        } else {
+            recyclerViewLibrary.visibility = View.VISIBLE
+            emptyView.visibility = View.GONE
+        }
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer

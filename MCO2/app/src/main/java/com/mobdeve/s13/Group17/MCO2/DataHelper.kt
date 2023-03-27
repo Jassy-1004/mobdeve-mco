@@ -126,7 +126,7 @@ class DataHelper {
         // add data for BookReview
         fun initializedData(): ArrayList<BookReview>{
             val data = ArrayList<BookReview>()
-            data.add(
+          data.add(
                 BookReview("Divergent", "Veronica Roth","Divergent follows the story of Beatrice (Tris), who has a " +
                         "choice to make among the 5 factions of her nation, which will map out certain actions in her life: Abnegation (the selfless)," +
                         " Amity (the peaceful), Candor (the honest), Dauntless (the brave), and Erudite (the intellectual).",
