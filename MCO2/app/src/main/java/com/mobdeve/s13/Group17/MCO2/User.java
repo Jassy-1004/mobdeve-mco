@@ -6,7 +6,28 @@ public class User {
     public User(){
 
     }
-    public User (String fullName,String username, String email,String password,String bio){
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public User (String fullName, String username, String email, String password, String bio){
         this.fullName=fullName;
         this.username=username;
         this.email=email;

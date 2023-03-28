@@ -25,7 +25,7 @@ class StartPage : AppCompatActivity() {
         // clicking the login button would start the Login activity
         loginbtn = viewBinding.loginbtn
         loginbtn.setOnClickListener{
-            val intent : Intent = Intent(this, Login::class.java);
+            val intent : Intent = Intent(this, Login1::class.java);
             startActivity(intent)
         }
 
