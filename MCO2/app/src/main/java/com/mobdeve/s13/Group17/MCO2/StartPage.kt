@@ -18,7 +18,7 @@ class StartPage : AppCompatActivity() {
         // clicking the register button would start the Register1 activity
         homeRegBtn = viewBinding.registerbtn
         homeRegBtn.setOnClickListener{
-            val intent : Intent = Intent(this, Register1::class.java);
+            val intent : Intent = Intent(this, Register::class.java);
             startActivity(intent)
         }
 

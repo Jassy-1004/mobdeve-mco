@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "630412367854",
+    "firebase_url": "https://mobdeve-mco-12345-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "mobdeve-mco-12345",
+    "storage_bucket": "mobdeve-mco-12345.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630412367854:android:1fba09c1603685fbabe0ff",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s13.Group17.MCO2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630412367854-f8q4ovba2h8tkm2hm8dtsfkse6eq4m6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4dyzF4HzYmxTnQMewqvEpvxyRjTVqNHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630412367854-f8q4ovba2h8tkm2hm8dtsfkse6eq4m6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
