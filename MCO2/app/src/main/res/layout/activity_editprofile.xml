@@ -118,35 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:id="@+id/profUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingTop="8dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="0dp"
-                android:text="Username"
-                android:textColor="@color/pastelorange"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <EditText
-                android:id="@+id/profileUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:inputType="text"
-                android:text="ez123"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#636161"
-                android:textSize="14sp" />
-
-        </LinearLayout>
+            android:orientation="vertical"/>
 
         <LinearLayout
             android:id="@+id/linearLayout6"

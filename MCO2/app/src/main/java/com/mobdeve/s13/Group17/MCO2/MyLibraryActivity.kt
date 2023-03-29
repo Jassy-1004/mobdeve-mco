@@ -16,6 +16,12 @@ import com.google.android.material.navigation.NavigationView
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
 
 class MyLibraryActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "MyLibraryActivity"
+        const val UNAME = "Username"
+    }
+
     //data
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -80,23 +86,25 @@ class MyLibraryActivity : AppCompatActivity() {
             // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val home = Intent(this, MainActivity::class.java)
+                    startActivity(home)
                     finishAffinity()
                 }
-                R.id.nav_books -> {
+                R.id.nav_books-> {
                     // Do something for menu item 2
-                    startActivity(Intent(this, MyLibraryActivity::class.java))
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, MyProfileActivity::class.java))
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    startActivity(profile)
                     finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
                 }
-                // Add more items as needed
             }
             // Close the drawer
             drawerLayout.closeDrawer(GravityCompat.START)

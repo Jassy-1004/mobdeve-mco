@@ -21,9 +21,14 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding;
 
 public class Login1 extends AppCompatActivity {
 
+    static final String UNAME = "Username";
+
+    /*void object {
+        final String UNAME = "Username";
+    }*/
     private Button login;
     private FirebaseFirestore db;
-    private EditText email, password;
+    private EditText uname, password;
     private TextView signUpHere;
     private ActivityLoginBinding viewBinding;
 
@@ -37,7 +42,7 @@ public class Login1 extends AppCompatActivity {
         Intent intent1 = new Intent(this, Register.class);
 
         login = viewBinding.loginbtn1;
-        email = viewBinding.loginemailtext;
+        uname = viewBinding.loginunametext;
         password = viewBinding.loginpasswordtext;
         db = FirebaseFirestore.getInstance();
 
@@ -51,7 +56,7 @@ public class Login1 extends AppCompatActivity {
     public void onClick(View view) {
 
             if (view.getId()==viewBinding.loginbtn1.getId()) {
-                if (email.getText().toString().isEmpty()) {
+                if (uname.getText().toString().isEmpty()) {
                     Toast.makeText(Login1.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().isEmpty()) {
                     Toast.makeText(Login1.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
@@ -64,13 +69,14 @@ public class Login1 extends AppCompatActivity {
                                     boolean isMatchFound = false;
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot doc : task.getResult()) {
-                                            String a = doc.getString("Email");
+                                            String a = doc.getString("Username");
                                             String b = doc.getString("Password");
-                                            String a1 = email.getText().toString();
+                                            String a1 = uname.getText().toString();
                                             String b1 = password.getText().toString();
                                             if (a.equalsIgnoreCase(a1) && b.equalsIgnoreCase(b1)) {
                                                 Toast.makeText(Login1.this, "Logged In Successful", Toast.LENGTH_SHORT).show();
                                                 Intent home = new Intent(Login1.this, MainActivity.class);
+                                                home.putExtra(Login1.UNAME, uname.getText().toString());
                                                 startActivity(home);
                                                 isMatchFound = true;
                                                 break;

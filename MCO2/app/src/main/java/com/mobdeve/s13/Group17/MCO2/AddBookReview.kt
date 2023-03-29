@@ -69,16 +69,19 @@ class AddBookReview : AppCompatActivity() {
             // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val home = Intent(this, MainActivity::class.java)
+                    startActivity(home)
                     finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
-                    startActivity(Intent(this, MyLibraryActivity::class.java))
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, MyProfileActivity::class.java))
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    startActivity(profile)
                     finishAffinity()
                 }
                 R.id.nav_logout->{

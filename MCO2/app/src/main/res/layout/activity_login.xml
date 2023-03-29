@@ -54,24 +54,24 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/loginemailtv"
+            android:id="@+id/loginunametv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             android:paddingRight="10dp"
             android:paddingBottom="8dp"
-            android:text="Email"
+            android:text="Username"
             android:textColor="@color/pastelorange"
             android:textSize="14sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/loginemailtext"
+            android:id="@+id/loginunametext"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="email"
+            android:hint="username"
             android:inputType="textPersonName"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"

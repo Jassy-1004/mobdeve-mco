@@ -64,27 +64,29 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
                 if (Username.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type a username", Toast.LENGTH_SHORT).show();
-
-                } else if (Email.getText().toString().isEmpty()) {
+                }
+                else if (Email.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type an email", Toast.LENGTH_SHORT).show();
-
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(Email.getText().toString()).matches()) {
+                }
+                else if (!Patterns.EMAIL_ADDRESS.matcher(Email.getText().toString()).matches()) {
                     Toast.makeText(Register.this, "Please enter correct email format", Toast.LENGTH_SHORT).show();
-                } else if (Password.getText().toString().isEmpty()) {
+                }
+                else if (Password.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type a password", Toast.LENGTH_SHORT).show();
-                } else if (!Password.getText().toString().equals(ConPassword.getText().toString())) {
+                }
+                else if (!Password.getText().toString().equals(ConPassword.getText().toString())) {
                     Toast.makeText(Register.this, "Password and confirm password does not match", Toast.LENGTH_SHORT).show();
-                } else if (Password.getText().toString().length() < 8) {
+                }
+                else if (Password.getText().toString().length() < 8) {
                     Toast.makeText(Register.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
-                } else if (FirstName.getText().toString().isEmpty()) {
+                }
+                else if (FirstName.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type your First Name", Toast.LENGTH_SHORT).show();
-
-                } else if (LastName.getText().toString().isEmpty()) {
+                }
+                else if (LastName.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type your Last Name", Toast.LENGTH_SHORT).show();
-
-
-                } else {
-
+                }
+                else {
                     firebaseFirestore.collection("UserInfo")
                             .whereEqualTo("Username", Username.getText().toString())
                             .get()

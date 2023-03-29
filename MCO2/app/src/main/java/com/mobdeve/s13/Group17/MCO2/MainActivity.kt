@@ -1,25 +1,30 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
 import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "MainActivity"
+        const val UNAME = "Username"
+    }
     // data
     private val bookList: ArrayList<Books> = DataHelper.initializeData()
     lateinit var drawerLayout: DrawerLayout
@@ -41,6 +46,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(Login1.UNAME).toString()}")
 
         val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
@@ -78,16 +85,19 @@ class MainActivity : AppCompatActivity() {
             // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val home = Intent(this, MainActivity::class.java)
+                    startActivity(home)
                     finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
-                    startActivity(Intent(this, MyLibraryActivity::class.java))
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, MyProfileActivity::class.java))
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    startActivity(profile)
                     finishAffinity()
                 }
                 R.id.nav_logout->{

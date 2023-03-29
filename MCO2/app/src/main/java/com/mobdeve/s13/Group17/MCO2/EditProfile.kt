@@ -2,8 +2,12 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
@@ -13,6 +17,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityEditprofileBinding
 import java.util.*
 
@@ -24,12 +29,15 @@ class EditProfile : AppCompatActivity() {
         const val USERNAME_KEY = "USERNAME_KEY"
         const val NAME_KEY = "NAME_KEY"
         const val BIO_KEY = "BIO_KEY"
+        private const val UNAME = "Username"
     }
 
     private var datePickerDialog: DatePickerDialog? = null
     private lateinit var dateButton2: Button
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
+    val db = FirebaseFirestore.getInstance();
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,10 +45,27 @@ class EditProfile : AppCompatActivity() {
             ActivityEditprofileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        val username = this.intent.getStringExtra(Login1.UNAME).toString()
+        Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(Login1.UNAME).toString()}")
+
+        db.collection("UserInfo").whereEqualTo("Username", username)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        viewBinding.profileName.text = document.data["Name"] as Editable?
+                        viewBinding.profileBio.text = document.data["Bio"] as Editable?
+                        Log.d(TAG, document.id + " => " + document.data)
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
         // putting data to views
-        viewBinding.profileUsername.setText(intent.getStringExtra(USERNAME_KEY))
-        viewBinding.profileName.setText(intent.getStringExtra(NAME_KEY))
-        viewBinding.profileBio.setText(intent.getStringExtra(BIO_KEY))
+        //viewBinding.profileUsername.setText(intent.getStringExtra(USERNAME_KEY))
+        //viewBinding.profileName.setText(intent.getStringExtra(NAME_KEY))
+        //viewBinding.profileBio.setText(intent.getStringExtra(BIO_KEY))
 
         // clicking the done button would start activity to MyProfileActivity
         done = viewBinding.editComplete
@@ -76,19 +101,22 @@ class EditProfile : AppCompatActivity() {
             // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val home = Intent(this, MainActivity::class.java)
+                    startActivity(home)
                     finishAffinity()
                 }
-                R.id.nav_books -> {
+                R.id.nav_books-> {
                     // Do something for menu item 2
-                    startActivity(Intent(this, MyLibraryActivity::class.java))
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    startActivity(lib)
                     finishAffinity()
                 }
-                R.id.nav_profile -> {
-                    startActivity(Intent(this, MyProfileActivity::class.java))
+                R.id.nav_profile->{
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    startActivity(profile)
                     finishAffinity()
                 }
-                R.id.nav_logout -> {
+                R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
                 }

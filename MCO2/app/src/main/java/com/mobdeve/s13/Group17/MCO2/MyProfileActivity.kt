@@ -1,47 +1,63 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
+
 class MyProfileActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "MyProfileActivity"
+        const val UNAME = "Username"
+    }
+
     //navigation
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     private lateinit var editProfile: Button
 
+    val db = FirebaseFirestore.getInstance();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewBinding: ActivityProfileBinding= ActivityProfileBinding.inflate(layoutInflater)
+
+        val viewBinding: ActivityProfileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        val username = this.intent.getStringExtra(Login1.UNAME).toString()
+        Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(Login1.UNAME).toString()}")
+
+        db.collection("UserInfo").whereEqualTo("Username", username)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        viewBinding.profileName.text = document.data["Name"] as CharSequence?
+                        viewBinding.profileUsername.text = document.data["Username"] as CharSequence?
+                        viewBinding.profileBio.text = document.data["Bio"] as CharSequence?
+                        Log.d(TAG, document.id + " => " + document.data)
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
 
         editProfile = viewBinding.editProfile
         editProfile.setOnClickListener {
             val intent: Intent = Intent(this, EditProfile::class.java);
-
-            // putting data to views
-            val username = viewBinding.profileUsername.text
-            val name = viewBinding.profileName.text
-            val bio = viewBinding.profileBio.text
-
-            intent.putExtra(EditProfile.NAME_KEY, name)
-            intent.putExtra(EditProfile.USERNAME_KEY, username)
-            intent.putExtra(EditProfile.BIO_KEY, bio)
-
             startActivity(intent)
         }
 
@@ -64,23 +80,25 @@ class MyProfileActivity : AppCompatActivity() {
             // Handle menu item clicks here
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    val home = Intent(this, MainActivity::class.java)
+                    startActivity(home)
                     finishAffinity()
                 }
-                R.id.nav_books -> {
+                R.id.nav_books-> {
                     // Do something for menu item 2
-                    startActivity(Intent(this, MyLibraryActivity::class.java))
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
-                    startActivity(Intent(this, MyProfileActivity::class.java))
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    startActivity(profile)
                     finishAffinity()
                 }
                 R.id.nav_logout->{
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
                 }
-                // Add more items as needed
             }
             // Close the drawer
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -94,4 +112,11 @@ class MyProfileActivity : AppCompatActivity() {
         } else super.onOptionsItemSelected(item)
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        val sp = getSharedPreferences(TAG, Context.MODE_PRIVATE)
+        sp.getString(MainActivity.UNAME, "Username")
+    }
 }
+
