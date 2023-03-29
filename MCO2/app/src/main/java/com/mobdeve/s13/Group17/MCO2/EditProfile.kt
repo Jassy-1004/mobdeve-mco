@@ -1,25 +1,22 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.UserInfo
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityEditprofileBinding
-import java.util.*
+
 
 class EditProfile : AppCompatActivity() {
     private lateinit var done: Button
@@ -53,8 +50,8 @@ class EditProfile : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     for (document in task.result) {
-                        viewBinding.profileName.text = document.data["Name"] as Editable?
-                        viewBinding.profileBio.text = document.data["Bio"] as Editable?
+                        viewBinding.profileName.setText(document.data["Name"].toString())
+                        viewBinding.profileBio.setText(document.data["Bio"].toString())
                         Log.d(TAG, document.id + " => " + document.data)
                     }
                 } else {
@@ -70,7 +67,34 @@ class EditProfile : AppCompatActivity() {
         // clicking the done button would start activity to MyProfileActivity
         done = viewBinding.editComplete
         done.setOnClickListener {
-            val intent: Intent = Intent(this, MyProfileActivity::class.java);
+            val intent: Intent = Intent(this, MyProfileActivity::class.java)
+
+            var id: String = ""
+            val bio = viewBinding.profileBio.text.toString()
+            val name = viewBinding.profileName.text.toString()
+
+            db.collection("UserInfo").whereEqualTo("Username", username).get()
+                .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        id = document.id
+                        Log.w(TAG, "id: $id")
+                    }
+                } else {
+                    Log.w(TAG, "Error getting documents.", task.exception)
+                }
+            }
+
+            db.runTransaction { transaction ->
+                val snapshot = transaction.get(db.collection("UserInfo").document(id))
+                
+                transaction.update(db.collection("UserInfo").document(id), "Name", name,"Bio", bio)
+
+                // Success
+                null
+            }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+
+            intent.putExtra(EditProfile.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
             startActivity(intent)
             finishAffinity()
         }

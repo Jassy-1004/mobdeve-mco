@@ -1,9 +1,13 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -11,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 
 class BookInfoActivity : AppCompatActivity() {
@@ -27,6 +32,7 @@ class BookInfoActivity : AppCompatActivity() {
         const val DESCRIPTION_KEY = "DESCRIPTION_KEY"
         const val POSITION_KEY = "POSITION_KEY"
         const val RATING_KEY = "RATING_KEY"
+        const val UNAME = "USERNAME"
     }
 
     private val commentList: ArrayList<Comment> = DataHelper.initializeDatum()
@@ -64,16 +70,41 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
 
+        val db = FirebaseFirestore.getInstance();
+        var i = false
+
+        db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    i = true
+                    Log.w(TAG, "Found.")
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
-            val intent: Intent = Intent(this, AddBookReview::class.java)
+            if(!i)
+            {
+                val intent: Intent = Intent(this, AddBookReview::class.java)
 
-            intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
-            intent.putExtra(AddBookReview.AUTHOR_KEY, author)
-            intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
-            intent.putExtra(AddBookReview.IMG_KEY, image)
+                intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
+                intent.putExtra(AddBookReview.AUTHOR_KEY, author)
+                intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
+                intent.putExtra(AddBookReview.IMG_KEY, image)
+                intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(BookInfoActivity.UNAME).toString())
 
-            startActivity(intent)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(
+                    this@BookInfoActivity,
+                    "You have already made a review",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
         // drawer layout instance to toggle the menu icon to open

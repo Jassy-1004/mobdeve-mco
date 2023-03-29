@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val username = this.intent.getStringExtra(Login1.UNAME).toString()
         Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(Login1.UNAME).toString()}")
 
         val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView = viewBinding.recyclerView
 
         // Set the Adapter.
-        this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher)
+        this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher, username)
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)

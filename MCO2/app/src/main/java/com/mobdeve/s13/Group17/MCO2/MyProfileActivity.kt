@@ -58,6 +58,7 @@ class MyProfileActivity : AppCompatActivity() {
         editProfile = viewBinding.editProfile
         editProfile.setOnClickListener {
             val intent: Intent = Intent(this, EditProfile::class.java);
+            intent.putExtra(UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
             startActivity(intent)
         }
 

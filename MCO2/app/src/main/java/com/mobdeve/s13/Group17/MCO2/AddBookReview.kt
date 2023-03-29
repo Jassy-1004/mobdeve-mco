@@ -2,6 +2,7 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -65,6 +66,7 @@ class AddBookReview : AppCompatActivity() {
             }
             else {
                 val username = this.intent.getStringExtra(Login1.UNAME).toString()
+                Log.w(TAG, "$username")
                 firebaseFirestore.collection("UserReviews").get()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -72,6 +74,7 @@ class AddBookReview : AppCompatActivity() {
                             reg_entry["User"]=username
                             reg_entry["Review"] = Review.text.toString()
                             reg_entry["Rating"] = Rating.rating.toFloat()
+                            reg_entry["Book Title"] = viewBinding.booktitletv.text.toString()
 
                             firebaseFirestore.collection("UserReviews")
                                 .add(reg_entry)
