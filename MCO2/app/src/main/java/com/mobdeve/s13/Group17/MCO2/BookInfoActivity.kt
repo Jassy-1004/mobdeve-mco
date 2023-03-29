@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 
@@ -40,12 +41,16 @@ class BookInfoActivity : AppCompatActivity() {
     private lateinit var recyclerViewComment: RecyclerView
 
     private lateinit var adapter: MyAdapterComment
+
+
+    
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewBinding: ActivityBookinfoBinding = ActivityBookinfoBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
 
         // set up recycler view
         this.recyclerViewComment = viewBinding.recyclerView2
@@ -54,10 +59,10 @@ class BookInfoActivity : AppCompatActivity() {
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
 
         // putting intent to variable
-        val title = intent.getStringExtra(BookInfoActivity.BOOK_TITLE_KEY)
-        val author = intent.getStringExtra(BookInfoActivity.AUTHOR_KEY)
-        val description = intent.getStringExtra(BookInfoActivity.DESCRIPTION_KEY)
-        val image = intent.getIntExtra(BookInfoActivity.IMG_KEY, R.drawable.hob_logo)
+        val title = intent.getStringExtra(BOOK_TITLE_KEY)
+        val author = intent.getStringExtra(AUTHOR_KEY)
+        val description = intent.getStringExtra(DESCRIPTION_KEY)
+        val image = intent.getIntExtra(IMG_KEY, R.drawable.hob_logo)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
 
@@ -73,14 +78,14 @@ class BookInfoActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance();
         var i = false
 
-        db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
+        db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     i = true
                     Log.w(TAG, "Found.")
                 } else {
-                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                    Log.w(TAG, "Error getting documents.", task.exception)
                 }
             }
 
@@ -94,7 +99,7 @@ class BookInfoActivity : AppCompatActivity() {
                 intent.putExtra(AddBookReview.AUTHOR_KEY, author)
                 intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
                 intent.putExtra(AddBookReview.IMG_KEY, image)
-                intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(BookInfoActivity.UNAME).toString())
+                intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
 
                 startActivity(intent)
             }

@@ -17,6 +17,13 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.database.*
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.protobuf.Value
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 
 
@@ -26,7 +33,8 @@ class MainActivity : AppCompatActivity() {
         const val UNAME = "Username"
     }
     // data
-    private val bookList: ArrayList<Books> = DataHelper.initializeData()
+    //private val bookList: ArrayList<Books> = DataHelper.initializeData()
+    private var bookList = ArrayList<Books>()
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
@@ -43,6 +51,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    private lateinit var dbf : FirebaseFirestore
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,11 +73,31 @@ class MainActivity : AppCompatActivity() {
         // Initialize the RecyclerView
         this.recyclerView = viewBinding.recyclerView
 
-        // Set the Adapter.
+
+            // Set the Adapter.
         this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher, username)
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
+
+
+        dbf = FirebaseFirestore.getInstance()
+        dbf.collection("Books").
+        addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
+                    return
+                }
+
+                for (dc: DocumentChange in value?.documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+                        bookList.add(dc.document.toObject(Books::class.java))
+                    }
+                }
+            }
+        })
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
@@ -115,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
