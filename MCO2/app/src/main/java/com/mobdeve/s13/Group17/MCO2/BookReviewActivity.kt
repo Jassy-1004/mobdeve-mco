@@ -2,9 +2,9 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -17,6 +17,8 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 class BookReviewActivity: AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+
+
     companion object {
         const val BOOK_TITLE_KEY = "BOOK_TITLE_KEY"
         const val AUTHOR_KEY = "AUTHOR_KEY"
@@ -131,11 +133,6 @@ class BookReviewActivity: AppCompatActivity() {
         }
 
     }
-
-
-
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

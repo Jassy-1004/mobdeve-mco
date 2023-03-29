@@ -33,9 +33,8 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-    private EditText FullName, Email, Password, Username, Bio, ConPassword, FirstName,LastName;
+    private EditText  Email, Password, Username, Bio, ConPassword, FirstName,LastName;
     private Button  Reg1Btn;
-    private FirebaseAuth mAuth;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
 
