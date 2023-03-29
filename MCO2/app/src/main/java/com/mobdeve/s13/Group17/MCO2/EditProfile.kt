@@ -75,30 +75,28 @@ class EditProfile : AppCompatActivity() {
 
             db.collection("UserInfo").whereEqualTo("Username", username).get()
                 .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result) {
-                        id = document.id
-                        Log.w(TAG, "id: $id")
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            id = document.id
+                            Log.w(TAG, "id: $id")
+                        }
+
+                        db.runTransaction { transaction ->
+                            val snapshot = transaction.get(db.collection("UserInfo").document(id))
+                            transaction.update(db.collection("UserInfo").document(id), "Name", name,"Bio", bio)
+                            // Success
+                            null
+                        }.addOnSuccessListener {
+                            Log.d(TAG, "Transaction success!")
+                            intent.putExtra(EditProfile.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.exception)
                     }
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.exception)
                 }
-            }
-
-            db.runTransaction { transaction ->
-                val snapshot = transaction.get(db.collection("UserInfo").document(id))
-                
-                transaction.update(db.collection("UserInfo").document(id), "Name", name,"Bio", bio)
-
-                // Success
-                null
-            }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
-
-            intent.putExtra(EditProfile.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
-            startActivity(intent)
-            finishAffinity()
         }
-
         // clicking the discard button would finish the current activity
         discard = viewBinding.discardBtn
         discard.setOnClickListener {
