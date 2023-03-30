@@ -10,6 +10,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
     //  Method that accepts a Character object and sets our views' info accordingly.
     fun bindData(books: Books) {
+
         this.viewBinding.ISBN.text = books.book_isbn
         this.viewBinding.imgBook.setImageResource(books.bookImage)
         this.viewBinding.BookTitle.text = books.bookName

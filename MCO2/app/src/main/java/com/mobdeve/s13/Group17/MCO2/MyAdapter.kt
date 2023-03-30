@@ -26,6 +26,7 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
 
             holder.bindData(book)
 
+
             // clicking the itemView would start the activity for BookInfoActivity
             holder.itemView.setOnClickListener {
                 val intent = Intent(holder.itemView.context, BookInfoActivity::class.java)

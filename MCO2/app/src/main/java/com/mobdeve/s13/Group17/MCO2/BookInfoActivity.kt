@@ -59,6 +59,7 @@ class BookInfoActivity : AppCompatActivity() {
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
 
         // putting intent to variable
+
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)

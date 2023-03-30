@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
 
+        // recycler view getting from firebase firestore
         dbf = FirebaseFirestore.getInstance()
         dbf.collection("Books").
         addSnapshotListener(object : EventListener<QuerySnapshot> {

@@ -1,9 +1,15 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import com.google.firebase.firestore.FirebaseFirestore
+
 class DataHelper {
     companion object {
         // add data for Books
         fun initializeData(): ArrayList<Books> {
+          //  lateinit var dbf : FirebaseFirestore
+            //dbf = FirebaseFirestore.getInstance()
+            //dbf.collection("Books").add("1").getB
+
             val data = ArrayList<Books>()
             data.add(
                 Books(
