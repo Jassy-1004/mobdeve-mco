@@ -66,12 +66,12 @@ class BookInfoActivity : AppCompatActivity() {
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)
-        val image = intent.getStringExtra(IMG_KEY)
+        val image = intent.getIntExtra(IMG_KEY, R.drawable.hob_logo)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
 
         // putting data to views
-        Picasso.get().load(image).into(viewBinding.bookimg)
+        viewBinding.bookimg.setImageResource(image)
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
         viewBinding.publishdatetv.text = date
