@@ -8,5 +8,5 @@ data class Books(
     val Plot:String = "",
     val Rating:Float = 0F,
     val DatePublished:String = "",
-    val BookImg: String =""
+    val BookImg: Int =0
 )

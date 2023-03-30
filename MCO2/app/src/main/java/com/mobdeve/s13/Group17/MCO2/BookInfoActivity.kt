@@ -18,7 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
-import com.squareup.picasso.Picasso
+
 
 class BookInfoActivity : AppCompatActivity() {
 
@@ -103,8 +103,8 @@ class BookInfoActivity : AppCompatActivity() {
                         viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
                         viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                         viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
-                        viewBinding.myRatingBar.rating=document.data["Rating"] as Float
-                        Picasso.get().load(document.data["Book Img"] as String).into(viewBinding.bookimg)
+                       
+
                     }
                 } else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
