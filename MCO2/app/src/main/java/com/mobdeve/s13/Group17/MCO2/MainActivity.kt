@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     // RecyclerView reference
     private lateinit var recyclerView: RecyclerView
+    private lateinit var myAdapter: MyAdapter
 
 
     private val bookInfoResultLauncher = registerForActivityResult(
@@ -73,32 +74,19 @@ class MainActivity : AppCompatActivity() {
         // Initialize the RecyclerView
         this.recyclerView = viewBinding.recyclerView
 
+        bookList = arrayListOf()
+
+        myAdapter= MyAdapter(bookList,bookInfoResultLauncher, username)
 
             // Set the Adapter.
-        this.recyclerView.adapter = MyAdapter(bookList, bookInfoResultLauncher, username)
+        this.recyclerView.adapter = myAdapter
 
         // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
 
-        // recycler view getting from firebase firestore
-        dbf = FirebaseFirestore.getInstance()
-        dbf.collection("Books").
-        addSnapshotListener(object : EventListener<QuerySnapshot> {
-            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+        EventChangeListener()
 
-                if (error != null) {
-                    Log.e("Firestore Error", error.message.toString())
-                    return
-                }
-
-                for (dc: DocumentChange in value?.documentChanges!!) {
-                    if (dc.type == DocumentChange.Type.ADDED) {
-                        bookList.add(dc.document.toObject(Books::class.java))
-                    }
-                }
-            }
-        })
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
@@ -145,6 +133,31 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
+    }
+
+    private fun EventChangeListener() {
+
+        // recycler view getting from firebase firestore
+        dbf = FirebaseFirestore.getInstance()
+        dbf.collection("Book").
+        addSnapshotListener(object : EventListener<QuerySnapshot> {
+            override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
+
+                if (error != null) {
+                    Log.e("Firestore Error", error.message.toString())
+                    return
+                }
+
+                for (dc: DocumentChange in value?.documentChanges!!) {
+                    if (dc.type == DocumentChange.Type.ADDED) {
+                        bookList.add(dc.document.toObject(Books::class.java))
+                    }
+                }
+                myAdapter.notifyDataSetChanged()
+            }
+
+        })
 
     }
 

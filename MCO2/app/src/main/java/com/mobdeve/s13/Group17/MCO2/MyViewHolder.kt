@@ -11,12 +11,13 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
     //  Method that accepts a Character object and sets our views' info accordingly.
     fun bindData(books: Books) {
 
-        this.viewBinding.ISBN.text = books.book_isbn
-        this.viewBinding.imgBook.setImageResource(books.bookImage)
-        this.viewBinding.BookTitle.text = books.bookName
-        this.viewBinding.author.text = books.bookAuthor
-        this.viewBinding.description.text = books.bookPlot
-        this.viewBinding.myRating.rating = books.bookRating
-        this.viewBinding.Date.text = books.bookDate
+
+        this.viewBinding.ISBN.text = books.ISBN
+        this.viewBinding.imgBook.setImageResource(books.BookImg)
+        this.viewBinding.BookTitle.text = books.Title
+        this.viewBinding.author.text = books.Author
+        this.viewBinding.description.text = books.Plot
+        //this.viewBinding.myRating.rating = books.Rating.toFloat()
+        this.viewBinding.Date.text = books.DatePublished
     }
 }

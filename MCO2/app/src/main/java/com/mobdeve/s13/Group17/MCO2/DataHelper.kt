@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class DataHelper {
     companion object {
         // add data for Books
-        fun initializeData(): ArrayList<Books> {
+        /*fun initializeData(): ArrayList<Books> {
           //  lateinit var dbf : FirebaseFirestore
             //dbf = FirebaseFirestore.getInstance()
             //dbf.collection("Books").add("1").getB
@@ -126,7 +126,7 @@ class DataHelper {
             )
 
             return data;
-        }
+        }*/
 
 
         // add data for BookReview

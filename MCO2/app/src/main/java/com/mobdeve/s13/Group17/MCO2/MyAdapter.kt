@@ -1,10 +1,13 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 
 
@@ -16,7 +19,7 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
             val view: ItemLayoutBinding = ItemLayoutBinding.inflate(inflater, parent, false)
 
             // Return a new instance of our MyViewHolder passing the View object we created
-            val myViewHolder = MyViewHolder(view)
+          //  val myViewHolder = MyViewHolder(view)
 
             return MyViewHolder(view)
         }
@@ -31,14 +34,14 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
             holder.itemView.setOnClickListener {
                 val intent = Intent(holder.itemView.context, BookInfoActivity::class.java)
 
-                intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, book.bookName)
-                intent.putExtra(BookInfoActivity.AUTHOR_KEY, book.bookAuthor)
-                intent.putExtra(BookInfoActivity.PUBLICATION_DATE_KEY, book.bookDate)
-                intent.putExtra(BookInfoActivity.ISBN_KEY, book.book_isbn)
-                intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, book.bookPlot)
+                intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, book.Title)
+                intent.putExtra(BookInfoActivity.AUTHOR_KEY, book.Author)
+                intent.putExtra(BookInfoActivity.PUBLICATION_DATE_KEY, book.DatePublished)
+                intent.putExtra(BookInfoActivity.ISBN_KEY, book.ISBN)
+                intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, book.Plot)
                 intent.putExtra(BookInfoActivity.POSITION_KEY, position)
-                intent.putExtra(BookInfoActivity.RATING_KEY, book.bookRating)
-                intent.putExtra(BookInfoActivity.IMG_KEY, book.bookImage)
+              //  intent.putExtra(BookInfoActivity.RATING_KEY, book.Rating)
+                intent.putExtra(BookInfoActivity.IMG_KEY, book.BookImg)
                 intent.putExtra(BookInfoActivity.UNAME, uname)
 
                 myActivityResultLauncher.launch(intent)

@@ -42,9 +42,11 @@ class BookInfoActivity : AppCompatActivity() {
 
     private lateinit var adapter: MyAdapterComment
 
+    private lateinit var dbf : FirebaseFirestore
 
-    
-    
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -89,6 +91,24 @@ class BookInfoActivity : AppCompatActivity() {
                     Log.w(TAG, "Error getting documents.", task.exception)
                 }
             }
+
+        db.collection("Book")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        viewBinding.booktitletv.text = document.data["Title"] as CharSequence?
+                        viewBinding.authortv.text = document.data["Author"] as CharSequence?
+                        viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
+                        viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
+                        viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
+
 
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
