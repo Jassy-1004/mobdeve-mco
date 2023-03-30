@@ -6,7 +6,7 @@ data class Books(
     var Title:String = "",
     val Author:String = "",
     val Plot:String = "",
-   // val Rating:Float = 0F,
+    val Rating:Float = 0F,
     val DatePublished:String = "",
-    val BookImg: Int = 0
+    val BookImg: String =""
 )

@@ -40,7 +40,7 @@ class MyAdapter(private val data: ArrayList<Books>, private val myActivityResult
                 intent.putExtra(BookInfoActivity.ISBN_KEY, book.ISBN)
                 intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, book.Plot)
                 intent.putExtra(BookInfoActivity.POSITION_KEY, position)
-              //  intent.putExtra(BookInfoActivity.RATING_KEY, book.Rating)
+                intent.putExtra(BookInfoActivity.RATING_KEY, book.Rating)
                 intent.putExtra(BookInfoActivity.IMG_KEY, book.BookImg)
                 intent.putExtra(BookInfoActivity.UNAME, uname)
 

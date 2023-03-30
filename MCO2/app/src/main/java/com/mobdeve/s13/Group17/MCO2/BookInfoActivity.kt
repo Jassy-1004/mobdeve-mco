@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
+import com.squareup.picasso.Picasso
 
 class BookInfoActivity : AppCompatActivity() {
 
@@ -65,12 +66,12 @@ class BookInfoActivity : AppCompatActivity() {
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)
-        val image = intent.getIntExtra(IMG_KEY, R.drawable.hob_logo)
+        val image = intent.getStringExtra(IMG_KEY)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
 
         // putting data to views
-        viewBinding.bookimg.setImageResource(image)
+        Picasso.get().load(image).into(viewBinding.bookimg)
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
         viewBinding.publishdatetv.text = date
@@ -92,7 +93,7 @@ class BookInfoActivity : AppCompatActivity() {
                 }
             }
 
-        db.collection("Book")
+        db.collection("Books")
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -102,6 +103,8 @@ class BookInfoActivity : AppCompatActivity() {
                         viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
                         viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                         viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                        viewBinding.myRatingBar.rating=document.data["Rating"] as Float
+                        Picasso.get().load(document.data["Book Img"] as String).into(viewBinding.bookimg)
                     }
                 } else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
@@ -121,7 +124,6 @@ class BookInfoActivity : AppCompatActivity() {
                 intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
                 intent.putExtra(AddBookReview.IMG_KEY, image)
                 intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
-
                 startActivity(intent)
             }
             else {
