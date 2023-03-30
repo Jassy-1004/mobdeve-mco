@@ -103,7 +103,7 @@ class EditProfile : AppCompatActivity() {
             finish()
         }
 
-
+/*
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -156,7 +156,7 @@ class EditProfile : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
-        } else super.onOptionsItemSelected(item)
+        } else super.onOptionsItemSelected(item)*/
     }
 
 }

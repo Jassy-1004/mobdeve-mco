@@ -27,6 +27,7 @@ class BookReviewActivity: AppCompatActivity() {
         const val REVIEW_KEY = "REVIEW_KEY"
         const val POSITION_KEY = "POSITION_KEY"
         const val IMAGE_KEY="IMAGE_KEY"
+        const val UNAME="USERNAME"
     }
     
     //private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
@@ -75,6 +76,7 @@ class BookReviewActivity: AppCompatActivity() {
             edit.putExtra(EditBookReviewActivity.REVIEW_KEY, review)
             edit.putExtra(EditBookReviewActivity.IMG_KEY, image)
             edit.putExtra(EditBookReviewActivity.AUTHOR_KEY, author)
+            edit.putExtra(EditBookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
 
             startActivity(edit)
         }
@@ -82,6 +84,9 @@ class BookReviewActivity: AppCompatActivity() {
         deleteBtn = viewBinding.deletebtn
         viewBinding.deletebtn.setOnClickListener {
             val delete: Intent = Intent(this, DeleteBookReviewActivity::class.java)
+            delete.putExtra(DeleteBookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+            delete.putExtra(DeleteBookReviewActivity.BOOK_TITLE_KEY, this.intent.getStringExtra(
+                BOOK_TITLE_KEY).toString())
             startActivity(delete)
         }
         // drawer layout instance to toggle the menu icon to open
@@ -103,20 +108,20 @@ class BookReviewActivity: AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     val home = Intent(this, MainActivity::class.java)
-                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
+                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(home)
                     finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
-                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
+                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
                     val profile = Intent(this, MyProfileActivity::class.java)
-                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
+                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(profile)
                     finishAffinity()
                 }

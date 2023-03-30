@@ -25,6 +25,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val REVIEW_KEY = "REVIEW_KEY"
         const val IMG_KEY = "IMG_KEY"
         const val POSITION_KEY = "POSITION_KEY"
+        const val UNAME="USERNAME"
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -44,6 +45,8 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()
 
+            //add database edit here
+
             setResult(Activity.RESULT_OK, intent)
 
             finish()
@@ -52,7 +55,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
             finish()
         })
-        // drawer layout instance to toggle the menu icon to open
+        /*// drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
@@ -105,6 +108,6 @@ class EditBookReviewActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
-        } else super.onOptionsItemSelected(item)
+        } else super.onOptionsItemSelected(item)*/
     }
 }

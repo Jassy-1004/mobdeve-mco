@@ -76,7 +76,7 @@ public class Login1 extends AppCompatActivity {
                                             if (a.equalsIgnoreCase(a1) && b.equalsIgnoreCase(b1)) {
                                                 Toast.makeText(Login1.this, "Logged In Successful", Toast.LENGTH_SHORT).show();
                                                 Intent home = new Intent(Login1.this, MainActivity.class);
-                                                home.putExtra(Login1.UNAME, uname.getText().toString());
+                                                home.putExtra(MainActivity.UNAME, uname.getText().toString());
                                                 startActivity(home);
                                                 isMatchFound = true;
                                                 break;
