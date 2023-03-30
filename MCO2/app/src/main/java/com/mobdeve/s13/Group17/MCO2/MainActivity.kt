@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
         // recycler view getting from firebase firestore
         dbf = FirebaseFirestore.getInstance()
-        dbf.collection("Book").
+        dbf.collection("Books").
         addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
 
