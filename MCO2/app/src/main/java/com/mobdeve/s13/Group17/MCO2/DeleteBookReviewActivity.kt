@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.DialogDeletionBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
+
 class DeleteBookReviewActivity : AppCompatActivity() {
     private lateinit var yes: Button
     private lateinit var no: Button

@@ -17,7 +17,6 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 import java.util.function.BinaryOperator
 
-//MCO3 Group 17- Chua, Shi, Tan
 class EditBookReviewActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle

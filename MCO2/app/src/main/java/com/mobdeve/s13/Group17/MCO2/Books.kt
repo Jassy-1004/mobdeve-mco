@@ -1,6 +1,5 @@
 package com.mobdeve.s13.Group17.MCO2
 
-//MCO3 Group 17- Chua, Shi, Tan
 data class Books(
     // declare variables for books
     val ISBN:String = "",

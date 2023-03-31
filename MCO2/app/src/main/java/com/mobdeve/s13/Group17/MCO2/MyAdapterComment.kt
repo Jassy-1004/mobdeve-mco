@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutCommentBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
 class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String): RecyclerView.Adapter<MyViewHolderComment>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderComment {

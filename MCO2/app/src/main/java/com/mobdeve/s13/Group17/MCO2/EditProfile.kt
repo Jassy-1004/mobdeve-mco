@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityEditprofileBinding
 
 
-//MCO3 Group 17- Chua, Shi, Tan
 class EditProfile : AppCompatActivity() {
     private lateinit var done: Button
     private lateinit var discard: Button

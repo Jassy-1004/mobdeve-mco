@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
+
 class MyProfileActivity : AppCompatActivity() {
 
     companion object {

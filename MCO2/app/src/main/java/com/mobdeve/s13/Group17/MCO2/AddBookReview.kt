@@ -20,8 +20,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.squareup.picasso.Picasso
 
-//MCO3 Group 17- Chua, Shi, Tan
-
 class AddBookReview : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
