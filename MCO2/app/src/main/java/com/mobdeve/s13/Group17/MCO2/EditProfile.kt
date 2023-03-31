@@ -88,7 +88,7 @@ class EditProfile : AppCompatActivity() {
                             null
                         }.addOnSuccessListener {
                             Log.d(TAG, "Transaction success!")
-                            intent.putExtra(EditProfile.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
+                            intent.putExtra(EditProfile.UNAME, this.intent.getStringExtra(MyProfileActivity.UNAME).toString())
                             startActivity(intent)
                             finishAffinity()
                         }

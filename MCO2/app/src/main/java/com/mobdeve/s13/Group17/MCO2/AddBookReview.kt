@@ -65,7 +65,7 @@ class AddBookReview : AppCompatActivity() {
                 Toast.makeText(this@AddBookReview, "Please rate the book", Toast.LENGTH_SHORT).show()
             }
             else {
-                val username = this.intent.getStringExtra(Login1.UNAME).toString()
+                val username = this.intent.getStringExtra(UNAME).toString()
                 Log.w(TAG, "$username")
                 firebaseFirestore.collection("UserReviews").get()
                     .addOnCompleteListener { task ->

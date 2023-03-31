@@ -1,8 +1,10 @@
 package com.mobdeve.s13.Group17.MCO2
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -10,8 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
+import java.util.function.BinaryOperator
 
 class EditBookReviewActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
@@ -27,6 +31,8 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val POSITION_KEY = "POSITION_KEY"
         const val UNAME="USERNAME"
     }
+
+    val db = FirebaseFirestore.getInstance();
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -45,7 +51,35 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()
 
-            //add database edit here
+            var id: String = ""
+            val comment = viewBinding.commentEt.text.toString()
+            val rating = viewBinding.myRatingBar.rating.toFloat()
+
+            //add database update here
+            db.collection("UserReviews").whereEqualTo("User", intent.getStringExtra(UNAME)).whereEqualTo("Book Title", intent.getStringExtra(
+                BOOK_TITLE_KEY)).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            id = document.id
+                            Log.w(ContentValues.TAG, "id: $id")
+                        }
+
+                        db.runTransaction { transaction ->
+                            val snapshot = transaction.get(db.collection("UserReviews").document(id))
+                            transaction.update(db.collection("UserReviews").document(id), "Rating", rating,"Review", comment)
+                            // Success
+                            null
+                        }.addOnSuccessListener {
+                            Log.d(ContentValues.TAG, "Transaction success!")
+                            intent.putExtra(BookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+                            startActivity(intent)
+                            finishAffinity()
+                        }
+                    } else {
+                        Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                    }
+                }
 
             setResult(Activity.RESULT_OK, intent)
 
