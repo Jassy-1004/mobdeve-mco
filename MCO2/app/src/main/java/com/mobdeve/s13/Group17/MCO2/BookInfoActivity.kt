@@ -103,8 +103,6 @@ class BookInfoActivity : AppCompatActivity() {
                         viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
                         viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                         viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
-                       
-
                     }
                 } else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)

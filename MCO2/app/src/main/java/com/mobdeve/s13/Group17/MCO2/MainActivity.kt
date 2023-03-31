@@ -1,5 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -139,6 +140,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun EventChangeListener() {
 
+        val progressDialog = ProgressDialog(this@MainActivity)
+        progressDialog.setMessage("Fetching Data, please wait")
+        progressDialog.show()
+
+
+
         // recycler view getting from firebase firestore
         dbf = FirebaseFirestore.getInstance()
         dbf.collection("Books").
@@ -155,10 +162,11 @@ class MainActivity : AppCompatActivity() {
                         bookList.add(dc.document.toObject(Books::class.java))
                     }
                 }
+                progressDialog.dismiss();
                 myAdapter.notifyDataSetChanged()
             }
-
         })
+
 
     }
 
