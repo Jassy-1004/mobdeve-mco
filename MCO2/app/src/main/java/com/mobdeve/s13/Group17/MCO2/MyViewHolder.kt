@@ -11,7 +11,6 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 
 
-//MCO3 Group 17- Chua, Shi, Tan
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {
     //  Method that accepts a Character object and sets our views' info accordingly.
     private lateinit var db : FirebaseFirestore

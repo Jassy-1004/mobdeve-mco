@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
 class MyViewHolderReview (private val viewBinding: ItemLayoutMylibraryBinding): RecyclerView.ViewHolder(viewBinding.root){
     // method which accepts a character object and set views' info accordingly
     fun bindData(review: BookReview){

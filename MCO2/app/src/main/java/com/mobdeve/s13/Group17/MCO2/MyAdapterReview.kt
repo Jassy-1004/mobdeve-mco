@@ -7,7 +7,6 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
 class MyAdapterReview(private val data: ArrayList<BookReview>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolderReview>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderReview {
         // Create a LayoutInflater using the parent's context

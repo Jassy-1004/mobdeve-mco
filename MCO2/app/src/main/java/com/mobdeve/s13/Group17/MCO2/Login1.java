@@ -18,7 +18,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding;
 
-//MCO3 Group 17- Chua, Shi, Tan
+
 public class Login1 extends AppCompatActivity {
 
     static final String UNAME = "Username";

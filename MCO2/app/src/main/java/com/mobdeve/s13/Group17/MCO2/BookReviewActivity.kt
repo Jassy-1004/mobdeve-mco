@@ -14,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 
-//MCO3 Group 17- Chua, Shi, Tan
 class BookReviewActivity: AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle

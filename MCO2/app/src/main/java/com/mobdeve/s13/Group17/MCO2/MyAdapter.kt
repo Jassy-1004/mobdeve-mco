@@ -11,7 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 
-//MCO3 Group 17- Chua, Shi, Tan
+
 class MyAdapter(private val data: MutableList<Books>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             // Create a LayoutInflater using the parent's context
