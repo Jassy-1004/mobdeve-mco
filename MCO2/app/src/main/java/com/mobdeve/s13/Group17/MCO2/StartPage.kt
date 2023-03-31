@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityStartpageBinding
 
+//MCO3 Group 17- Chua, Shi, Tan
 class StartPage : AppCompatActivity() {
     private lateinit var homeRegBtn: Button
     private lateinit var loginbtn:Button
