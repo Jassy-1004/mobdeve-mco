@@ -167,22 +167,20 @@ class BookInfoActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_home -> {
                     val home = Intent(this, MainActivity::class.java)
-                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(MainActivity.UNAME).toString())
+                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(home)
                     finishAffinity()
                 }
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
-                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(MainActivity.UNAME).toString())
+                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(lib)
                     finishAffinity()
                 }
                 R.id.nav_profile->{
                     val profile = Intent(this, MyProfileActivity::class.java)
-                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(
-                        MainActivity.UNAME
-                    ).toString())
+                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(profile)
                     finishAffinity()
                 }

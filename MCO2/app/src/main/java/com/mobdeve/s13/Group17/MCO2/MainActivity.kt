@@ -151,7 +151,6 @@ class MainActivity : AppCompatActivity() {
                     // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
                     lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
-                    Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(MyLibraryActivity.UNAME).toString()}")
                     startActivity(lib)
                     finishAffinity()
                 }
