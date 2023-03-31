@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
+//MCO3 Group 17- Chua, Shi, Tan
 class DatabaseHelperAccount(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
 

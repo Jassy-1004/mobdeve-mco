@@ -22,6 +22,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
 import com.squareup.picasso.Picasso
 
 
+//MCO3 Group 17- Chua, Shi, Tan
 class BookInfoActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout

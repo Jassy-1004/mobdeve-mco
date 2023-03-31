@@ -1,5 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2;
 
+//MCO3 Group 17- Chua, Shi, Tan
 public class User {
 
     private long id;
