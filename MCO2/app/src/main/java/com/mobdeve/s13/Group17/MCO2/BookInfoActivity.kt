@@ -128,7 +128,7 @@ class BookInfoActivity : AppCompatActivity() {
 
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
-            if(!i)
+            if(true)
             {
                 val intent: Intent = Intent(this, AddBookReview::class.java)
 
@@ -139,7 +139,7 @@ class BookInfoActivity : AppCompatActivity() {
                 intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
                 startActivity(intent)
             }
-            else {
+            else if (false){
                 Toast.makeText(
                     this@BookInfoActivity,
                     "You have already made a review",
