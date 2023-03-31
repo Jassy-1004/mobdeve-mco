@@ -3,6 +3,7 @@ package com.mobdeve.s13.Group17.MCO2
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -18,6 +19,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
+import com.squareup.picasso.Picasso
 
 
 class BookInfoActivity : AppCompatActivity() {
@@ -43,7 +45,7 @@ class BookInfoActivity : AppCompatActivity() {
 
     private lateinit var adapter: MyAdapterComment
 
-    private lateinit var dbf : FirebaseFirestore
+    private lateinit var db : FirebaseFirestore
 
 
 
@@ -66,12 +68,15 @@ class BookInfoActivity : AppCompatActivity() {
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)
-        val image = intent.getIntExtra(IMG_KEY, R.drawable.hob_logo)
+        val image = intent.getStringExtra(IMG_KEY)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
+        if (image == null || image.isEmpty()) {
+            Log.e("Picasso", "Image URL is empty or null!")
+        } else {
+            Picasso.get().load(image).into(viewBinding.bookimg)
+        }
 
-        // putting data to views
-        viewBinding.bookimg.setImageResource(image)
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
         viewBinding.publishdatetv.text = date
@@ -79,7 +84,7 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
 
-        val db = FirebaseFirestore.getInstance();
+         db = FirebaseFirestore.getInstance();
         var i = false
 
         db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)
@@ -98,11 +103,21 @@ class BookInfoActivity : AppCompatActivity() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     for (document in task.result) {
-                        viewBinding.booktitletv.text = document.data["Title"] as CharSequence?
-                        viewBinding.authortv.text = document.data["Author"] as CharSequence?
-                        viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
-                        viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
-                        viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                        val bookTitle = document.data["Title"] as String
+                        if (bookTitle == title) {
+                            viewBinding.booktitletv.text = bookTitle
+                            viewBinding.authortv.text = document.data["Author"] as CharSequence?
+                            viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
+                            viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
+                            viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                            val imageUri = Uri.parse(document.data["Book Img"] as String?)
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.bookimg);
+
+
+                            Log.e("TAG", imageUri.toString())
+                            Log.e("TAG","${document.data["Rating"]}")
+                            break
+                        }
                     }
                 } else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
@@ -189,4 +204,5 @@ class BookInfoActivity : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
     }
+
 }
