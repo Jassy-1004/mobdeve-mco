@@ -88,6 +88,41 @@ class MainActivity : AppCompatActivity() {
 
         EventChangeListener()
 
+        //Add Data in Firestore db
+
+        /*dbf.collection("Books").get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val books: List<Map<String, Any>> = listOf(
+
+                        hashMapOf(
+                              "Title" to "",
+                              "Author" to "",
+                              "Rating" to ,
+                              "ISBN" to "",
+                              "Plot" to "",
+                              "Date Published" to "",
+                              "Book Img" to ""
+
+                          )
+
+                    )
+
+                    for (book in books) {
+                        dbf.collection("Books")
+                            .add(book)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(TAG, "Book successfully added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding book", e)
+                            }
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }*/
+
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
