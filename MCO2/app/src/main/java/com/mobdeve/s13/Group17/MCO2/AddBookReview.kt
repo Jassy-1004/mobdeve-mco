@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
+import com.squareup.picasso.Picasso
 
 class AddBookReview : AppCompatActivity() {
 
@@ -43,7 +45,7 @@ class AddBookReview : AppCompatActivity() {
 
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
-
+        
         //Putting different parts of the page
         viewBinding.myRatingBar.rating = 0F
         Review=viewBinding.commentEt
@@ -51,10 +53,30 @@ class AddBookReview : AppCompatActivity() {
         viewBinding.authortv.text = intent.getStringExtra(AddBookReview.AUTHOR_KEY)
         viewBinding.booktitletv.text = intent.getStringExtra(AddBookReview.BOOK_TITLE_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(AddBookReview.DESCRIPTION_KEY)
-        viewBinding.bookimg.setImageResource(intent.getIntExtra(AddBookReview.IMG_KEY, R.drawable.hob_logo))
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseFirestore.collection("Books")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        val bookTitle = document.data["Title"] as String
+                        if (bookTitle == viewBinding.booktitletv.text) {
+                            val imageUri = Uri.parse(document.data["Book Img"] as String?)
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.bookimg);
+
+                            Log.e("TAG", imageUri.toString())
+                            Log.e("TAG","${document.data["Rating"]}")
+                            break
+                        }
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
 
         //Save button
         viewBinding.savebtn.setOnClickListener(){
