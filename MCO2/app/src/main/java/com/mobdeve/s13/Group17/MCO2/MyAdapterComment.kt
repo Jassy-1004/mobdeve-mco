@@ -24,6 +24,7 @@ class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String
 
     override fun onBindViewHolder(holder: MyViewHolderComment, position: Int) {
         holder.bindData(data[position])
+
     }
 
     override fun getItemCount(): Int {

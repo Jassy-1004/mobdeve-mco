@@ -5,9 +5,14 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +24,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
+import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
+import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutCommentBinding
 import com.squareup.picasso.Picasso
 
 
@@ -57,11 +64,17 @@ class BookInfoActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
 
+
+
         // set up recycler view
         this.recyclerViewComment = viewBinding.recyclerView2
         this.adapter = MyAdapterComment(commentList, BOOK_TITLE_KEY)
         this.recyclerViewComment.adapter = adapter
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
+
+        db = FirebaseFirestore.getInstance();
+
+
 
         // putting intent to variable
 
@@ -107,22 +120,27 @@ class BookInfoActivity : AppCompatActivity() {
                         if (bookTitle == title) {
                             viewBinding.booktitletv.text = bookTitle
                             viewBinding.authortv.text = document.data["Author"] as CharSequence?
-                            viewBinding.publishdatetv.text = document.data["Date Published"] as CharSequence?
+                            viewBinding.publishdatetv.text =
+                                document.data["Date Published"] as CharSequence?
                             viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                             viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
                             val imageUri = Uri.parse(document.data["Book Img"] as String?)
-                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.bookimg);
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
+                                .into(viewBinding.bookimg);
 
 
                             Log.e("TAG", imageUri.toString())
-                            Log.e("TAG","${document.data["Rating"]}")
+                            Log.e("TAG", "${document.data["Rating"]}")
                             break
                         }
                     }
-                } else {
+                }
+                else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
                 }
             }
+
+
 
 
 
@@ -196,7 +214,11 @@ class BookInfoActivity : AppCompatActivity() {
             true
         }
 
+
+
     }
+
+
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

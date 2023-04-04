@@ -5,9 +5,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -24,8 +29,11 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
-import com.google.protobuf.Value
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +68,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        var sortedList = bookList
+
         val username = this.intent.getStringExtra(UNAME).toString()
         Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(UNAME).toString()}")
 
@@ -67,17 +77,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         val dropdown = findViewById<Spinner>(R.id.filter)
-        val items = arrayOf("Most Rated", "Latest Books", "Oldest Books")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        val items = arrayOf("Home", "Most Rated", "Least Rated")
 
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
         dropdown.adapter = adapter
+
+        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                when (position) {
+                    0 ->  recyclerView.adapter
+                    1 -> sortByRatingDescending(bookList)
+                    2 -> sortByLeastRated(bookList)
+                }
+                myAdapter.notifyDataSetChanged()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
         // Initialize the RecyclerView
         this.recyclerView = viewBinding.recyclerView
 
         bookList = arrayListOf()
 
-        myAdapter= MyAdapter(bookList,bookInfoResultLauncher, username)
+        myAdapter= MyAdapter(bookList, bookList,bookInfoResultLauncher, username)
 
             // Set the Adapter.
         this.recyclerView.adapter = myAdapter
@@ -88,40 +111,7 @@ class MainActivity : AppCompatActivity() {
 
         EventChangeListener()
 
-        //Add Data in Firestore db
 
-        /*dbf.collection("Books").get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val books: List<Map<String, Any>> = listOf(
-
-                        hashMapOf(
-                              "Title" to "",
-                              "Author" to "",
-                              "Rating" to ,
-                              "ISBN" to "",
-                              "Plot" to "",
-                              "Date Published" to "",
-                              "Book Img" to ""
-
-                          )
-
-                    )
-
-                    for (book in books) {
-                        dbf.collection("Books")
-                            .add(book)
-                            .addOnSuccessListener { documentReference ->
-                                Log.d(TAG, "Book successfully added with ID: ${documentReference.id}")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding book", e)
-                            }
-                    }
-                } else {
-                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
-                }
-            }*/
 
 
         // drawer layout instance to toggle the menu icon to open
@@ -171,6 +161,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+
+
     }
 
     private fun EventChangeListener() {
@@ -203,6 +195,43 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        val searchEditText = findViewById<EditText>(R.id.search)
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                // Do nothing
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Do nothing
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                search(s.toString())
+            }
+        })
+
+
+
+    }
+
+    private fun sortByRatingDescending(list: ArrayList<Books>) {
+        list.sortByDescending { it.Rating }
+        bookList = list
+    }
+
+    private fun sortByLeastRated(list: ArrayList<Books>) {
+
+        list.sortBy { it.Rating }
+        bookList = list
+    }
+
+
+    private fun search(query: String) {
+        val filteredList = bookList.filter { book ->
+            book.Title.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)) ||
+                    book.Author.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))
+        }
+        myAdapter.filterList(filteredList)
     }
 
 
