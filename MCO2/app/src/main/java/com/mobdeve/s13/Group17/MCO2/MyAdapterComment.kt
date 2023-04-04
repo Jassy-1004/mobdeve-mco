@@ -1,6 +1,8 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +25,20 @@ class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String
     }
 
     override fun onBindViewHolder(holder: MyViewHolderComment, position: Int) {
+        Log.d("TAG", "Binding comment at position $position")
         holder.bindData(data[position])
+
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
+    fun updateData(newData: List<Comment>) {
+
+            this.data.clear()
+            this.data.addAll(newData)
+            notifyDataSetChanged()
+
+    }
+
 }

@@ -27,6 +27,9 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
                             val imageUri = Uri.parse(document.data["Book Img"] as String?)
                             Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.imgBook);
 
+                            this.viewBinding.Date.text =
+                                document.data["Date Published"] as CharSequence?
+
                             Log.e("TAG", imageUri.toString())
                             Log.e("TAG","${document.data["Rating"]}")
                             break
@@ -50,6 +53,6 @@ class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.Vie
         this.viewBinding.author.text = books.Author
         this.viewBinding.description.text = books.Plot
         this.viewBinding.myRating.rating = books.Rating.toFloat()
-        this.viewBinding.Date.text = books.DatePublished
+
     }
 }

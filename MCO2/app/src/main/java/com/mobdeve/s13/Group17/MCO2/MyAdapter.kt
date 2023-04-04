@@ -12,7 +12,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
 
 
-class MyAdapter(private val data: MutableList<Books>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val data: MutableList<Books>, private var filteredList: List<Books> , private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             // Create a LayoutInflater using the parent's context
             val inflater = LayoutInflater.from(parent.context)
@@ -26,10 +26,19 @@ class MyAdapter(private val data: MutableList<Books>, private val myActivityResu
             return MyViewHolder(view)
         }
 
+        fun filterList(filteredList: List<Books>) {
+        this.filteredList = filteredList
+        notifyDataSetChanged()
+     }
+
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-            val book = data[position]
+
+            val book: Books = filteredList[position]
+
 
             holder.bindData(book)
+
+
 
 
             // clicking the itemView would start the activity for BookInfoActivity
@@ -52,6 +61,7 @@ class MyAdapter(private val data: MutableList<Books>, private val myActivityResu
         }
 
         override fun getItemCount(): Int {
-            return data.size
+            //return data.size
+            return filteredList.size
         }
 }
