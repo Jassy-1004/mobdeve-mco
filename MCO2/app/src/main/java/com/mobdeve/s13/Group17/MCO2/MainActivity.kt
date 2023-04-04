@@ -231,11 +231,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun search(query: String) {
-        val filteredList = bookList.filter { book ->
-            book.Title.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)) ||
-                    book.Author.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))
+        val filteredList = if (query.isEmpty()) {
+            // If the query is empty, return the original list
+            bookList
+        } else {
+            // Otherwise, filter the list based on the search query
+            bookList.filter { book ->
+                book.Title.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT)) ||
+                        book.Author.toLowerCase(Locale.ROOT).contains(query.toLowerCase(Locale.ROOT))
+            }
         }
         myAdapter.filterList(filteredList)
+        myAdapter.notifyDataSetChanged()
     }
 
 
