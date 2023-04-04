@@ -100,6 +100,28 @@ class BookInfoActivity : AppCompatActivity() {
          db = FirebaseFirestore.getInstance();
         var i = false
 
+        db.collection("UserReviews")
+            .whereEqualTo("Book Title", viewBinding.booktitletv.text)
+            .get()
+            .addOnSuccessListener { result ->
+                val comments = result.documents.map { document ->
+                    val username = document.getString("User")
+                    val comment = document.getString("Review")
+                    Comment(username.toString(), comment.toString())
+                }
+
+                Log.d(TAG, "Retrieved ${comments.size} comments")
+
+                // Update the adapter with the new comments
+                adapter.updateData(comments)
+
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting comments", exception)
+            }
+
+
+
         db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)
             .get()
             .addOnCompleteListener { task ->
