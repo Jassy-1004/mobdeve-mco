@@ -76,22 +76,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
         val dropdown = findViewById<Spinner>(R.id.filter)
-        val items = arrayOf("Home", "Most Rated", "Least Rated")
-
-
+        val items = arrayOf("Filter", "A-Z", "Most Rated", "Least Rated")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
         dropdown.adapter = adapter
+        dropdown.setSelection(0)
 
         dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 when (position) {
-                    0 ->  recyclerView.adapter
-                    1 -> sortByRatingDescending(bookList)
-                    2 -> sortByLeastRated(bookList)
+                    1 -> sortAlphabetically(bookList)
+                    2 -> sortByRatingDescending(bookList)
+                    3 -> sortByLeastRated(bookList)
                 }
                 myAdapter.notifyDataSetChanged()
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle nothing selected event
+            }
         }
 
         // Initialize the RecyclerView
@@ -224,6 +225,10 @@ class MainActivity : AppCompatActivity() {
         bookList = list
     }
 
+    private fun sortAlphabetically(list: ArrayList<Books>) {
+        list.sortBy { it.Title }
+        bookList = list
+    }
 
     private fun search(query: String) {
         val filteredList = bookList.filter { book ->
