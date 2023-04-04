@@ -34,11 +34,11 @@ class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String
         return data.size
     }
     fun updateData(newData: List<Comment>) {
-        if (newData.isNotEmpty()) {
+
             this.data.clear()
             this.data.addAll(newData)
             notifyDataSetChanged()
-        }
+
     }
 
 }

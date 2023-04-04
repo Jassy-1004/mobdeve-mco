@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.SearchView
@@ -46,7 +47,7 @@ class BookInfoActivity : AppCompatActivity() {
         const val UNAME = "USERNAME"
     }
 
-    private val commentList: ArrayList<Comment> = DataHelper.initializeDatum()
+    private lateinit var  commentList: ArrayList<Comment>
 
     private lateinit var recyclerViewComment: RecyclerView
 
@@ -64,7 +65,7 @@ class BookInfoActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
 
 
-
+        commentList = arrayListOf()
 
         // set up recycler view
         this.recyclerViewComment = viewBinding.recyclerView2
@@ -78,6 +79,7 @@ class BookInfoActivity : AppCompatActivity() {
 
         // putting intent to variable
 
+        val emptyView = viewBinding.empty
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)
@@ -100,26 +102,34 @@ class BookInfoActivity : AppCompatActivity() {
          db = FirebaseFirestore.getInstance();
         var i = false
 
-        db.collection("UserReviews")
-            .whereEqualTo("Book Title", viewBinding.booktitletv.text)
-            .get()
-            .addOnSuccessListener { result ->
-                val comments = result.documents.map { document ->
+        // Set up the SnapshotListener to listen for changes to the UserReviews collection
+        val collectionRef = db.collection("UserReviews")
+        val query = collectionRef.whereEqualTo("Book Title", viewBinding.booktitletv.text)
+
+        val listener = query.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(TAG, "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                val comments = snapshot.documents.map { document ->
                     val username = document.getString("User")
                     val comment = document.getString("Review")
                     Comment(username.toString(), comment.toString())
                 }
 
-                Log.d(TAG, "Retrieved ${comments.size} comments")
+                if (comments.isEmpty()) {
+                    viewBinding.empty.visibility = View.VISIBLE
+                } else {
+                    viewBinding.empty.visibility = View.GONE
+                }
 
-                // Update the adapter with the new comments
                 adapter.updateData(comments)
-
+            } else {
+                Log.d(TAG, "No comments")
             }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting comments", exception)
-            }
-
+        }
 
 
         db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)

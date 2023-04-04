@@ -68,7 +68,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var sortedList = bookList
 
         val username = this.intent.getStringExtra(UNAME).toString()
         Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(UNAME).toString()}")
