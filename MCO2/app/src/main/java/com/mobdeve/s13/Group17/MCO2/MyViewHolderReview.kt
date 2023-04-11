@@ -54,6 +54,11 @@ class MyViewHolderReview (private val viewBinding: ItemLayoutMylibraryBinding): 
                             viewBinding.myRating.rating = rating.toFloat()
                         }
 
+                        val date = document.getString("Date Posted")
+                        if (date != null){
+                            viewBinding.dateTv.text = date.toString()
+                        }
+
                         break
 
                     }
