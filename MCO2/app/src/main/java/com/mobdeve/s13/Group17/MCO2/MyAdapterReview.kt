@@ -18,7 +18,7 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         // Return a new instance of our MyViewHolder passing the View object we created
         val myViewHolder = MyViewHolderReview(view)
 
-        return MyViewHolderReview(view)
+        return myViewHolder
     }
 
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
@@ -29,12 +29,12 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         //clicking itemView would start activity for BookReviewActivity
         holder.itemView.setOnClickListener{
             val intent = Intent(holder.itemView.context, BookReviewActivity::class.java)
-            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, bookReview.book_Title)
-            intent.putExtra(BookReviewActivity.AUTHOR_KEY, bookReview.book_Author)
-            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY,bookReview.book_Description)
-            intent.putExtra(BookReviewActivity.RATING_KEY, bookReview.book_Rating)
-            intent.putExtra(BookReviewActivity.REVIEW_KEY, bookReview.book_Review)
-            intent.putExtra(BookReviewActivity.IMAGE_KEY, bookReview.bookImage)
+            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, bookReview.Title)
+            intent.putExtra(BookReviewActivity.AUTHOR_KEY, bookReview.Author)
+            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY,bookReview.Plot)
+            intent.putExtra(BookReviewActivity.RATING_KEY, bookReview.Rating)
+            intent.putExtra(BookReviewActivity.REVIEW_KEY, bookReview.comment)
+            intent.putExtra(BookReviewActivity.IMAGE_KEY, bookReview.BookImg)
             intent.putExtra(BookReviewActivity.POSITION_KEY, position)
             intent.putExtra(BookReviewActivity.UNAME, uname)
 
@@ -46,4 +46,5 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
     override fun getItemCount(): Int {
         return data.size
     }
+
 }

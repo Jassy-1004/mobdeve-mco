@@ -1,8 +1,11 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.result.ActivityResult
@@ -12,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 
 class BookReviewActivity: AppCompatActivity() {
@@ -34,6 +38,7 @@ class BookReviewActivity: AppCompatActivity() {
 
     private lateinit var editBtn: Button
     private lateinit var deleteBtn: Button
+    private lateinit var dbf: FirebaseFirestore
 
     private val addBookReviewLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -64,6 +69,32 @@ class BookReviewActivity: AppCompatActivity() {
         viewBinding.myRating.rating = rating
         viewBinding.reviewTv.text= review
         viewBinding.bookImage.setImageResource(image)
+
+        dbf = FirebaseFirestore.getInstance()
+
+        // Set up the SnapshotListener to listen for changes to the UserReviews collection
+        val collectionRef = dbf.collection("UserReviews")
+        val query = collectionRef.whereEqualTo("Book Title", viewBinding.booktitletv)
+
+        val listener = query.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                Log.w(ContentValues.TAG, "Listen failed.", e)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && !snapshot.isEmpty) {
+                val reviews = snapshot.documents.map { document ->
+                    val username = document.getString("User")
+                    val comment = document.getString("Review")
+                    val title = document.getString("Book Title")
+                    BookReview(username.toString(), comment.toString(),title.toString())
+                }
+
+            } else {
+                Log.d(ContentValues.TAG, "No reviews")
+            }
+        }
+
 
         //pressing editBtn will go to Edit Book Review Activity
         editBtn = viewBinding.editbtn

@@ -1,8 +1,11 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -13,7 +16,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.firestore.*
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
+import com.squareup.picasso.Picasso
 
 class MyLibraryActivity : AppCompatActivity() {
 
@@ -22,15 +27,22 @@ class MyLibraryActivity : AppCompatActivity() {
         const val UNAME = "Username"
     }
 
+
     //data
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private var bookList = ArrayList<BookReview>()
 
-    private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
+
+
+    //private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
 
     private lateinit var recyclerViewLibrary: RecyclerView
 
-    private lateinit var adapter: MyAdapterReview
+    private lateinit var myAdapter: MyAdapterReview
+
+
+    private lateinit var dbf: FirebaseFirestore
 
     private val bookReviewResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -39,6 +51,7 @@ class MyLibraryActivity : AppCompatActivity() {
 
         }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,21 +64,70 @@ class MyLibraryActivity : AppCompatActivity() {
 
         // setup recycler view
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
-        this.adapter = MyAdapterReview(reviewList, bookReviewResultLauncher, uname)
 
-        this.recyclerViewLibrary.adapter = adapter
+
+        // Set adapter to RecyclerView
+        //recyclerViewLibrary.adapter =  MyAdapter(bookList, bookList, bookReviewResultLauncher, uname)
+
+        myAdapter = MyAdapterReview(bookList, bookReviewResultLauncher, uname)
+
+        // Set the Adapter.
+        this.recyclerViewLibrary.adapter = myAdapter
+
+        //this.recyclerViewLibrary.adapter = adapter
 
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)
 
 
-        // if there are no reviews
-        if (adapter.itemCount == 0) {
-            recyclerViewLibrary.visibility = View.GONE
-            emptyView.visibility = View.VISIBLE
-        } else {
-            recyclerViewLibrary.visibility = View.VISIBLE
-            emptyView.visibility = View.GONE
-        }
+        dbf= FirebaseFirestore.getInstance()
+
+        dbf.collection("UserReviews")
+            .whereEqualTo("User", uname)
+            .get()
+            .addOnSuccessListener { reviews ->
+                val bookTitles = mutableListOf<String>()
+                // Extract the book titles from the reviews
+                for (Review in reviews) {
+                    val bookTitle = Review.getString("Book Title")
+                    if (bookTitle != null) {
+                        bookTitles.add(bookTitle)
+                    }
+                }
+
+                // Query the Books collection using the book titles
+                // Query the Books collection using the book titles
+                dbf.collection("Books")
+                    .whereIn("Title", bookTitles)
+                    .get()
+                    .addOnSuccessListener { books ->
+                        // Display the book information
+                        for (book in books) {
+                            Log.d("Book", "Title: ${book.getString("Title")}")
+                            Log.d("Book", "Author: ${book.getString("Author")}")
+                            val title = book.getString("Title")
+                            val author = book.getString("Author")
+
+                            if (title != null && author != null ) {
+                                bookList.add(BookReview(title, author))
+                            }
+                            if (myAdapter.itemCount == 0) {
+                                recyclerViewLibrary.visibility = View.GONE
+                                emptyView.visibility = View.VISIBLE
+                            } else {
+                                recyclerViewLibrary.visibility = View.VISIBLE
+                                emptyView.visibility = View.GONE
+                            }
+                            myAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    .addOnFailureListener { exception ->
+                        Log.e("Firestore", "Error getting books: ", exception)
+                    }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("Firestore", "Error getting reviews: ", exception)
+            }
+
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
@@ -123,3 +185,4 @@ class MyLibraryActivity : AppCompatActivity() {
         } else super.onOptionsItemSelected(item)
     }
 }
+
