@@ -7,7 +7,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 
-class MyAdapterReview(private val data: ArrayList<BookReview>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolderReview>() {
+class MyAdapterReview(private var bookList: List<BookReview>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolderReview>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderReview {
         // Create a LayoutInflater using the parent's context
         val inflater = LayoutInflater.from(parent.context)
@@ -23,7 +23,7 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
 
 
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
-        val bookReview = data[position]
+        val bookReview = bookList[position]
 
         holder.bindData(bookReview,uname)
 
@@ -46,7 +46,11 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
     }
 
     override fun getItemCount(): Int {
-        return data.size
+        return bookList.size
+    }
+    fun updateData(newData: List<BookReview>) {
+        bookList = newData
+        notifyDataSetChanged()
     }
 
 }
