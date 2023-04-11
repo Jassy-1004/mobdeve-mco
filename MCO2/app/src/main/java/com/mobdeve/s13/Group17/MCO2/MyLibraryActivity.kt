@@ -25,7 +25,6 @@ class MyLibraryActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MyLibraryActivity"
         const val UNAME = "Username"
-        const val Title = "Book Title"
     }
 
 
@@ -59,7 +58,7 @@ class MyLibraryActivity : AppCompatActivity() {
         val viewBinding: ActivityMylibraryBinding = ActivityMylibraryBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
+        val emptyView = viewBinding.empty
 
         val uname = this.intent.getStringExtra(UNAME).toString()
 
@@ -96,6 +95,7 @@ class MyLibraryActivity : AppCompatActivity() {
                 }
 
                 // Query the Books collection using the book titles
+                // Query the Books collection using the book titles
                 dbf.collection("Books")
                     .whereIn("Title", bookTitles)
                     .get()
@@ -104,7 +104,20 @@ class MyLibraryActivity : AppCompatActivity() {
                         for (book in books) {
                             Log.d("Book", "Title: ${book.getString("Title")}")
                             Log.d("Book", "Author: ${book.getString("Author")}")
+                            val title = book.getString("Title")
+                            val author = book.getString("Author")
 
+                            if (title != null && author != null ) {
+                                bookList.add(BookReview(title, author))
+                            }
+                            if (myAdapter.itemCount == 0) {
+                                recyclerViewLibrary.visibility = View.GONE
+                                emptyView.visibility = View.VISIBLE
+                            } else {
+                                recyclerViewLibrary.visibility = View.VISIBLE
+                                emptyView.visibility = View.GONE
+                            }
+                            myAdapter.notifyDataSetChanged()
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -114,45 +127,6 @@ class MyLibraryActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.e("Firestore", "Error getting reviews: ", exception)
             }
-
-
-
-
-
-        /* val collectionRef = dbf.collection("UserReviews")
-         val query = collectionRef.whereEqualTo("Book Title", BookReviewActivity.BOOK_TITLE_KEY)
-
-          dbf.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
-              .get()
-              .addOnCompleteListener { task ->
-                  if (task.isSuccessful) {
-                      dbf.collection("Books").
-                      addSnapshotListener(object : EventListener<QuerySnapshot> {
-                          override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
-
-                              if (error != null) {
-                                  Log.e("Firestore Error", error.message.toString())
-                                  return
-                              }
-
-                              for (dc: DocumentChange in value?.documentChanges!!) {
-                                  if (dc.type == DocumentChange.Type.ADDED) {
-                                      bookList.add(dc.document.toObject(Books::class.java))
-                                  }
-                              }
-                              myAdapter.notifyDataSetChanged()
-                          }
-
-                      })
-                      Log.w(ContentValues.TAG, "Found.")
-                  } else {
-                      Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
-                  }
-              }*/
-
-
-
-
 
 
         // drawer layout instance to toggle the menu icon to open
