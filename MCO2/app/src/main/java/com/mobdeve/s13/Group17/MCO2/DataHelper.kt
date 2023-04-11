@@ -128,7 +128,7 @@ class DataHelper {
             return data;
         }*/
 
-
+/*
         // add data for BookReview
         fun initializedData(): ArrayList<BookReview>{
             val data = ArrayList<BookReview>()
@@ -169,5 +169,5 @@ class DataHelper {
 
             return data
         }*/
-    }
-}
+    }*/
+    }}
