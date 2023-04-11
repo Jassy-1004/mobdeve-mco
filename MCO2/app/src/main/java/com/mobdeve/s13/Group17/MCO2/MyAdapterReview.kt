@@ -21,10 +21,11 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
         return myViewHolder
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
         val bookReview = data[position]
 
-        holder.bindData(bookReview)
+        holder.bindData(bookReview,uname)
 
         //clicking itemView would start activity for BookReviewActivity
         holder.itemView.setOnClickListener{
@@ -37,6 +38,7 @@ class MyAdapterReview(private val data: ArrayList<BookReview>, private val myAct
             intent.putExtra(BookReviewActivity.IMAGE_KEY, bookReview.BookImg)
             intent.putExtra(BookReviewActivity.POSITION_KEY, position)
             intent.putExtra(BookReviewActivity.UNAME, uname)
+
 
 
             myActivityResultLauncher.launch(intent)

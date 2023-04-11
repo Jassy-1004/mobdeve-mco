@@ -70,31 +70,6 @@ class BookReviewActivity: AppCompatActivity() {
         viewBinding.reviewTv.text= review
         viewBinding.bookImage.setImageResource(image)
 
-        dbf = FirebaseFirestore.getInstance()
-
-        // Set up the SnapshotListener to listen for changes to the UserReviews collection
-        val collectionRef = dbf.collection("UserReviews")
-        val query = collectionRef.whereEqualTo("Book Title", viewBinding.booktitletv)
-
-        val listener = query.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w(ContentValues.TAG, "Listen failed.", e)
-                return@addSnapshotListener
-            }
-
-            if (snapshot != null && !snapshot.isEmpty) {
-                val reviews = snapshot.documents.map { document ->
-                    val username = document.getString("User")
-                    val comment = document.getString("Review")
-                    val title = document.getString("Book Title")
-                    BookReview(username.toString(), comment.toString(),title.toString())
-                }
-
-            } else {
-                Log.d(ContentValues.TAG, "No reviews")
-            }
-        }
-
 
         //pressing editBtn will go to Edit Book Review Activity
         editBtn = viewBinding.editbtn
