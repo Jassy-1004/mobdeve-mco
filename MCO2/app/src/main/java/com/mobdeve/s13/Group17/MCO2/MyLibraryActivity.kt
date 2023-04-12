@@ -83,12 +83,17 @@ class MyLibraryActivity : AppCompatActivity() {
 
         dbf.collection("UserReviews")
             .whereEqualTo("User", uname)
-            .get()
-            .addOnSuccessListener { reviews ->
+            .addSnapshotListener { reviews, error ->
+                if (error != null) {
+                    Log.e("Firestore", "Error getting reviews: ", error)
+                    return@addSnapshotListener
+                }
+
                 val bookTitles = mutableListOf<String>()
+
                 // Extract the book titles from the reviews
-                for (Review in reviews) {
-                    val bookTitle = Review.getString("Book Title")
+                for (review in reviews!!) {
+                    val bookTitle = review.getString("Book Title")
                     if (bookTitle != null) {
                         bookTitles.add(bookTitle)
                     }
@@ -101,39 +106,37 @@ class MyLibraryActivity : AppCompatActivity() {
                         .get()
                         .addOnSuccessListener { books ->
                             // Display the book information
+                            val bookList = mutableListOf<BookReview>()
                             for (book in books) {
                                 Log.d("Book", "Title: ${book.getString("Title")}")
                                 Log.d("Book", "Author: ${book.getString("Author")}")
 
                                 val title = book.getString("Title")
-
+                                val comment = ""
                                 val imageUri = Uri.parse(book.getString("Book Img"))
                                 Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
 
-
-                                if (title != null && comment != null && imageUri != null) {
+                                if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
-
-                                if (myAdapter.itemCount == 0) {
-                                    recyclerViewLibrary.visibility = View.GONE
-                                    emptyView.visibility = View.VISIBLE
-                                } else {
-                                    recyclerViewLibrary.visibility = View.VISIBLE
-                                    emptyView.visibility = View.GONE
-                                }
-                                myAdapter.updateData(bookList)
                             }
+
+                            myAdapter.updateData(bookList)
                         }
                         .addOnFailureListener { exception ->
                             Log.e("Firestore", "Error getting books: ", exception)
                         }
+                } else {
+                    if (myAdapter.itemCount == 0) {
+                        recyclerViewLibrary.visibility = View.GONE
+                        emptyView.visibility = View.VISIBLE
+                    } else {
+                        recyclerViewLibrary.visibility = View.VISIBLE
+                        emptyView.visibility = View.GONE
+                    }
+                    myAdapter.updateData(emptyList())
                 }
             }
-                    .addOnFailureListener { exception ->
-                        Log.e("Firestore", "Error getting reviews: ", exception)
-                    }
-
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
