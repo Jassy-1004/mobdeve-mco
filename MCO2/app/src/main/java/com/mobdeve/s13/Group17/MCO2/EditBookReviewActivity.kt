@@ -35,13 +35,20 @@ class EditBookReviewActivity : AppCompatActivity() {
     }
     private lateinit var dbf : FirebaseFirestore
 
+
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val title = intent.getStringExtra(BOOK_TITLE_KEY).toString()
+        // put intent information to variable
+        val title = this.intent.getStringExtra(BOOK_TITLE_KEY).toString()
+        val author = this.intent.getStringExtra(AUTHOR_KEY).toString()
+        val description = this.intent.getStringExtra(BOOK_DESCRIPTION_KEY).toString()
+        var rating = this.intent.getFloatExtra(RATING_KEY, 0F).toFloat()
+        var review = this.intent.getStringExtra(REVIEW_KEY).toString()
+        val image = this.intent.getIntExtra(IMG_KEY, R.drawable.hob_logo)
         val user = intent.getStringExtra(UNAME).toString()
         Log.d(ContentValues.TAG, user)
 
@@ -51,7 +58,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.authortv.text = intent.getStringExtra(EditBookReviewActivity.AUTHOR_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
         viewBinding.bookimg.setImageResource(intent.getIntExtra(EditBookReviewActivity.IMG_KEY, R.drawable.hob_logo))
-        viewBinding.myRatingBar.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
+        viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
         viewBinding.commentEt.setText(intent.getStringExtra(REVIEW_KEY))
 
         dbf = FirebaseFirestore.getInstance()
@@ -100,14 +107,11 @@ class EditBookReviewActivity : AppCompatActivity() {
 
 
         viewBinding.savebtn.setOnClickListener(){
-            val intent: Intent = Intent()
+            val intent: Intent = Intent(this, BookReviewActivity::class.java)
 
             var id: String = ""
             val comment = viewBinding.commentEt.text.toString()
             val rating = viewBinding.myRatingBar.rating.toFloat()
-
-            Log.d(ContentValues.TAG, "I AM HERE!")
-            Log.d(ContentValues.TAG, title)
 
             //add database update here
             dbf.collection("UserReviews").whereEqualTo("User", user)
@@ -134,12 +138,28 @@ class EditBookReviewActivity : AppCompatActivity() {
                     }
                 }
 
-            setResult(Activity.RESULT_OK, intent)
-
+            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
+            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY, description)
+            intent.putExtra(BookReviewActivity.RATING_KEY, rating)
+            intent.putExtra(BookReviewActivity.REVIEW_KEY, review)
+            intent.putExtra(BookReviewActivity.IMAGE_KEY, image)
+            intent.putExtra(BookReviewActivity.AUTHOR_KEY, author)
+            intent.putExtra(BookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+            startActivity(intent)
             finish()
         }
 
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
+            val intent: Intent = Intent(this, BookReviewActivity::class.java)
+
+            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
+            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY, description)
+            intent.putExtra(BookReviewActivity.RATING_KEY, rating)
+            intent.putExtra(BookReviewActivity.REVIEW_KEY, review)
+            intent.putExtra(BookReviewActivity.IMAGE_KEY, image)
+            intent.putExtra(BookReviewActivity.AUTHOR_KEY, author)
+            intent.putExtra(BookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+            startActivity(intent)
             finish()
         })
     }

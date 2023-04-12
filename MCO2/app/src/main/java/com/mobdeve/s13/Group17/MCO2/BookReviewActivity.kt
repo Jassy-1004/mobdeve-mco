@@ -102,7 +102,7 @@ class BookReviewActivity: AppCompatActivity() {
             }
 
 
-        dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
+        dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -125,22 +125,23 @@ class BookReviewActivity: AppCompatActivity() {
                 }
             }
 
-
-
         //pressing editBtn will go to Edit Book Review Activity
         editBtn = viewBinding.editbtn
         editBtn.setOnClickListener {
             val edit: Intent = Intent(this, EditBookReviewActivity::class.java)
 
-            edit.putExtra(EditBookReviewActivity.BOOK_TITLE_KEY, title)
-            edit.putExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY, description)
-            edit.putExtra(EditBookReviewActivity.RATING_KEY, rating)
-            edit.putExtra(EditBookReviewActivity.REVIEW_KEY, review)
+            edit.putExtra(EditBookReviewActivity.BOOK_TITLE_KEY, this.intent.getStringExtra(
+                BOOK_TITLE_KEY).toString())
+            edit.putExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY, this.intent.getStringExtra(
+                BOOK_DESCRIPTION_KEY).toString())
+            edit.putExtra(EditBookReviewActivity.RATING_KEY, this.intent.getStringExtra(RATING_KEY).toString())
+            edit.putExtra(EditBookReviewActivity.REVIEW_KEY, this.intent.getStringExtra(REVIEW_KEY).toString())
             edit.putExtra(EditBookReviewActivity.IMG_KEY, image)
-            edit.putExtra(EditBookReviewActivity.AUTHOR_KEY, author)
+            edit.putExtra(EditBookReviewActivity.AUTHOR_KEY, this.intent.getStringExtra(AUTHOR_KEY).toString())
             edit.putExtra(EditBookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
 
             startActivity(edit)
+            finish()
         }
 
         deleteBtn = viewBinding.deletebtn

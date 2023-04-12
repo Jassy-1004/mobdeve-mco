@@ -61,6 +61,7 @@ class BookInfoActivity : AppCompatActivity() {
         val viewBinding: ActivityBookinfoBinding = ActivityBookinfoBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        Log.w(TAG, this.intent.getStringExtra(UNAME).toString())
 
         commentList = arrayListOf()
 
@@ -93,7 +94,6 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
 
         db = FirebaseFirestore.getInstance();
-        var i = false
 
         // Set up the SnapshotListener to listen for changes to the UserReviews collection
         val collectionRef = db.collection("UserReviews")
@@ -155,6 +155,8 @@ class BookInfoActivity : AppCompatActivity() {
             }
 
 
+        var id :String? = null
+        var comment : Boolean = true
 
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
@@ -232,9 +234,6 @@ class BookInfoActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
-
-
     }
 
 
