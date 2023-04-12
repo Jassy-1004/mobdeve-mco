@@ -158,31 +158,34 @@ class BookInfoActivity : AppCompatActivity() {
 
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
+            val db = FirebaseFirestore.getInstance()
+            val title = viewBinding.booktitletv.text.toString()
+            val user = this.intent.getStringExtra(UNAME).toString()
+
+            // Check if the user has already left a review for this book
             db.collection("UserReviews")
                 .whereEqualTo("Book Title", title)
-                .whereEqualTo("User", intent.getStringExtra(UNAME))
+                .whereEqualTo("User", user)
                 .get()
                 .addOnSuccessListener { documents ->
-                    if (documents.isEmpty) {
-                        val intent: Intent = Intent(this, AddBookReview::class.java)
+                    if (!documents.isEmpty) {
+                        Toast.makeText(this@BookInfoActivity, "You have already reviewed this book", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // If the user hasn't left a review, launch the AddBookReview activity
+                        val intent = Intent(this, AddBookReview::class.java)
                         intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
                         intent.putExtra(AddBookReview.AUTHOR_KEY, author)
                         intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
                         intent.putExtra(AddBookReview.IMG_KEY, image)
-                        intent.putExtra(AddBookReview.UNAME, intent.getStringExtra(UNAME))
+                        intent.putExtra(AddBookReview.UNAME, user)
                         startActivity(intent)
-                    } else {
-                        Toast.makeText(
-                            this@BookInfoActivity,
-                            "You have already made a review for this book.",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Log.w(TAG, "Error getting documents.", exception)
+                    Log.e(TAG, "Error checking if user has reviewed book: $exception")
                 }
         }
+
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
