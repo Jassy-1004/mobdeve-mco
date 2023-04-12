@@ -158,38 +158,29 @@ class BookInfoActivity : AppCompatActivity() {
 
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
-            var id :String = "."
-            var review : Boolean = false
-            db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME)).whereEqualTo("Book Title",title)
+            db.collection("UserReviews")
+                .whereEqualTo("Book Title", title)
+                .whereEqualTo("User", intent.getStringExtra(UNAME))
                 .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (document in task.result) {
-                            review = true
-                            id = document.id
-                            Log.w(TAG, "id: $id")
-                        }
-                        Log.w(TAG, review.toString())
-                        if(review === true){
-                            Toast.makeText(
-                                this@BookInfoActivity,
-                                "You have already made a review",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }else{
-                            val intent: Intent = Intent(this, AddBookReview::class.java)
-
-                            intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
-                            intent.putExtra(AddBookReview.AUTHOR_KEY, author)
-                            intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
-                            intent.putExtra(AddBookReview.IMG_KEY, image)
-                            intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
-                            startActivity(intent)
-                        }
+                .addOnSuccessListener { documents ->
+                    if (documents.isEmpty) {
+                        val intent: Intent = Intent(this, AddBookReview::class.java)
+                        intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
+                        intent.putExtra(AddBookReview.AUTHOR_KEY, author)
+                        intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
+                        intent.putExtra(AddBookReview.IMG_KEY, image)
+                        intent.putExtra(AddBookReview.UNAME, intent.getStringExtra(UNAME))
+                        startActivity(intent)
                     } else {
-                        Log.w(TAG, "Error getting documents.", task.exception)
-
+                        Toast.makeText(
+                            this@BookInfoActivity,
+                            "You have already made a review for this book.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                }
+                .addOnFailureListener { exception ->
+                    Log.w(TAG, "Error getting documents.", exception)
                 }
         }
 
