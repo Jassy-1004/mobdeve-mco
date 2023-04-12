@@ -33,7 +33,6 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val POSITION_KEY = "POSITION_KEY"
         const val UNAME="USERNAME"
     }
-
     private lateinit var dbf : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -41,6 +40,11 @@ class EditBookReviewActivity : AppCompatActivity() {
 
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        val title = intent.getStringExtra(BOOK_TITLE_KEY).toString()
+        val user = intent.getStringExtra(UNAME).toString()
+        Log.d(ContentValues.TAG, user)
+
 
         // putting data to views
         viewBinding.booktitletv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_TITLE_KEY)
@@ -102,9 +106,12 @@ class EditBookReviewActivity : AppCompatActivity() {
             val comment = viewBinding.commentEt.text.toString()
             val rating = viewBinding.myRatingBar.rating.toFloat()
 
+            Log.d(ContentValues.TAG, "I AM HERE!")
+            Log.d(ContentValues.TAG, title)
+
             //add database update here
-            dbf.collection("UserReviews").whereEqualTo("User", intent.getStringExtra(UNAME)).whereEqualTo("Book Title", intent.getStringExtra(
-                BOOK_TITLE_KEY)).get()
+            dbf.collection("UserReviews").whereEqualTo("User", user)
+                .whereEqualTo("Book Title", title).get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         for (document in task.result) {
@@ -119,11 +126,10 @@ class EditBookReviewActivity : AppCompatActivity() {
                             null
                         }.addOnSuccessListener {
                             Log.d(ContentValues.TAG, "Transaction success!")
-                            intent.putExtra(BookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
-                            startActivity(intent)
-                            finishAffinity()
+                            finish()
                         }
-                    } else {
+                    }
+                    else {
                         Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
                     }
                 }
@@ -136,59 +142,5 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
             finish()
         })
-        /*// drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
-        drawerLayout = findViewById(R.id.drawer_layout)
-        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
-
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
-
-        // to make the Navigation drawer icon always appear on the action bar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            // Handle menu item clicks here
-            when (menuItem.itemId) {
-                R.id.nav_home -> {
-                    val home = Intent(this, MainActivity::class.java)
-                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
-                    startActivity(home)
-                    finishAffinity()
-                }
-                R.id.nav_books-> {
-                    // Do something for menu item 2
-                    val lib = Intent(this, MyLibraryActivity::class.java)
-                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
-                    startActivity(lib)
-                    finishAffinity()
-                }
-                R.id.nav_profile->{
-                    val profile = Intent(this, MyProfileActivity::class.java)
-                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(Login1.UNAME).toString())
-                    startActivity(profile)
-                    finishAffinity()
-                }
-                R.id.nav_logout->{
-                    startActivity(Intent(this, StartPage::class.java))
-                    finishAffinity()
-                }
-            }
-            // Close the drawer
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
-        }
-
-    }
-
-
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            true
-        } else super.onOptionsItemSelected(item)*/
     }
 }

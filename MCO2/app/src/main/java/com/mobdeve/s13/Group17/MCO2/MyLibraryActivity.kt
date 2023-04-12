@@ -42,7 +42,6 @@ class MyLibraryActivity : AppCompatActivity() {
 
     private lateinit var myAdapter: MyAdapterReview
 
-
     private lateinit var dbf: FirebaseFirestore
 
     private val bookReviewResultLauncher = registerForActivityResult(

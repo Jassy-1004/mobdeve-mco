@@ -60,8 +60,8 @@ class BookReviewActivity: AppCompatActivity() {
         val title = intent.getStringExtra(BookReviewActivity.BOOK_TITLE_KEY)
         val author = intent.getStringExtra(BookReviewActivity.AUTHOR_KEY)
         val description = intent.getStringExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY)
-        val rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
-        val review = intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
+        var rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
+        var review = intent.getStringExtra(BookReviewActivity.REVIEW_KEY)
         val image = intent.getIntExtra(BookReviewActivity.IMAGE_KEY, R.drawable.hob_logo)
 
         // put information to view
@@ -110,11 +110,13 @@ class BookReviewActivity: AppCompatActivity() {
                         val reviewText = document.getString("Review")
                         if (reviewText != null) {
                             viewBinding.reviewTv.text = reviewText
+                            review = reviewText
                         }
 
-                        val rating = document.getDouble("Rating")
-                        if (rating != null) {
-                            viewBinding.myRating.rating = rating.toFloat()
+                        val ratings = document.getDouble("Rating")
+                        if (ratings != null) {
+                            viewBinding.myRating.rating = ratings.toFloat()
+                            rating = ratings.toFloat()
                         }
                     }
                     Log.w(ContentValues.TAG, "Found.")

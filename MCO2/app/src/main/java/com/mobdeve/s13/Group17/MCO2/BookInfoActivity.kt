@@ -55,9 +55,6 @@ class BookInfoActivity : AppCompatActivity() {
 
     private lateinit var db : FirebaseFirestore
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -85,11 +82,8 @@ class BookInfoActivity : AppCompatActivity() {
         val image = intent.getStringExtra(IMG_KEY)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
-        if (image == null || image.isEmpty()) {
-            Log.e("Picasso", "Image URL is empty or null!")
-        } else {
-            Picasso.get().load(image).into(viewBinding.bookimg)
-        }
+        if (image == null || image.isEmpty()) { Log.e("Picasso", "Image URL is empty or null!") }
+        else { Picasso.get().load(image).into(viewBinding.bookimg) }
 
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
@@ -98,7 +92,7 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
 
-         db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         var i = false
 
         // Set up the SnapshotListener to listen for changes to the UserReviews collection
@@ -131,17 +125,6 @@ class BookInfoActivity : AppCompatActivity() {
         }
 
 
-        db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME).toString()).whereEqualTo("Book Title",title)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    i = true
-                    Log.w(TAG, "Found.")
-                } else {
-                    Log.w(TAG, "Error getting documents.", task.exception)
-                }
-            }
-
         db.collection("Books")
             .get()
             .addOnCompleteListener { task ->
@@ -173,28 +156,41 @@ class BookInfoActivity : AppCompatActivity() {
 
 
 
-
-
         // pressing add button will start activity to AddBookReview
         viewBinding.addbtnFab.setOnClickListener {
-            if(true)
-            {
-                val intent: Intent = Intent(this, AddBookReview::class.java)
+            var id :String = "."
+            var review : Boolean = false
+            db.collection("UserReview").whereEqualTo("User", this.intent.getStringExtra(UNAME)).whereEqualTo("Book Title",title)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        for (document in task.result) {
+                            review = true
+                            id = document.id
+                            Log.w(TAG, "id: $id")
+                        }
+                        Log.w(TAG, review.toString())
+                        if(review === true){
+                            Toast.makeText(
+                                this@BookInfoActivity,
+                                "You have already made a review",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }else{
+                            val intent: Intent = Intent(this, AddBookReview::class.java)
 
-                intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
-                intent.putExtra(AddBookReview.AUTHOR_KEY, author)
-                intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
-                intent.putExtra(AddBookReview.IMG_KEY, image)
-                intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
-                startActivity(intent)
-            }
-            else if (false){
-                Toast.makeText(
-                    this@BookInfoActivity,
-                    "You have already made a review",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+                            intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
+                            intent.putExtra(AddBookReview.AUTHOR_KEY, author)
+                            intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
+                            intent.putExtra(AddBookReview.IMG_KEY, image)
+                            intent.putExtra(AddBookReview.UNAME, this.intent.getStringExtra(UNAME).toString())
+                            startActivity(intent)
+                        }
+                    } else {
+                        Log.w(TAG, "Error getting documents.", task.exception)
+
+                    }
+                }
         }
 
         // drawer layout instance to toggle the menu icon to open

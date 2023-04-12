@@ -19,7 +19,7 @@ class DeleteBookReviewActivity : AppCompatActivity() {
         const val UNAME="USERNAME"
     }
 
-    val db = FirebaseFirestore.getInstance();
+    private val db = FirebaseFirestore.getInstance();
     
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +40,14 @@ class DeleteBookReviewActivity : AppCompatActivity() {
                          for (document in task.result) {
                              id = document.id
                              Log.w(TAG, "id: $id")
+
+                             //add delete from database here
+                             db.collection("UserReviews").document(id).delete()
+                                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
+                                 .addOnFailureListener { Log.w(TAG, "Error deleting document") }
                          }
                      }
                  }
-
-             //add delete from database here
-             db.collection("UserReviews").document(id).delete()
-                 .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
-                 .addOnFailureListener { Log.w(TAG, "Error deleting document") }
 
              val intent: Intent = Intent(this, MyLibraryActivity::class.java);
              intent.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
