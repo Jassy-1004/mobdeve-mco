@@ -76,7 +76,6 @@ class BookInfoActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance();
 
 
-
         // putting intent to variable
 
         val emptyView = viewBinding.empty

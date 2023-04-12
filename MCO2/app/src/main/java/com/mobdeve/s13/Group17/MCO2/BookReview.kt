@@ -1,13 +1,15 @@
 package com.mobdeve.s13.Group17.MCO2
 
-class BookReview (
+import android.net.Uri
+
+class BookReview(
     // declare variables for bookReview
     var Title:String = "",
     val comment: String,
-    val DatePublished:String = "",
+    val BookImg: Uri,
     val Rating:Float = 0F,
-    val BookImg: String="",
+    val DatePublished:String = "",
     val Author:String = "",
     val Plot:String = "",
 
-)
+    )

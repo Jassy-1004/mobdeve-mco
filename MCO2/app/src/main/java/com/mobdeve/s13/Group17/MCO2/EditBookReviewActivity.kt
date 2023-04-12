@@ -3,6 +3,7 @@ package com.mobdeve.s13.Group17.MCO2
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -15,6 +16,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
+import com.squareup.picasso.Picasso
 import java.util.function.BinaryOperator
 
 class EditBookReviewActivity : AppCompatActivity() {
@@ -32,7 +34,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val UNAME="USERNAME"
     }
 
-    val db = FirebaseFirestore.getInstance();
+    private lateinit var dbf : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
@@ -48,6 +50,51 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.myRatingBar.rating = intent.getFloatExtra(BookReviewActivity.RATING_KEY, 0F).toFloat()
         viewBinding.commentEt.setText(intent.getStringExtra(REVIEW_KEY))
 
+        dbf = FirebaseFirestore.getInstance()
+
+        dbf.collection("Books")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        val bookTitle = document.data["Title"] as String
+                        if (bookTitle == viewBinding.booktitletv.text) {
+                            val imageUri = Uri.parse(document.data["Book Img"] as String?)
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.bookimg);
+
+                            viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                            Log.e("TAG", imageUri.toString())
+                            Log.e("TAG","${document.data["Rating"]}")
+                            break
+                        }
+                    }
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
+        dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        val reviewText = document.getString("Review")
+                        if (reviewText != null) {
+                            viewBinding.commentEt.setText(reviewText)
+                        }
+
+                        val rating = document.getDouble("Rating")
+                        if (rating != null) {
+                            viewBinding.myRatingBar.rating = rating.toFloat()
+                        }
+                    }
+                    Log.w(ContentValues.TAG, "Found.")
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
+
         viewBinding.savebtn.setOnClickListener(){
             val intent: Intent = Intent()
 
@@ -56,7 +103,7 @@ class EditBookReviewActivity : AppCompatActivity() {
             val rating = viewBinding.myRatingBar.rating.toFloat()
 
             //add database update here
-            db.collection("UserReviews").whereEqualTo("User", intent.getStringExtra(UNAME)).whereEqualTo("Book Title", intent.getStringExtra(
+            dbf.collection("UserReviews").whereEqualTo("User", intent.getStringExtra(UNAME)).whereEqualTo("Book Title", intent.getStringExtra(
                 BOOK_TITLE_KEY)).get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -65,9 +112,9 @@ class EditBookReviewActivity : AppCompatActivity() {
                             Log.w(ContentValues.TAG, "id: $id")
                         }
 
-                        db.runTransaction { transaction ->
-                            val snapshot = transaction.get(db.collection("UserReviews").document(id))
-                            transaction.update(db.collection("UserReviews").document(id), "Rating", rating,"Review", comment)
+                        dbf.runTransaction { transaction ->
+                            val snapshot = transaction.get(dbf.collection("UserReviews").document(id))
+                            transaction.update(dbf.collection("UserReviews").document(id), "Rating", rating,"Review", comment)
                             // Success
                             null
                         }.addOnSuccessListener {

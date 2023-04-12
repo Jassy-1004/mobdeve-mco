@@ -19,6 +19,9 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.squareup.picasso.Picasso
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 class AddBookReview : AppCompatActivity() {
 
@@ -89,6 +92,9 @@ class AddBookReview : AppCompatActivity() {
             else {
                 val username = this.intent.getStringExtra(UNAME).toString()
                 Log.w(TAG, "$username")
+                val currentTimestamp = com.google.firebase.Timestamp.now()
+                val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+                val currentDate = dateFormat.format(currentTimestamp.toDate())
                 firebaseFirestore.collection("UserReviews").get()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
@@ -97,6 +103,7 @@ class AddBookReview : AppCompatActivity() {
                             reg_entry["Review"] = Review.text.toString()
                             reg_entry["Rating"] = Rating.rating.toFloat()
                             reg_entry["Book Title"] = viewBinding.booktitletv.text.toString()
+                            reg_entry["Date Posted"] = currentDate
 
                             firebaseFirestore.collection("UserReviews")
                                 .add(reg_entry)

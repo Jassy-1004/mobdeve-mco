@@ -2,6 +2,7 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.content.ContentValues
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -17,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
+import com.squareup.picasso.Picasso
 
 class BookReviewActivity: AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
@@ -72,28 +74,55 @@ class BookReviewActivity: AppCompatActivity() {
 
         dbf = FirebaseFirestore.getInstance()
 
-        // Set up the SnapshotListener to listen for changes to the UserReviews collection
-        val collectionRef = dbf.collection("UserReviews")
-        val query = collectionRef.whereEqualTo("Book Title", viewBinding.booktitletv)
+        dbf.collection("Books")
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        val bookTitle = document.data["Title"] as String
+                        if (bookTitle == title) {
+                            viewBinding.booktitletv.text = bookTitle
+                            viewBinding.authortv.text = document.data["Author"] as CharSequence?
+                            viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
 
-        val listener = query.addSnapshotListener { snapshot, e ->
-            if (e != null) {
-                Log.w(ContentValues.TAG, "Listen failed.", e)
-                return@addSnapshotListener
-            }
+                            val imageUri = Uri.parse(document.data["Book Img"] as String?)
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
+                                .into(viewBinding.bookImage);
 
-            if (snapshot != null && !snapshot.isEmpty) {
-                val reviews = snapshot.documents.map { document ->
-                    val username = document.getString("User")
-                    val comment = document.getString("Review")
-                    val title = document.getString("Book Title")
-                    BookReview(username.toString(), comment.toString(),title.toString())
+
+                            Log.e("TAG", imageUri.toString())
+                            Log.e("TAG", "${document.data["Rating"]}")
+                            break
+                        }
+                    }
                 }
-
-            } else {
-                Log.d(ContentValues.TAG, "No reviews")
+                else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
             }
-        }
+
+
+        dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result) {
+                        val reviewText = document.getString("Review")
+                        if (reviewText != null) {
+                            viewBinding.reviewTv.text = reviewText
+                        }
+
+                        val rating = document.getDouble("Rating")
+                        if (rating != null) {
+                            viewBinding.myRating.rating = rating.toFloat()
+                        }
+                    }
+                    Log.w(ContentValues.TAG, "Found.")
+                } else {
+                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                }
+            }
+
 
 
         //pressing editBtn will go to Edit Book Review Activity

@@ -25,6 +25,7 @@ class MyLibraryActivity : AppCompatActivity() {
     companion object {
         private const val TAG = "MyLibraryActivity"
         const val UNAME = "Username"
+        const val comment = "Review"
     }
 
 
@@ -94,39 +95,45 @@ class MyLibraryActivity : AppCompatActivity() {
                     }
                 }
 
-                // Query the Books collection using the book titles
-                // Query the Books collection using the book titles
-                dbf.collection("Books")
-                    .whereIn("Title", bookTitles)
-                    .get()
-                    .addOnSuccessListener { books ->
-                        // Display the book information
-                        for (book in books) {
-                            Log.d("Book", "Title: ${book.getString("Title")}")
-                            Log.d("Book", "Author: ${book.getString("Author")}")
-                            val title = book.getString("Title")
-                            val author = book.getString("Author")
+                if (bookTitles.isNotEmpty()) {
+                    // Query the Books collection using the book titles
+                    dbf.collection("Books")
+                        .whereIn("Title", bookTitles)
+                        .get()
+                        .addOnSuccessListener { books ->
+                            // Display the book information
+                            for (book in books) {
+                                Log.d("Book", "Title: ${book.getString("Title")}")
+                                Log.d("Book", "Author: ${book.getString("Author")}")
 
-                            if (title != null && author != null ) {
-                                bookList.add(BookReview(title, author))
+                                val title = book.getString("Title")
+
+                                val imageUri = Uri.parse(book.getString("Book Img"))
+                                Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
+
+
+                                if (title != null && comment != null && imageUri != null) {
+                                    bookList.add(BookReview(title, comment, imageUri))
+                                }
+
+                                if (myAdapter.itemCount == 0) {
+                                    recyclerViewLibrary.visibility = View.GONE
+                                    emptyView.visibility = View.VISIBLE
+                                } else {
+                                    recyclerViewLibrary.visibility = View.VISIBLE
+                                    emptyView.visibility = View.GONE
+                                }
+                                myAdapter.updateData(bookList)
                             }
-                            if (myAdapter.itemCount == 0) {
-                                recyclerViewLibrary.visibility = View.GONE
-                                emptyView.visibility = View.VISIBLE
-                            } else {
-                                recyclerViewLibrary.visibility = View.VISIBLE
-                                emptyView.visibility = View.GONE
-                            }
-                            myAdapter.notifyDataSetChanged()
                         }
-                    }
+                        .addOnFailureListener { exception ->
+                            Log.e("Firestore", "Error getting books: ", exception)
+                        }
+                }
+            }
                     .addOnFailureListener { exception ->
-                        Log.e("Firestore", "Error getting books: ", exception)
+                        Log.e("Firestore", "Error getting reviews: ", exception)
                     }
-            }
-            .addOnFailureListener { exception ->
-                Log.e("Firestore", "Error getting reviews: ", exception)
-            }
 
 
         // drawer layout instance to toggle the menu icon to open
