@@ -12,8 +12,7 @@ class MyViewHolderComment(private val viewBinding: ItemLayoutCommentBinding): Re
     // method which accepts a character object and set views' info accordingly
 
     fun bindData(comment: Comment) {
-
-
+        // Set the comment information into the views.
          this.viewBinding.usertv.text = comment.username
          this.viewBinding.commenttv.text = comment.comment
     }

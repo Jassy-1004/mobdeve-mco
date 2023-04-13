@@ -27,35 +27,39 @@ class MyProfileActivity : AppCompatActivity() {
 
 
 
-    //navigation
+    // Navigation drawer setup
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
+    // Declare variable to be used i this Activity
     private lateinit var editProfile: Button
 
+    // Declare variables to access the Firestore database
     val db = FirebaseFirestore.getInstance();
 
-    var user=getUserName()
-
+    // Boolean indicating whether a user is logged in or not
     var isUserLoggedIn = getIsLoggedIn()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflate the layout using view binding
         val viewBinding: ActivityProfileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-
+        // Retrieve the user's username from SharedPreferences
         val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val username = sharedPrefs.getString("username", "")
 
         Log.d(TAG, "DocumentSnapshot data: ${username}")
 
+        // Query the database to retrieve the user's profile information
         db.collection("UserInfo").whereEqualTo("Username", username)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     for (document in task.result) {
+                        // Update the UI with the user's profile information
                         viewBinding.profileName.text = document.data["Name"] as CharSequence?
                         viewBinding.profileUsername.text = document.data["Username"] as CharSequence?
                         viewBinding.profileBio.text = document.data["Bio"] as CharSequence?
@@ -66,6 +70,7 @@ class MyProfileActivity : AppCompatActivity() {
                 }
             }
 
+        // Set up the Edit Profile button
         editProfile = viewBinding.editProfile
         editProfile.setOnClickListener {
             val intent: Intent = Intent(this, EditProfile::class.java);
@@ -73,11 +78,11 @@ class MyProfileActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // Set up the DrawerLayout and its listener
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
-        actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
 
         // pass the Open and Close toggle for the drawer layout listener
         // to toggle the button
@@ -87,34 +92,39 @@ class MyProfileActivity : AppCompatActivity() {
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Set up the NavigationView and its listener
         val navigationView = findViewById<NavigationView>(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // Handle menu item clicks here
             when (menuItem.itemId) {
+                // Go to the MainActivity
                 R.id.nav_home -> {
                     val home = Intent(this, MainActivity::class.java)
-                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(MainActivity.UNAME).toString())
                     startActivity(home)
                     finishAffinity()
                 }
+
+                // Go to the MyLibraryActivity
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
-                    lib.putExtra(
-                        MyLibraryActivity.UNAME, this.intent.getStringExtra(
-                            UNAME
-                        ).toString())
+                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(MainActivity.UNAME).toString())
                     startActivity(lib)
                     finishAffinity()
                 }
+
+                // Go to the MyProfileActivity
                 R.id.nav_profile->{
                     val profile = Intent(this, MyProfileActivity::class.java)
-                    profile.putExtra(UNAME, this.intent.getStringExtra(
-                        UNAME
+                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(
+                        MainActivity.UNAME
                     ).toString())
                     startActivity(profile)
                     finishAffinity()
                 }
+
+                // Go to the Logout
                 R.id.nav_logout->{
                     isUserLoggedIn = false
                     val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -124,6 +134,7 @@ class MyProfileActivity : AppCompatActivity() {
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
 
+
                 }
             }
             // Close the drawer
@@ -132,12 +143,15 @@ class MyProfileActivity : AppCompatActivity() {
         }
 
     }
+
+    // Handle the navigation drawer and menu button
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
     }
 
+    // Pause the activity and store the previous activity in SharedPreferences
    override fun onPause() {
        super.onPause()
        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -146,6 +160,7 @@ class MyProfileActivity : AppCompatActivity() {
        editor.apply()
     }
 
+    // Function to handle the "back" button press by calling, so it wouldn't go back to th login page
     override fun onBackPressed() {
         // Call finishAffinity instead of super.onBackPressed
         finishAffinity()

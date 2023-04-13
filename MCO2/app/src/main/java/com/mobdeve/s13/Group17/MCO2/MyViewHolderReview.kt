@@ -69,7 +69,7 @@ class MyViewHolderReview (private val viewBinding: ItemLayoutMylibraryBinding): 
 
         this.viewBinding.BookTitle.text = review.Title
         this.viewBinding.dateTv.text = review.DatePublished
-        // this.viewBinding.myRating.rating = review.Rating
+
     }
 
 

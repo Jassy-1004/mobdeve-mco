@@ -7,7 +7,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,13 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityRegister1Binding;
@@ -33,6 +26,7 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
+    // Initialize views
     private EditText  Email, Password, Username, Bio, ConPassword, FirstName,LastName;
     private Button  Reg1Btn;
     FirebaseFirestore firebaseFirestore;
@@ -42,9 +36,11 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Set view binding
         ActivityRegister1Binding viewBinding = ActivityRegister1Binding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
+        // Assign view variables
         FirstName=viewBinding.firstnametext;
         LastName=viewBinding.lastnametext;
         Email=viewBinding.emailtext;
@@ -53,29 +49,36 @@ public class Register extends AppCompatActivity {
         Username=viewBinding.usertext;
         Bio=viewBinding.biotext;
 
+        // Initialize Firebase Firestore instance
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        // Create intent for login activity
         Intent intent = new Intent(this, Login1.class);
 
+        // Set click listener for registration button
         Reg1Btn = viewBinding.nextpage4;
         Reg1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Check if required fields are empty
                 if (Username.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type a username", Toast.LENGTH_SHORT).show();
                 }
                 else if (Email.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type an email", Toast.LENGTH_SHORT).show();
                 }
+                // Check if email is in correct format
                 else if (!Patterns.EMAIL_ADDRESS.matcher(Email.getText().toString()).matches()) {
                     Toast.makeText(Register.this, "Please enter correct email format", Toast.LENGTH_SHORT).show();
                 }
                 else if (Password.getText().toString().isEmpty()) {
                     Toast.makeText(Register.this, "Please type a password", Toast.LENGTH_SHORT).show();
                 }
+                // Check if password and confirm password fields match
                 else if (!Password.getText().toString().equals(ConPassword.getText().toString())) {
                     Toast.makeText(Register.this, "Password and confirm password does not match", Toast.LENGTH_SHORT).show();
                 }
+                // Check if password has at least 8 characters
                 else if (Password.getText().toString().length() < 8) {
                     Toast.makeText(Register.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
                 }
@@ -86,6 +89,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this, "Please type your Last Name", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    // Check if username already exists
                     firebaseFirestore.collection("UserInfo")
                             .whereEqualTo("Username", Username.getText().toString())
                             .get()
@@ -120,6 +124,7 @@ public class Register extends AppCompatActivity {
                                                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                                                 @Override
                                                                                 public void onSuccess(DocumentReference documentReference) {
+                                                                                    // Display a message to the user that the registration was successful and go to the login page
                                                                                     Toast.makeText(Register.this, "User successfully registered", Toast.LENGTH_SHORT).show();
                                                                                     startActivity(intent);
                                                                                 }
