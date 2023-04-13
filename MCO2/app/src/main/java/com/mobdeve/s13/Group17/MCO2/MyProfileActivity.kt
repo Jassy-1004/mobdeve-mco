@@ -13,6 +13,8 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mobdeve.s13.Group17.MCO2.Login1.getUserName
+import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
 
@@ -23,6 +25,8 @@ class MyProfileActivity : AppCompatActivity() {
         const val UNAME = "Username"
     }
 
+
+
     //navigation
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -31,14 +35,21 @@ class MyProfileActivity : AppCompatActivity() {
 
     val db = FirebaseFirestore.getInstance();
 
+    var user=getUserName()
+
+    var isUserLoggedIn = getIsLoggedIn()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val viewBinding: ActivityProfileBinding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val username = this.intent.getStringExtra(Login1.UNAME).toString()
-        Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(Login1.UNAME).toString()}")
+
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val username = sharedPrefs.getString("username", "")
+
+        Log.d(TAG, "DocumentSnapshot data: ${username}")
 
         db.collection("UserInfo").whereEqualTo("Username", username)
             .get()
@@ -105,8 +116,14 @@ class MyProfileActivity : AppCompatActivity() {
                     finishAffinity()
                 }
                 R.id.nav_logout->{
+                    isUserLoggedIn = false
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.clear();
+                    editor.apply();
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
+
                 }
             }
             // Close the drawer
@@ -121,11 +138,17 @@ class MyProfileActivity : AppCompatActivity() {
         } else super.onOptionsItemSelected(item)
     }
 
-    override fun onStart() {
-        super.onStart()
+   override fun onPause() {
+       super.onPause()
+       val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+       val editor = sharedPrefs.edit()
+       editor.putString("previous_activity", this.javaClass.name)
+       editor.apply()
+    }
 
-        val sp = getSharedPreferences(TAG, Context.MODE_PRIVATE)
-        sp.getString(MainActivity.UNAME, "Username")
+    override fun onBackPressed() {
+        // Call finishAffinity instead of super.onBackPressed
+        finishAffinity()
     }
 }
 

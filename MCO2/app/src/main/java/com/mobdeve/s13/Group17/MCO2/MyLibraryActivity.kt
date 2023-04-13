@@ -1,6 +1,5 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.*
+import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
 import com.squareup.picasso.Picasso
 
@@ -45,6 +45,8 @@ class MyLibraryActivity : AppCompatActivity() {
 
     private lateinit var dbf: FirebaseFirestore
 
+    var isUserLoggedIn = getIsLoggedIn()
+
     private val bookReviewResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -59,9 +61,13 @@ class MyLibraryActivity : AppCompatActivity() {
         val viewBinding: ActivityMylibraryBinding = ActivityMylibraryBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val username = sharedPrefs.getString("username", "")
+
+        Log.d(TAG, "DocumentSnapshot data: ${username}")
+
         val emptyView = viewBinding.empty
 
-        val uname = this.intent.getStringExtra(UNAME).toString()
 
         // setup recycler view
         this.recyclerViewLibrary = viewBinding.recyclerViewLibrary
@@ -70,7 +76,7 @@ class MyLibraryActivity : AppCompatActivity() {
         // Set adapter to RecyclerView
         //recyclerViewLibrary.adapter =  MyAdapter(bookList, bookList, bookReviewResultLauncher, uname)
 
-        myAdapter = MyAdapterReview(bookList, bookReviewResultLauncher, uname)
+        myAdapter = MyAdapterReview(bookList, bookReviewResultLauncher, username.toString())
 
         // Set the Adapter.
         this.recyclerViewLibrary.adapter = myAdapter
@@ -83,7 +89,7 @@ class MyLibraryActivity : AppCompatActivity() {
         dbf= FirebaseFirestore.getInstance()
 
         dbf.collection("UserReviews")
-            .whereEqualTo("User", uname)
+            .whereEqualTo("User", username)
             .addSnapshotListener { reviews, error ->
                 if (error != null) {
                     Log.e("Firestore", "Error getting reviews: ", error)
@@ -120,6 +126,12 @@ class MyLibraryActivity : AppCompatActivity() {
                                 if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
+
+                                if (BookReview(title.toString(), Companion.comment,imageUri)==null) {
+                                    viewBinding.empty.visibility = View.VISIBLE
+                                } else {
+                                    viewBinding.empty.visibility = View.GONE
+                                }
                             }
 
                             myAdapter.updateData(bookList)
@@ -128,15 +140,7 @@ class MyLibraryActivity : AppCompatActivity() {
                             Log.e("Firestore", "Error getting books: ", exception)
                         }
                 } else {
-                    if (myAdapter.itemCount == 0) {
-                        !viewBinding.empty.isGone
-                        recyclerViewLibrary.visibility = View.GONE
-                        emptyView.visibility = View.VISIBLE
-                    } else {
-                        viewBinding.empty.isGone
-                        recyclerViewLibrary.visibility = View.VISIBLE
-                        emptyView.visibility = View.GONE
-                    }
+
                     myAdapter.updateData(emptyList())
                 }
             }
@@ -179,6 +183,11 @@ class MyLibraryActivity : AppCompatActivity() {
                     finishAffinity()
                 }
                 R.id.nav_logout->{
+                    isUserLoggedIn = false
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.clear();
+                    editor.apply();
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
                 }
@@ -190,6 +199,13 @@ class MyLibraryActivity : AppCompatActivity() {
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.putString("previous_activity", this.javaClass.name)
+        editor.apply()
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {

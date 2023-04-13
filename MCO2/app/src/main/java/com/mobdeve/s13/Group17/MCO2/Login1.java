@@ -1,6 +1,8 @@
 package com.mobdeve.s13.Group17.MCO2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,8 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding;
 
 public class Login1 extends AppCompatActivity {
 
+
+
     static final String UNAME = "Username";
 
     /*void object {
@@ -32,6 +36,17 @@ public class Login1 extends AppCompatActivity {
     private TextView signUpHere;
     private ActivityLoginBinding viewBinding;
 
+    boolean isUserLoggedIn = StartPage.Companion.getIsLoggedIn();
+
+    SharedPreferences sharedPrefs;
+
+
+    private static String getUname = null;
+
+    public static String getUserName() {
+        return getUname;
+    }
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +55,9 @@ public class Login1 extends AppCompatActivity {
         setContentView(viewBinding.getRoot());
 
         Intent intent1 = new Intent(this, Register.class);
+
+        sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+
 
         login = viewBinding.loginbtn1;
         uname = viewBinding.loginunametext;
@@ -79,6 +97,12 @@ public class Login1 extends AppCompatActivity {
                                                 home.putExtra(MainActivity.UNAME, uname.getText().toString());
                                                 startActivity(home);
                                                 isMatchFound = true;
+                                                isUserLoggedIn = true;
+                                                sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                                SharedPreferences.Editor editor = sharedPrefs.edit();
+                                                editor.putBoolean("isLoggedIn", true);
+                                                editor.putString("username", uname.getText().toString());
+                                                editor.apply();
                                                 break;
                                             }
                                         }
@@ -98,7 +122,10 @@ public class Login1 extends AppCompatActivity {
                 }
 
         }
-    }
+
+}
+
+
 
 
 

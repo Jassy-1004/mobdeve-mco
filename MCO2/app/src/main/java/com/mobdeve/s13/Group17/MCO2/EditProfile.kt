@@ -3,6 +3,7 @@ package com.mobdeve.s13.Group17.MCO2
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -29,10 +30,6 @@ class EditProfile : AppCompatActivity() {
         private const val UNAME = "Username"
     }
 
-    private var datePickerDialog: DatePickerDialog? = null
-    private lateinit var dateButton2: Button
-    lateinit var drawerLayout: DrawerLayout
-    lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
 
     val db = FirebaseFirestore.getInstance();
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +39,9 @@ class EditProfile : AppCompatActivity() {
             ActivityEditprofileBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
-        val username = this.intent.getStringExtra(MyProfileActivity.UNAME).toString()
+        val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val username = sharedPrefs.getString("username", null).toString()
+
         Log.d(TAG, "DocumentSnapshot data: $username")
 
         db.collection("UserInfo").whereEqualTo("Username", username)

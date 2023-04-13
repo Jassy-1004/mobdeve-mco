@@ -1,7 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
 import android.app.ProgressDialog
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,17 +22,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.*
-import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
+import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
-import java.text.SimpleDateFormat
-
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var dbf : FirebaseFirestore
+    var isUserLoggedIn = getIsLoggedIn()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,8 +145,15 @@ class MainActivity : AppCompatActivity() {
                     finishAffinity()
                 }
                 R.id.nav_logout->{
+                    isUserLoggedIn = false
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.clear();
+                    editor.apply();
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
+
+
                 }
             }
             // Close the drawer
@@ -253,7 +254,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
-        var username = this.intent.getStringExtra(Login1.UNAME).toString()
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.putString("previous_activity", this.javaClass.name)
+        editor.apply()
     }
+    override fun onBackPressed() {
+        // Call finishAffinity instead of super.onBackPressed
+        finishAffinity()
+    }
+
+
 }
