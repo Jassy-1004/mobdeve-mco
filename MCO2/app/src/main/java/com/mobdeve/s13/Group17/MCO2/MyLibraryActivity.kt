@@ -116,21 +116,14 @@ class MyLibraryActivity : AppCompatActivity() {
                                 if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
-
-                                if (BookReview(title.toString(), Companion.comment,imageUri)==null) {
-                                    viewBinding.empty.visibility = View.VISIBLE
-                                } else {
-                                    viewBinding.empty.visibility = View.GONE
-                                }
+                                viewBinding.empty.visibility = View.GONE
                             }
-
                             myAdapter.updateData(bookList)
                         }
                         .addOnFailureListener { exception ->
                             Log.e("Firestore", "Error getting books: ", exception)
                         }
                 } else {
-
                     myAdapter.updateData(emptyList())
                 }
             }

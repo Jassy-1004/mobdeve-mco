@@ -1,5 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -45,7 +46,8 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
             intent.putExtra(BookReviewActivity.UNAME, uname)
 
             // Launch the BookReviewActivity using myActivityResultLauncher
-            myActivityResultLauncher.launch(intent)
+            holder.itemView.context.startActivity(intent)
+            (holder.itemView.context as Activity).finish()
         }
     }
 
