@@ -52,18 +52,19 @@ class MyProfileActivity : AppCompatActivity() {
         val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val username = sharedPrefs.getString("username", "")
 
+        // checker
         Log.d(TAG, "DocumentSnapshot data: ${username}")
 
-<<<<<<< Updated upstream
+
         // Query the database to retrieve the user's profile information
-=======
+
 
         // process dialog while fetching the users data from db
         val progressDialog = ProgressDialog(this@MyProfileActivity)
         progressDialog.setMessage("Loading....., Please Wait")
         progressDialog.show()
 
->>>>>>> Stashed changes
+        // Query the database to retrieve the user's profile information
         db.collection("UserInfo").whereEqualTo("Username", username)
             .get()
             .addOnCompleteListener { task ->

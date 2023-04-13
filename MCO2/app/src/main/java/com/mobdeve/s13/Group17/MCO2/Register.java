@@ -26,11 +26,8 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
-<<<<<<< Updated upstream
-    // Initialize views
-=======
+
     // declares variables
->>>>>>> Stashed changes
     private EditText  Email, Password, Username, Bio, ConPassword, FirstName,LastName;
     private Button  Reg1Btn;
     FirebaseFirestore firebaseFirestore;
@@ -44,11 +41,8 @@ public class Register extends AppCompatActivity {
         ActivityRegister1Binding viewBinding = ActivityRegister1Binding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
-<<<<<<< Updated upstream
-        // Assign view variables
-=======
+
         // assign the views from layout file to declared variables
->>>>>>> Stashed changes
         FirstName=viewBinding.firstnametext;
         LastName=viewBinding.lastnametext;
         Email=viewBinding.emailtext;
@@ -60,12 +54,7 @@ public class Register extends AppCompatActivity {
         // Initialize Firebase Firestore instance
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-<<<<<<< Updated upstream
         // Create intent for login activity
-=======
-
-        // direct to Login page once done
->>>>>>> Stashed changes
         Intent intent = new Intent(this, Login1.class);
 
         // Set click listener for registration button
@@ -92,11 +81,10 @@ public class Register extends AppCompatActivity {
                 else if (!Password.getText().toString().equals(ConPassword.getText().toString())) {
                     Toast.makeText(Register.this, "Password and confirm password does not match", Toast.LENGTH_SHORT).show();
                 }
-<<<<<<< Updated upstream
+
                 // Check if password has at least 8 characters
-=======
                 // passwords are required to have at least 8 characters
->>>>>>> Stashed changes
+
                 else if (Password.getText().toString().length() < 8) {
                     Toast.makeText(Register.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
                 }
