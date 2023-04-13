@@ -14,16 +14,18 @@ class DeleteBookReviewActivity : AppCompatActivity() {
     private lateinit var yes: Button
     private lateinit var no: Button
 
+    // initialize database instance
+    private val db = FirebaseFirestore.getInstance();
+
     companion object{
         const val BOOK_TITLE_KEY = "BOOK_TITLE_KEY"
         const val UNAME="USERNAME"
     }
-
-    private val db = FirebaseFirestore.getInstance();
     
      override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+         // set content view using view binding
          val viewBinding: DialogDeletionBinding = DialogDeletionBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -32,6 +34,7 @@ class DeleteBookReviewActivity : AppCompatActivity() {
          yes.setOnClickListener {
              var id: String = ""
 
+             // find the document id to delete
              db.collection("UserReviews").whereEqualTo("User", intent.getStringExtra(
                  EditBookReviewActivity.UNAME)).whereEqualTo("Book Title", intent.getStringExtra(
                  EditBookReviewActivity.BOOK_TITLE_KEY)).get()
@@ -41,7 +44,7 @@ class DeleteBookReviewActivity : AppCompatActivity() {
                              id = document.id
                              Log.w(TAG, "id: $id")
 
-                             //add delete from database here
+                             // delete document from database
                              db.collection("UserReviews").document(id).delete()
                                  .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
                                  .addOnFailureListener { Log.w(TAG, "Error deleting document") }
@@ -49,6 +52,7 @@ class DeleteBookReviewActivity : AppCompatActivity() {
                      }
                  }
 
+             // go back to MyLibraryActivity
              val intent: Intent = Intent(this, MyLibraryActivity::class.java);
              intent.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
              startActivity(intent)

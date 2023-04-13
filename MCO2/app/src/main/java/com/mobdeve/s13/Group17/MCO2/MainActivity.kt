@@ -34,19 +34,16 @@ class MainActivity : AppCompatActivity() {
         private const val TAG = "MainActivity"
         const val UNAME = "Username"
     }
-    // data
-    //private val bookList: ArrayList<Books> = DataHelper.initializeData()
+
+    // variables for RecyclerView and DrawerLayout
     private var bookList = ArrayList<Books>()
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-
-   // private val bookReviewList: ArrayList<BookReview> = DataHelper.initializesDatas()
-
-    // RecyclerView reference
     private lateinit var recyclerView: RecyclerView
     private lateinit var myAdapter: MyAdapter
 
 
+    // ActivityResultLauncher for getting book information
     private val bookInfoResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){result : ActivityResult->
         if(result.resultCode == RESULT_OK){
@@ -55,26 +52,31 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // Firestore database instance
     private lateinit var dbf : FirebaseFirestore
+    // boolean variable to keep track of user login status
     var isUserLoggedIn = getIsLoggedIn()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        // Get the username passed from the previous activity
         val username = this.intent.getStringExtra(UNAME).toString()
         Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(UNAME).toString()}")
 
+        // Set the view using view binding
         val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // Set up the spinner for sorting options
         val dropdown = findViewById<Spinner>(R.id.filter)
         val items = arrayOf("Filter", "A-Z", "Most Rated", "Least Rated")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
         dropdown.adapter = adapter
         dropdown.setSelection(0)
 
+        // Set up the listener for the spinner
         dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 when (position) {
@@ -89,25 +91,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Set up the RecyclerView and its adapter
         // Initialize the RecyclerView
         this.recyclerView = viewBinding.recyclerView
-
         bookList = arrayListOf()
-
         myAdapter= MyAdapter(bookList, bookList,bookInfoResultLauncher, username)
-
-            // Set the Adapter.
         this.recyclerView.adapter = myAdapter
-
-        // Set the LayoutManager.
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
-
+        // Set up the listener for Firestore database changes
         EventChangeListener()
 
 
 
-
+        // Set up the DrawerLayout and its listener
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -121,16 +118,20 @@ class MainActivity : AppCompatActivity() {
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Set up the NavigationView and its listener
         val navigationView = findViewById<NavigationView>(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // Handle menu item clicks here
             when (menuItem.itemId) {
+                // Go to the MainActivity
                 R.id.nav_home -> {
                     val home = Intent(this, MainActivity::class.java)
                     home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(home)
                     finishAffinity()
                 }
+
+                // Go to the MyLibraryActivity
                 R.id.nav_books-> {
                     // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
@@ -138,12 +139,16 @@ class MainActivity : AppCompatActivity() {
                     startActivity(lib)
                     finishAffinity()
                 }
+
+                // Go to the MyProfileActivity
                 R.id.nav_profile->{
                     val profile = Intent(this, MyProfileActivity::class.java)
                     profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(profile)
                     finishAffinity()
                 }
+
+                // Go to the Logout
                 R.id.nav_logout->{
                     isUserLoggedIn = false
                     val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -160,41 +165,44 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-
-
-
     }
 
+    // EventChangeListener function used to listen to changes in the Firestore collection "Books" and populate a RecyclerView accordingly
     private fun EventChangeListener() {
 
+        // Progress dialog to be shown while fetching data
         val progressDialog = ProgressDialog(this@MainActivity)
         progressDialog.setMessage("Fetching Data, please wait")
         progressDialog.show()
 
 
-
-        // recycler view getting from firebase firestore
+        // Get the Firestore instance and listen for changes in the "Books" collection
         dbf = FirebaseFirestore.getInstance()
         dbf.collection("Books").
         addSnapshotListener(object : EventListener<QuerySnapshot> {
             override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {
 
+                // If an error occurred, log it and return
                 if (error != null) {
                     Log.e("Firestore Error", error.message.toString())
                     return
                 }
 
+                // Iterate over each document change in the query snapshot
                 for (dc: DocumentChange in value?.documentChanges!!) {
+                    // If the document change type is "added", add the corresponding book to the book list
                     if (dc.type == DocumentChange.Type.ADDED) {
                         bookList.add(dc.document.toObject(Books::class.java))
                     }
                 }
+                // Dismiss the progress dialog and notify the adapter that the data set has changed
                 progressDialog.dismiss();
                 myAdapter.notifyDataSetChanged()
             }
         })
 
 
+        // Get the search EditText and listen for text changes to filter the RecyclerView items
         val searchEditText = findViewById<EditText>(R.id.search)
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -213,23 +221,26 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
+    // Function to sort the book list by rating in descending order
     private fun sortByRatingDescending(list: ArrayList<Books>) {
         list.sortByDescending { it.Rating }
         bookList = list
     }
 
+    // Function to sort the book list by rating in ascending order
     private fun sortByLeastRated(list: ArrayList<Books>) {
 
         list.sortBy { it.Rating }
         bookList = list
     }
 
+    // Function to sort the book list alphabetically by title
     private fun sortAlphabetically(list: ArrayList<Books>) {
         list.sortBy { it.Title }
         bookList = list
     }
 
+    // Function to filter the book list based on a search query and update the RecyclerView
     private fun search(query: String) {
         val filteredList = if (query.isEmpty()) {
             // If the query is empty, return the original list
@@ -245,13 +256,14 @@ class MainActivity : AppCompatActivity() {
         myAdapter.notifyDataSetChanged()
     }
 
-
+    // Function to handle the "options item selected" event
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
         } else super.onOptionsItemSelected(item)
     }
 
+    // Function to save the name of the previous activity to shared preferences when the activity is paused
     override fun onPause() {
         super.onPause()
         val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -259,8 +271,9 @@ class MainActivity : AppCompatActivity() {
         editor.putString("previous_activity", this.javaClass.name)
         editor.apply()
     }
+
+    // Function to handle the "back" button press by calling, so it wouldn't go back to th login page
     override fun onBackPressed() {
-        // Call finishAffinity instead of super.onBackPressed
         finishAffinity()
     }
 

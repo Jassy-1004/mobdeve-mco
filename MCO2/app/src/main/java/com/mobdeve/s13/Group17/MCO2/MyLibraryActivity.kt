@@ -30,17 +30,12 @@ class MyLibraryActivity : AppCompatActivity() {
     }
 
 
-    //data
+
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private var bookList = ArrayList<BookReview>()
 
-
-
-    //private val reviewList: ArrayList<BookReview> = DataHelper.initializedData()
-
     private lateinit var recyclerViewLibrary: RecyclerView
-
     private lateinit var myAdapter: MyAdapterReview
 
     private lateinit var dbf: FirebaseFirestore
@@ -54,7 +49,6 @@ class MyLibraryActivity : AppCompatActivity() {
 
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,14 +68,10 @@ class MyLibraryActivity : AppCompatActivity() {
 
 
         // Set adapter to RecyclerView
-        //recyclerViewLibrary.adapter =  MyAdapter(bookList, bookList, bookReviewResultLauncher, uname)
-
         myAdapter = MyAdapterReview(bookList, bookReviewResultLauncher, username.toString())
 
         // Set the Adapter.
         this.recyclerViewLibrary.adapter = myAdapter
-
-        //this.recyclerViewLibrary.adapter = adapter
 
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)
 

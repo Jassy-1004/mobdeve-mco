@@ -34,12 +34,15 @@ class EditBookReviewActivity : AppCompatActivity() {
         const val POSITION_KEY = "POSITION_KEY"
         const val UNAME="USERNAME"
     }
+
+    // variable to hold an instance of Firebase Firestore
     private lateinit var dbf : FirebaseFirestore
 
 
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
+        //inflate layout for this activity
         val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
@@ -54,7 +57,7 @@ class EditBookReviewActivity : AppCompatActivity() {
         Log.d(ContentValues.TAG, user)
 
 
-        // putting data to views
+        // set values to views
         viewBinding.booktitletv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_TITLE_KEY)
         viewBinding.authortv.text = intent.getStringExtra(EditBookReviewActivity.AUTHOR_KEY)
         viewBinding.descriptiontv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
@@ -62,8 +65,10 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
         viewBinding.commentEt.setText(intent.getStringExtra(REVIEW_KEY))
 
+        //initialize Firebase Firestore instance
         dbf = FirebaseFirestore.getInstance()
 
+        // retrieve book data from Firestore collection
         dbf.collection("Books")
             .get()
             .addOnCompleteListener { task ->
@@ -85,6 +90,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                 }
             }
 
+        // retrieve user review from Firestore collection
         dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
             .get()
             .addOnCompleteListener { task ->
@@ -110,13 +116,12 @@ class EditBookReviewActivity : AppCompatActivity() {
         viewBinding.savebtn.setOnClickListener() {
             if (viewBinding.commentEt.text.toString().isNotEmpty()) {
 
-                //val intent: Intent = Intent(this, MyLibraryActivity::class.java)
-
                 var id: String = ""
                 val comment = viewBinding.commentEt.text.toString()
                 val rating = viewBinding.myRatingBar.rating.toFloat()
 
-                //add database update here
+                //Update UserReviews information
+                //Used in the edit user review feature
                 dbf.collection("UserReviews").whereEqualTo("User", user)
                     .whereEqualTo("Book Title", title).get()
                     .addOnCompleteListener { task ->
@@ -139,6 +144,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                                 // Success
                                 null
                             }.addOnSuccessListener {
+                                // start BookReviewActivity and finish this activity
                                 val intent: Intent = Intent(this, BookReviewActivity::class.java)
 
                                 intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
@@ -162,6 +168,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                     }
             }
             else{
+                // show a Toast message to remind the user to enter a review
                 Toast.makeText(this,
                     "Please enter your review",
                     Toast.LENGTH_SHORT)
@@ -169,6 +176,7 @@ class EditBookReviewActivity : AppCompatActivity() {
             }
         }
 
+        // handle click events for the discard button
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
             val intent: Intent = Intent(this, BookReviewActivity::class.java)
 

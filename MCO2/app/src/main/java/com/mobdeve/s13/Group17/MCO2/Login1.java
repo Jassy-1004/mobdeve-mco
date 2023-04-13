@@ -23,13 +23,7 @@ import com.mobdeve.s13.Group17.MCO2.databinding.ActivityLoginBinding;
 
 public class Login1 extends AppCompatActivity {
 
-
-
     static final String UNAME = "Username";
-
-    /*void object {
-        final String UNAME = "Username";
-    }*/
     private Button login;
     private FirebaseFirestore db;
     private EditText uname, password;
@@ -51,20 +45,26 @@ public class Login1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-       viewBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        // Inflate the layout for this activity using ViewBinding
+        viewBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
         Intent intent1 = new Intent(this, Register.class);
 
+        // Get the shared preferences for the activity
         sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
 
-
+        // Initialize the UI elements
         login = viewBinding.loginbtn1;
         uname = viewBinding.loginunametext;
         password = viewBinding.loginpasswordtext;
+        signUpHere = viewBinding.signuphere;
+
+        //Initialize firebase firestore
         db = FirebaseFirestore.getInstance();
 
-        signUpHere = viewBinding.signuphere;
+        // Set click listeners for the login and sign-up buttons
+
 
         login.setOnClickListener(this::onClick);
         signUpHere.setOnClickListener(this::onClick);
@@ -74,11 +74,13 @@ public class Login1 extends AppCompatActivity {
     public void onClick(View view) {
 
             if (view.getId()==viewBinding.loginbtn1.getId()) {
+                // Check if the email and password fields are empty
                 if (uname.getText().toString().isEmpty()) {
                     Toast.makeText(Login1.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
                 } else if (password.getText().toString().isEmpty()) {
                     Toast.makeText(Login1.this, "Please enter valid password", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Get the user credentials from the Firestore database
                     db.collection("UserInfo")
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -86,6 +88,7 @@ public class Login1 extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     boolean isMatchFound = false;
                                     if (task.isSuccessful()) {
+                                        // Loop through the documents in the collection to find a matching email and password
                                         for (QueryDocumentSnapshot doc : task.getResult()) {
                                             String a = doc.getString("Username");
                                             String b = doc.getString("Password");
@@ -93,11 +96,16 @@ public class Login1 extends AppCompatActivity {
                                             String b1 = password.getText().toString();
                                             if (a.equalsIgnoreCase(a1) && b.equalsIgnoreCase(b1)) {
                                                 Toast.makeText(Login1.this, "Logged In Successful", Toast.LENGTH_SHORT).show();
+                                                // Navigate to the main activity and set the logged-in user's email
                                                 Intent home = new Intent(Login1.this, MainActivity.class);
                                                 home.putExtra(MainActivity.UNAME, uname.getText().toString());
                                                 startActivity(home);
+
+                                                // Set the user as logged in
                                                 isMatchFound = true;
                                                 isUserLoggedIn = true;
+
+                                                // Update the shared preferences with the user's email and logged-in status
                                                 sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                                 SharedPreferences.Editor editor = sharedPrefs.edit();
                                                 editor.putBoolean("isLoggedIn", true);
@@ -116,7 +124,7 @@ public class Login1 extends AppCompatActivity {
                 }
             }
                 else if(view.getId()==viewBinding.signuphere.getId()) {
-
+                // Navigate to the Register activity when the user clicks the sign-up button
                     Intent register_view = new Intent(Login1.this, Register.class);
                     startActivity(register_view);
                 }

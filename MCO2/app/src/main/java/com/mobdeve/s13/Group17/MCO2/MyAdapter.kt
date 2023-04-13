@@ -21,11 +21,10 @@ class MyAdapter(private val data: MutableList<Books>, private var filteredList: 
             val view: ItemLayoutBinding = ItemLayoutBinding.inflate(inflater, parent, false)
 
             // Return a new instance of our MyViewHolder passing the View object we created
-          //  val myViewHolder = MyViewHolder(view)
-
             return MyViewHolder(view)
         }
 
+        // This function is used to filter the list of books and update the view
         fun filterList(filteredList: List<Books>) {
         this.filteredList = filteredList
         notifyDataSetChanged()
@@ -35,11 +34,8 @@ class MyAdapter(private val data: MutableList<Books>, private var filteredList: 
 
             val book: Books = filteredList[position]
 
-
+            // Bind data to the ViewHolder
             holder.bindData(book)
-
-
-
 
             // clicking the itemView would start the activity for BookInfoActivity
             holder.itemView.setOnClickListener {
@@ -55,13 +51,14 @@ class MyAdapter(private val data: MutableList<Books>, private var filteredList: 
                 intent.putExtra(BookInfoActivity.IMG_KEY, book.BookImg)
                 intent.putExtra(BookInfoActivity.UNAME, uname)
 
+                // Launch the activity using the ActivityResultLauncher
                 myActivityResultLauncher.launch(intent)
             }
 
         }
 
         override fun getItemCount(): Int {
-            //return data.size
+            // Return the number of items in the filtered list
             return filteredList.size
         }
 }

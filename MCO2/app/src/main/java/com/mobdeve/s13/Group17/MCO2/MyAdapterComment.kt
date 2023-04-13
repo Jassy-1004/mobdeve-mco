@@ -25,6 +25,8 @@ class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String
     }
 
     override fun onBindViewHolder(holder: MyViewHolderComment, position: Int) {
+        // Log a message to indicate which comment is being bound to the view holder
+        // For checking purposes
         Log.d("TAG", "Binding comment at position $position")
         holder.bindData(data[position])
 
@@ -33,6 +35,8 @@ class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String
     override fun getItemCount(): Int {
         return data.size
     }
+
+    // Update the adapter's data
     fun updateData(newData: List<Comment>) {
 
             this.data.clear()

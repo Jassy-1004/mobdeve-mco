@@ -23,13 +23,18 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
 
 
     override fun onBindViewHolder(holder: MyViewHolderReview, position: Int) {
+        // Get the book review at the current position
         val bookReview = bookList[position]
 
+        // Bind the book review to the view holder
         holder.bindData(bookReview,uname)
 
         //clicking itemView would start activity for BookReviewActivity
         holder.itemView.setOnClickListener{
+            // Create an intent to start the BookReviewActivity
             val intent = Intent(holder.itemView.context, BookReviewActivity::class.java)
+
+            // Pass the book review data as extras to the intent
             intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, bookReview.Title)
             intent.putExtra(BookReviewActivity.AUTHOR_KEY, bookReview.Author)
             intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY,bookReview.Plot)
@@ -39,8 +44,7 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
             intent.putExtra(BookReviewActivity.POSITION_KEY, position)
             intent.putExtra(BookReviewActivity.UNAME, uname)
 
-
-
+            // Launch the BookReviewActivity using myActivityResultLauncher
             myActivityResultLauncher.launch(intent)
         }
     }
@@ -49,6 +53,7 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
         return bookList.size
     }
 
+    // Update the adapter data with new data
     fun updateData(newData: List<BookReview>) {
         bookList = newData
         notifyDataSetChanged()

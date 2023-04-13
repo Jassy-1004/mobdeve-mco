@@ -5,15 +5,9 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,11 +16,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityBookinfoBinding
-import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
-import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutCommentBinding
 import com.squareup.picasso.Picasso
 
 
@@ -34,7 +26,9 @@ class BookInfoActivity : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    var isUserLoggedIn = getIsLoggedIn()
 
+    // Define Key that will be used to access intent extras
     companion object{
         const val IMG_KEY="IMG_KEY"
         const val BOOK_TITLE_KEY = "BOOK_TITLE_KEY"
@@ -47,45 +41,48 @@ class BookInfoActivity : AppCompatActivity() {
         const val UNAME = "USERNAME"
     }
 
+    // Declare variables used in this Activity
     private lateinit var  commentList: ArrayList<Comment>
-
     private lateinit var recyclerViewComment: RecyclerView
-
     private lateinit var adapter: MyAdapterComment
-
     private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Inflate the layout using view binding
         val viewBinding: ActivityBookinfoBinding = ActivityBookinfoBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        //For checking purposes
         Log.w(TAG, this.intent.getStringExtra(UNAME).toString())
 
+        // Initialize an empty comment list
         commentList = arrayListOf()
 
-        // set up recycler view
+        // Set up recycler view and its adapter
         this.recyclerViewComment = viewBinding.recyclerView2
         this.adapter = MyAdapterComment(commentList, BOOK_TITLE_KEY)
         this.recyclerViewComment.adapter = adapter
         this.recyclerViewComment.layoutManager = LinearLayoutManager(this)
 
-        db = FirebaseFirestore.getInstance();
+        // Initialize a Firebase Firestore instance
+        db = FirebaseFirestore.getInstance()
 
 
-        // putting intent to variable
-
-        val emptyView = viewBinding.empty
+        // Extract intent extras and populate the corresponding views
         val title = intent.getStringExtra(BOOK_TITLE_KEY)
         val author = intent.getStringExtra(AUTHOR_KEY)
         val description = intent.getStringExtra(DESCRIPTION_KEY)
         val image = intent.getStringExtra(IMG_KEY)
         val date = intent.getStringExtra(PUBLICATION_DATE_KEY)
         val isbn = intent.getStringExtra(ISBN_KEY)
+
+        // Load the book cover image using Picasso library
         if (image == null || image.isEmpty()) { Log.e("Picasso", "Image URL is empty or null!") }
         else { Picasso.get().load(image).into(viewBinding.bookimg) }
 
+        // Populate the rest of the views with intent extras
         viewBinding.booktitletv.text = title
         viewBinding.authortv.text = author
         viewBinding.publishdatetv.text = date
@@ -93,25 +90,26 @@ class BookInfoActivity : AppCompatActivity() {
         viewBinding.descriptiontv.text = description
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
 
-        db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance()
 
         // Set up the SnapshotListener to listen for changes to the UserReviews collection
         val collectionRef = db.collection("UserReviews")
         val query = collectionRef.whereEqualTo("Book Title", viewBinding.booktitletv.text)
 
-        val listener = query.addSnapshotListener { snapshot, e ->
+           val listener= query.addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w(TAG, "Listen failed.", e)
                 return@addSnapshotListener
             }
 
             if (snapshot != null && !snapshot.isEmpty) {
+                // Map the query results to Comment objects
                 val comments = snapshot.documents.map { document ->
                     val username = document.getString("User")
                     val comment = document.getString("Review")
                     Comment(username.toString(), comment.toString())
                 }
-
+                // Show or hide the empty view depending on the comments list
                 if (comments.isEmpty()) {
                     viewBinding.empty.visibility = View.VISIBLE
                 } else {
@@ -120,11 +118,13 @@ class BookInfoActivity : AppCompatActivity() {
 
                 adapter.updateData(comments)
             } else {
+                //For Checking purposes
                 Log.d(TAG, "No comments")
             }
         }
 
 
+        // Firebase Firestore code to get book data from "Books" collection
         db.collection("Books")
             .get()
             .addOnCompleteListener { task ->
@@ -132,17 +132,20 @@ class BookInfoActivity : AppCompatActivity() {
                     for (document in task.result) {
                         val bookTitle = document.data["Title"] as String
                         if (bookTitle == title) {
+                            // Set book information to corresponding UI elements
                             viewBinding.booktitletv.text = bookTitle
                             viewBinding.authortv.text = document.data["Author"] as CharSequence?
                             viewBinding.publishdatetv.text =
                                 document.data["Date Published"] as CharSequence?
                             viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                             viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                            // Load book image with Picasso
                             val imageUri = Uri.parse(document.data["Book Img"] as String?)
                             Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
-                                .into(viewBinding.bookimg);
+                                .into(viewBinding.bookimg)
 
-
+                            // Log book data for debugging
+                            //For checking purposes
                             Log.e("TAG", imageUri.toString())
                             Log.e("TAG", "${document.data["Rating"]}")
                             break
@@ -155,10 +158,7 @@ class BookInfoActivity : AppCompatActivity() {
             }
 
 
-        var id :String? = null
-        var comment : Boolean = true
-
-        // pressing add button will start activity to AddBookReview
+        // When add button is pressed, launch AddBookReview activity if user hasn't reviewed the book yet
         viewBinding.addbtnFab.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
             val title = viewBinding.booktitletv.text.toString()
@@ -188,44 +188,52 @@ class BookInfoActivity : AppCompatActivity() {
                 }
         }
 
-
+        // Set up navigation drawer
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
 
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
+        // pass the Open and Close toggle for the drawer layout listener to toggle the button
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
         // to make the Navigation drawer icon always appear on the action bar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Set up navigation drawer item clicks
         val navigationView = findViewById<NavigationView>(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             // Handle menu item clicks here
             when (menuItem.itemId) {
+                // Go to MainActivity
                 R.id.nav_home -> {
                     val home = Intent(this, MainActivity::class.java)
                     home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(home)
                     finishAffinity()
                 }
+                // Go to MyLibraryActivity
                 R.id.nav_books-> {
-                    // Do something for menu item 2
                     val lib = Intent(this, MyLibraryActivity::class.java)
                     lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(lib)
                     finishAffinity()
                 }
+                // Go to MyProfileActivity
                 R.id.nav_profile->{
                     val profile = Intent(this, MyProfileActivity::class.java)
                     profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
                     startActivity(profile)
                     finishAffinity()
                 }
+                // Go to StartPage
                 R.id.nav_logout->{
+                    isUserLoggedIn = false
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.clear();
+                    editor.apply();
                     startActivity(Intent(this, StartPage::class.java))
                     finishAffinity()
                 }
@@ -236,9 +244,7 @@ class BookInfoActivity : AppCompatActivity() {
         }
     }
 
-
-
-
+    // This function is called when a menu item in the action bar is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
