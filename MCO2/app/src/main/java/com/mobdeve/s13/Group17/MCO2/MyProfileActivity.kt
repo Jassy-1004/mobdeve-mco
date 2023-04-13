@@ -1,5 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -53,7 +54,16 @@ class MyProfileActivity : AppCompatActivity() {
 
         Log.d(TAG, "DocumentSnapshot data: ${username}")
 
+<<<<<<< Updated upstream
         // Query the database to retrieve the user's profile information
+=======
+
+        // process dialog while fetching the users data from db
+        val progressDialog = ProgressDialog(this@MyProfileActivity)
+        progressDialog.setMessage("Loading....., Please Wait")
+        progressDialog.show()
+
+>>>>>>> Stashed changes
         db.collection("UserInfo").whereEqualTo("Username", username)
             .get()
             .addOnCompleteListener { task ->
@@ -64,6 +74,8 @@ class MyProfileActivity : AppCompatActivity() {
                         viewBinding.profileUsername.text = document.data["Username"] as CharSequence?
                         viewBinding.profileBio.text = document.data["Bio"] as CharSequence?
                         Log.d(TAG, document.id + " => " + document.data)
+                        // Dismiss the progress dialog and notify the adapter that the data set has changed
+                        progressDialog.dismiss();
                     }
                 } else {
                     Log.w(ContentValues.TAG, "Error getting documents.", task.exception)

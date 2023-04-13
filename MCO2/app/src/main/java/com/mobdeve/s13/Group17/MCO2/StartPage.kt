@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityStartpageBinding
 
 class StartPage : AppCompatActivity() {
+
+    // declare the variables
     private lateinit var homeRegBtn: Button
     private lateinit var loginbtn:Button
     companion object {
@@ -45,7 +47,7 @@ class StartPage : AppCompatActivity() {
             setContentView(viewBinding.root)
 
 
-            // clicking the register button would start the Register1 activity
+            // clicking the register button would start the Register activity
             homeRegBtn = viewBinding.registerbtn
             homeRegBtn.setOnClickListener {
                 val intent: Intent = Intent(this, Register::class.java);

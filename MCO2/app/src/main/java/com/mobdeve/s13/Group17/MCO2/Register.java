@@ -26,11 +26,15 @@ import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
+<<<<<<< Updated upstream
     // Initialize views
+=======
+    // declares variables
+>>>>>>> Stashed changes
     private EditText  Email, Password, Username, Bio, ConPassword, FirstName,LastName;
     private Button  Reg1Btn;
     FirebaseFirestore firebaseFirestore;
-    DocumentReference ref;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,11 @@ public class Register extends AppCompatActivity {
         ActivityRegister1Binding viewBinding = ActivityRegister1Binding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
+<<<<<<< Updated upstream
         // Assign view variables
+=======
+        // assign the views from layout file to declared variables
+>>>>>>> Stashed changes
         FirstName=viewBinding.firstnametext;
         LastName=viewBinding.lastnametext;
         Email=viewBinding.emailtext;
@@ -52,13 +60,19 @@ public class Register extends AppCompatActivity {
         // Initialize Firebase Firestore instance
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+<<<<<<< Updated upstream
         // Create intent for login activity
+=======
+
+        // direct to Login page once done
+>>>>>>> Stashed changes
         Intent intent = new Intent(this, Login1.class);
 
         // Set click listener for registration button
         Reg1Btn = viewBinding.nextpage4;
         Reg1Btn.setOnClickListener(new View.OnClickListener() {
             @Override
+            // makes sure that all fields are with data
             public void onClick(View view) {
                 // Check if required fields are empty
                 if (Username.getText().toString().isEmpty()) {
@@ -78,7 +92,11 @@ public class Register extends AppCompatActivity {
                 else if (!Password.getText().toString().equals(ConPassword.getText().toString())) {
                     Toast.makeText(Register.this, "Password and confirm password does not match", Toast.LENGTH_SHORT).show();
                 }
+<<<<<<< Updated upstream
                 // Check if password has at least 8 characters
+=======
+                // passwords are required to have at least 8 characters
+>>>>>>> Stashed changes
                 else if (Password.getText().toString().length() < 8) {
                     Toast.makeText(Register.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
                 }
@@ -98,6 +116,7 @@ public class Register extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
                                         if (!task.getResult().isEmpty()) {
+                                            // if username already exists
                                             Toast.makeText(Register.this, "Sorry, this username already exists", Toast.LENGTH_SHORT).show();
                                         } else {
                                             // Check if email already exists
