@@ -84,7 +84,7 @@ class AddBookReview : AppCompatActivity() {
         //Save button
         viewBinding.savebtn.setOnClickListener(){
             if (Review.text.toString().isEmpty()) {
-                Toast.makeText(this@AddBookReview, "Please write something", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddBookReview, "Please write your comment", Toast.LENGTH_SHORT).show()
             }
             else if(Rating.rating.toFloat().equals(0F)){
                 Toast.makeText(this@AddBookReview, "Please rate the book", Toast.LENGTH_SHORT).show()

@@ -48,6 +48,7 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
     override fun getItemCount(): Int {
         return bookList.size
     }
+
     fun updateData(newData: List<BookReview>) {
         bookList = newData
         notifyDataSetChanged()

@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
+import androidx.core.view.isGone
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -128,9 +129,11 @@ class MyLibraryActivity : AppCompatActivity() {
                         }
                 } else {
                     if (myAdapter.itemCount == 0) {
+                        !viewBinding.empty.isGone
                         recyclerViewLibrary.visibility = View.GONE
                         emptyView.visibility = View.VISIBLE
                     } else {
+                        viewBinding.empty.isGone
                         recyclerViewLibrary.visibility = View.VISIBLE
                         emptyView.visibility = View.GONE
                     }

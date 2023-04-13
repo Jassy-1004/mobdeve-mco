@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -106,47 +107,66 @@ class EditBookReviewActivity : AppCompatActivity() {
             }
 
 
-        viewBinding.savebtn.setOnClickListener(){
-            val intent: Intent = Intent(this, BookReviewActivity::class.java)
+        viewBinding.savebtn.setOnClickListener() {
+            if (viewBinding.commentEt.text.toString().isNotEmpty()) {
 
-            var id: String = ""
-            val comment = viewBinding.commentEt.text.toString()
-            val rating = viewBinding.myRatingBar.rating.toFloat()
+                //val intent: Intent = Intent(this, MyLibraryActivity::class.java)
 
-            //add database update here
-            dbf.collection("UserReviews").whereEqualTo("User", user)
-                .whereEqualTo("Book Title", title).get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        for (document in task.result) {
-                            id = document.id
-                            Log.w(ContentValues.TAG, "id: $id")
-                        }
+                var id: String = ""
+                val comment = viewBinding.commentEt.text.toString()
+                val rating = viewBinding.myRatingBar.rating.toFloat()
 
-                        dbf.runTransaction { transaction ->
-                            val snapshot = transaction.get(dbf.collection("UserReviews").document(id))
-                            transaction.update(dbf.collection("UserReviews").document(id), "Rating", rating,"Review", comment)
-                            // Success
-                            null
-                        }.addOnSuccessListener {
-                            Log.d(ContentValues.TAG, "Transaction success!")
-                            finish()
+                //add database update here
+                dbf.collection("UserReviews").whereEqualTo("User", user)
+                    .whereEqualTo("Book Title", title).get()
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            for (document in task.result) {
+                                id = document.id
+                                Log.w(ContentValues.TAG, "id: $id")
+                            }
+
+                            dbf.runTransaction { transaction ->
+                                val snapshot =
+                                    transaction.get(dbf.collection("UserReviews").document(id))
+                                transaction.update(
+                                    dbf.collection("UserReviews").document(id),
+                                    "Rating",
+                                    rating,
+                                    "Review",
+                                    comment
+                                )
+                                // Success
+                                null
+                            }.addOnSuccessListener {
+                                val intent: Intent = Intent(this, BookReviewActivity::class.java)
+
+                                intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
+                                intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY, description)
+                                intent.putExtra(BookReviewActivity.RATING_KEY, rating)
+                                intent.putExtra(BookReviewActivity.REVIEW_KEY, review)
+                                intent.putExtra(BookReviewActivity.IMAGE_KEY, image)
+                                intent.putExtra(BookReviewActivity.AUTHOR_KEY, author)
+                                intent.putExtra(
+                                    BookReviewActivity.UNAME,
+                                    this.intent.getStringExtra(UNAME).toString()
+                                )
+                                startActivity(intent)
+
+                                Log.d(ContentValues.TAG, "Transaction success!")
+                                finish()
+                            }
+                        } else {
+                            Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
                         }
                     }
-                    else {
-                        Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
-                    }
-                }
-
-            intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
-            intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY, description)
-            intent.putExtra(BookReviewActivity.RATING_KEY, rating)
-            intent.putExtra(BookReviewActivity.REVIEW_KEY, review)
-            intent.putExtra(BookReviewActivity.IMAGE_KEY, image)
-            intent.putExtra(BookReviewActivity.AUTHOR_KEY, author)
-            intent.putExtra(BookReviewActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
-            startActivity(intent)
-            finish()
+            }
+            else{
+                Toast.makeText(this,
+                    "Please enter your review",
+                    Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
