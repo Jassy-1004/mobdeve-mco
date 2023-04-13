@@ -105,7 +105,9 @@ class AddBookReview : AppCompatActivity() {
                         .show()
                 } else {
                     // Add the review to the "UserReviews" collection in Firestore
-                    val username = this.intent.getStringExtra(UNAME).toString()
+                    // Retrieve the user's username from SharedPreferences
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val username = sharedPrefs.getString("username", "")
                     Log.w(TAG, "$username")
                     // Get current date to be used in Date Posted
                     val currentTimestamp = com.google.firebase.Timestamp.now()
@@ -115,7 +117,7 @@ class AddBookReview : AppCompatActivity() {
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 val reg_entry: MutableMap<String, Any> = HashMap()
-                                reg_entry["User"] = username
+                                reg_entry["User"] = username.toString()
                                 reg_entry["Review"] = Review.text.toString()
                                 reg_entry["Rating"] = Rating.rating.toFloat()
                                 reg_entry["Book Title"] = viewBinding.booktitletv.text.toString()
