@@ -1,5 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,8 @@ import com.squareup.picasso.Picasso
 
 class MyLibraryActivity : AppCompatActivity() {
 
+
+    // define the uname and comment that will be used to access intents
     companion object {
         private const val TAG = "MyLibraryActivity"
         const val UNAME = "Username"
@@ -30,7 +33,7 @@ class MyLibraryActivity : AppCompatActivity() {
     }
 
 
-
+    // declares the variables that are used in the my library activity
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private var bookList = ArrayList<BookReview>()
@@ -55,12 +58,12 @@ class MyLibraryActivity : AppCompatActivity() {
         val viewBinding: ActivityMylibraryBinding = ActivityMylibraryBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        // retrieve value from a SharedPref
         val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val username = sharedPrefs.getString("username", "")
 
+        // for checker
         Log.d(TAG, "DocumentSnapshot data: ${username}")
-
-        val emptyView = viewBinding.empty
 
 
         // setup recycler view
@@ -75,8 +78,9 @@ class MyLibraryActivity : AppCompatActivity() {
 
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)
 
-
+        // initialize dbf
         dbf= FirebaseFirestore.getInstance()
+
 
         dbf.collection("UserReviews")
             .whereEqualTo("User", username)
@@ -86,9 +90,10 @@ class MyLibraryActivity : AppCompatActivity() {
                     return@addSnapshotListener
                 }
 
+                // set of mutable list of string to be modified later depending on the review of the user
                 val bookTitles = mutableListOf<String>()
 
-                // Extract the book titles from the reviews
+                // extract the book titles from the reviews and add it into bookTitles (mutable list of string)
                 for (review in reviews!!) {
                     val bookTitle = review.getString("Book Title")
                     if (bookTitle != null) {
@@ -96,18 +101,27 @@ class MyLibraryActivity : AppCompatActivity() {
                     }
                 }
 
-                if (bookTitles.isNotEmpty()) {
-                    // Query the Books collection using the book titles
+                // progress dialog is shown when fetching data from db and checking if user has reviews
+                val progressDialog = ProgressDialog(this@MyLibraryActivity)
+                progressDialog.setMessage("Loading....., Please Wait")
+                progressDialog.show()
+
+                if (bookTitles.isNotEmpty()) {  // if users have a review
+
+                    // query the Books collection using the book titles
                     dbf.collection("Books")
                         .whereIn("Title", bookTitles)
                         .get()
                         .addOnSuccessListener { books ->
-                            // Display the book information
+                            // display the book information
                             val bookList = mutableListOf<BookReview>()
                             for (book in books) {
+
+                                // for checking
                                 Log.d("Book", "Title: ${book.getString("Title")}")
                                 Log.d("Book", "Author: ${book.getString("Author")}")
 
+                                // display the book title , book review, and image of the book
                                 val title = book.getString("Title")
                                 val comment = ""
                                 val imageUri = Uri.parse(book.getString("Book Img"))
@@ -116,15 +130,18 @@ class MyLibraryActivity : AppCompatActivity() {
                                 if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
+
+                                // hide the view and show no reviews view if user has no reviews
                                 viewBinding.empty.visibility = View.GONE
                             }
+                            // Dismiss the progress dialog
+                            progressDialog.dismiss();
+
                             myAdapter.updateData(bookList)
                         }
                         .addOnFailureListener { exception ->
                             Log.e("Firestore", "Error getting books: ", exception)
                         }
-                } else {
-                    myAdapter.updateData(emptyList())
                 }
             }
 
@@ -182,6 +199,7 @@ class MyLibraryActivity : AppCompatActivity() {
 
     }
 
+    // save the name of previous activity in a SharedPref file when current activity is paused
     override fun onPause() {
         super.onPause()
         val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -190,6 +208,8 @@ class MyLibraryActivity : AppCompatActivity() {
         editor.apply()
     }
 
+
+    // function is called when action bar inside menu item is clicked
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             true
