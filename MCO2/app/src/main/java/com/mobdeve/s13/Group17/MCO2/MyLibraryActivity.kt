@@ -128,6 +128,8 @@ class MyLibraryActivity : AppCompatActivity() {
                                 if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
+                                // hide the view and show no reviews view if user has no reviews
+                                viewBinding.empty.visibility = View.GONE
                             }
 
                             // If this is the last batch, update the UI
