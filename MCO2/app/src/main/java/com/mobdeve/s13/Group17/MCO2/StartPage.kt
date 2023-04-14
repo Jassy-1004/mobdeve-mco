@@ -26,6 +26,7 @@ class StartPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // User is logged in, shows the screen based on the users last activity
         val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         isLoggedIn = sharedPrefs.getBoolean("isLoggedIn", false)
         val previousActivity = sharedPrefs.getString("previous_activity", null)
