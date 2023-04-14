@@ -139,6 +139,9 @@ class BookInfoActivity : AppCompatActivity() {
                                 document.data["Date Published"] as CharSequence?
                             viewBinding.ISBNtv.text = document.data["ISBN"] as CharSequence?
                             viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
+                            viewBinding.myRatingBar.rating = (document.data["Rating"] as Double).toFloat()
+
+
                             // Load book image with Picasso
                             val imageUri = Uri.parse(document.data["Book Img"] as String?)
                             Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)

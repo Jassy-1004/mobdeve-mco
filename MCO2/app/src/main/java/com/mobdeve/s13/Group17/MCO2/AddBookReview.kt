@@ -141,7 +141,42 @@ class AddBookReview : AppCompatActivity() {
                             }
 
                         }
-            }
+
+                    firebaseFirestore.collection("Books")
+                        .get()
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                for (document in task.result) {
+                                    val bookTitle = document.data["Title"] as String
+                                    // Check if the book title matches the title in the view
+                                    if (bookTitle == viewBinding.booktitletv.text) {
+                                        // Retrieve the current rating and number of ratings for the book
+                                        val currentRating = document.data["Rating"] as? Double ?: 0.0
+
+                                        // Calculate the new rating and number of ratings based on the user's rating
+                                        val userRating = Rating.rating.toFloat()
+                                        val newRating = (currentRating + userRating) / 2
+
+
+
+                                        // Update the "Books" collection in Firestore with the new rating and number of ratings
+                                        firebaseFirestore.collection("Books").document(document.id)
+                                            .update("Rating", newRating)
+                                            .addOnSuccessListener {
+                                                Log.d(TAG, "Book rating updated successfully")
+                                            }
+                                            .addOnFailureListener { e ->
+                                                Log.w(TAG, "Error updating book rating", e)
+                                            }
+                                        break
+                                    }
+                                }
+                            } else {
+                                Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                            }
+                        }
+
+                }
 
 
             //Discard button will exit the add book review activity
