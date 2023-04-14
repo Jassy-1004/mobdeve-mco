@@ -81,6 +81,11 @@ class MyLibraryActivity : AppCompatActivity() {
         // initialize dbf
         dbf= FirebaseFirestore.getInstance()
 
+        // progress dialog is shown when fetching data from db and checking if user has reviews
+        val progressDialog = ProgressDialog(this@MyLibraryActivity)
+        progressDialog.setMessage("Loading..... Please Wait")
+        progressDialog.show()
+
 
         dbf.collection("UserReviews")
             .whereEqualTo("User", username)
@@ -101,13 +106,7 @@ class MyLibraryActivity : AppCompatActivity() {
                     }
                 }
 
-                // progress dialog is shown when fetching data from db and checking if user has reviews
-                val progressDialog = ProgressDialog(this@MyLibraryActivity)
-                progressDialog.setMessage("Loading....., Please Wait")
-                //progressDialog.show()
-
                 if (bookTitles.isNotEmpty()) {  // if users have a review
-
                     // query the Books collection using the book titles
                     dbf.collection("Books")
                         .whereIn("Title", bookTitles)
@@ -134,6 +133,7 @@ class MyLibraryActivity : AppCompatActivity() {
                                 // hide the view and show no reviews view if user has no reviews
                                 viewBinding.empty.visibility = View.GONE
                             }
+
                             // Dismiss the progress dialog
                             progressDialog.dismiss();
 

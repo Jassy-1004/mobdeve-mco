@@ -157,7 +157,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                                     BookReviewActivity.UNAME,
                                     this.intent.getStringExtra(UNAME).toString()
                                 )
-                                startActivity(intent)
+                               startActivity(intent)
 
                                 Log.d(ContentValues.TAG, "Transaction success!")
                                 finish()

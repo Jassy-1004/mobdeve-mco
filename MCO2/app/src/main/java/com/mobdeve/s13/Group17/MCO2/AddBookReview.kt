@@ -91,7 +91,6 @@ class AddBookReview : AppCompatActivity() {
 
         // Set an OnClickListener on the "Save" button to add the review to the "UserReviews" collection in Firestore
         viewBinding.savebtn.setOnClickListener() {
-            viewBinding.savebtn.setOnClickListener() {
                 // Display a toast message if the comment is empty
                 if (Review.text.toString().isEmpty()) {
                     Toast.makeText(
@@ -142,8 +141,6 @@ class AddBookReview : AppCompatActivity() {
                             }
 
                         }
-
-                }
             }
 
 
