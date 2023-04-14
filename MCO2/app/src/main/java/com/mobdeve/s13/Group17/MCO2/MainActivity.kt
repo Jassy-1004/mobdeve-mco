@@ -99,9 +99,6 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView.adapter = myAdapter
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set up the listener for Firestore database changes
-        EventChangeListener()
-
 
 
         // Set up the DrawerLayout and its listener
@@ -200,6 +197,9 @@ class MainActivity : AppCompatActivity() {
                 // Handle nothing selected event
             }
         }
+
+        // Set up the listener for Firestore database changes
+        EventChangeListener()
 
         // Set up the RecyclerView and its adapter
         // Initialize the RecyclerView
