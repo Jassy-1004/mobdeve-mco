@@ -161,6 +161,9 @@ class BookInfoActivity : AppCompatActivity() {
             }
 
 
+        // Retrieve the user's username from SharedPreferences
+        val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val username = sharedPrefs.getString("username", "")
         // When add button is pressed, launch AddBookReview activity if user hasn't reviewed the book yet
         viewBinding.addbtnFab.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
@@ -170,7 +173,7 @@ class BookInfoActivity : AppCompatActivity() {
             // Check if the user has already left a review for this book
             db.collection("UserReviews")
                 .whereEqualTo("Book Title", title)
-                .whereEqualTo("User", user)
+                .whereEqualTo("User", username)
                 .get()
                 .addOnSuccessListener { documents ->
                     if (!documents.isEmpty) {
@@ -182,7 +185,7 @@ class BookInfoActivity : AppCompatActivity() {
                         intent.putExtra(AddBookReview.AUTHOR_KEY, author)
                         intent.putExtra(AddBookReview.DESCRIPTION_KEY, description)
                         intent.putExtra(AddBookReview.IMG_KEY, image)
-                        intent.putExtra(AddBookReview.UNAME, user)
+                        intent.putExtra(AddBookReview.UNAME, username)
                         startActivity(intent)
                         finish()
                     }

@@ -79,7 +79,7 @@ class MyLibraryActivity : AppCompatActivity() {
         this.recyclerViewLibrary.layoutManager = LinearLayoutManager(this)
 
         // initialize dbf
-        dbf= FirebaseFirestore.getInstance()
+        dbf = FirebaseFirestore.getInstance()
 
         // progress dialog is shown when fetching data from db and checking if user has reviews
         val progressDialog = ProgressDialog(this@MyLibraryActivity)
@@ -106,21 +106,20 @@ class MyLibraryActivity : AppCompatActivity() {
                     }
                 }
 
-                if (bookTitles.isNotEmpty()) {  // if users have a review
-                    // query the Books collection using the book titles
+                // Split the book titles into batches of 10
+                val batches = bookTitles.chunked(10)
+
+                // Create a list to hold the results
+                val bookList = mutableListOf<BookReview>()
+
+                // For each batch, query the Books collection using the book titles
+                for (batch in batches) {
                     dbf.collection("Books")
-                        .whereIn("Title", bookTitles)
+                        .whereIn("Title", batch)
                         .get()
                         .addOnSuccessListener { books ->
-                            // display the book information
-                            val bookList = mutableListOf<BookReview>()
+                            // Add the book information to the results list
                             for (book in books) {
-
-                                // for checking
-                                Log.d("Book", "Title: ${book.getString("Title")}")
-                                Log.d("Book", "Author: ${book.getString("Author")}")
-
-                                // display the book title , book review, and image of the book
                                 val title = book.getString("Title")
                                 val comment = ""
                                 val imageUri = Uri.parse(book.getString("Book Img"))
@@ -129,23 +128,23 @@ class MyLibraryActivity : AppCompatActivity() {
                                 if (title != null && imageUri != null) {
                                     bookList.add(BookReview(title, comment, imageUri))
                                 }
-
-                                // hide the view and show no reviews view if user has no reviews
-                                viewBinding.empty.visibility = View.GONE
                             }
 
-                            // Dismiss the progress dialog
-                            progressDialog.dismiss();
-
-                            myAdapter.updateData(bookList)
+                            // If this is the last batch, update the UI
+                            if (batch == batches.last()) {
+                                progressDialog.dismiss()
+                                myAdapter.updateData(bookList)
+                            }
                         }
                         .addOnFailureListener { exception ->
                             Log.e("Firestore", "Error getting books: ", exception)
                         }
                 }
             }
+    
 
-        // drawer layout instance to toggle the menu icon to open
+
+                // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         actionBarDrawerToggle =
