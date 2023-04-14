@@ -2,7 +2,6 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.app.ProgressDialog
 import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,10 +13,16 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mobdeve.s13.Group17.MCO2.Login1.getUserName
 import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityProfileBinding
 
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 class MyProfileActivity : AppCompatActivity() {
 

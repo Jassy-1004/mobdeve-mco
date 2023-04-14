@@ -12,7 +12,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
-import androidx.core.view.isGone
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,8 +21,15 @@ import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMylibraryBinding
 import com.squareup.picasso.Picasso
 
-class MyLibraryActivity : AppCompatActivity() {
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
+class MyLibraryActivity : AppCompatActivity() {
 
     // define the uname and comment that will be used to access intents
     companion object {

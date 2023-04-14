@@ -7,6 +7,14 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityStartpageBinding
 
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
+
 class StartPage : AppCompatActivity() {
 
     // declare the variables

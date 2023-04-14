@@ -3,12 +3,18 @@ package com.mobdeve.s13.Group17.MCO2
 import android.content.ContentValues
 import android.net.Uri
 import android.util.Log
-import android.widget.RatingBar
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.squareup.picasso.Picasso
+
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 
 class MyViewHolder(private val viewBinding: ItemLayoutBinding): RecyclerView.ViewHolder(viewBinding.root) {

@@ -5,9 +5,16 @@ import android.net.Uri
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
 import com.squareup.picasso.Picasso
+
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 class MyViewHolderReview (private val viewBinding: ItemLayoutMylibraryBinding): RecyclerView.ViewHolder(viewBinding.root){
     // method which accepts a character object and set views' info accordingly

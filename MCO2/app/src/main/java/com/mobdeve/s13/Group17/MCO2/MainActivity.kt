@@ -28,6 +28,13 @@ import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMainBinding
 import java.util.*
 
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 class MainActivity : AppCompatActivity() {
     companion object {

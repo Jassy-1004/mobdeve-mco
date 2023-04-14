@@ -19,6 +19,14 @@ import com.mobdeve.s13.Group17.MCO2.StartPage.Companion.getIsLoggedIn
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 import com.squareup.picasso.Picasso
 
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
+
 class BookReviewActivity: AppCompatActivity() {
 
     //Declare variables to be used in this activity

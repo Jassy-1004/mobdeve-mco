@@ -1,25 +1,27 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.app.Activity
+
 import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
-import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
 import com.squareup.picasso.Picasso
-import java.util.function.BinaryOperator
 
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 class EditBookReviewActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var actionBarDrawerToggle: ActionBarDrawerToggle

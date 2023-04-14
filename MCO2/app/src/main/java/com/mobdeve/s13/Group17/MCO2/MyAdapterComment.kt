@@ -1,13 +1,20 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.content.ContentValues.TAG
-import android.content.Intent
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutCommentBinding
-import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
+
+
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 class MyAdapterComment (private val data: ArrayList<Comment>, val title:  String): RecyclerView.Adapter<MyViewHolderComment>() {
 

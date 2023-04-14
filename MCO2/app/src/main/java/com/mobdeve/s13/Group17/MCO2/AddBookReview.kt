@@ -1,6 +1,6 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.app.Activity
+
 import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.EditText
 import android.widget.RatingBar
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -22,7 +21,13 @@ import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
-
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 class AddBookReview : AppCompatActivity() {
 
     lateinit var drawerLayout: DrawerLayout

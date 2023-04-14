@@ -1,12 +1,19 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutMylibraryBinding
+
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 
 class MyAdapterReview(private var bookList: List<BookReview>, private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolderReview>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderReview {

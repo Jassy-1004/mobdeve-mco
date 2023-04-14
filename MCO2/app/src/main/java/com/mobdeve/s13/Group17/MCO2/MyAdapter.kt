@@ -1,17 +1,20 @@
 package com.mobdeve.s13.Group17.MCO2
 
-import android.content.ContentValues
+
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ItemLayoutBinding
-import com.squareup.picasso.Picasso
 
-
+/*
+MCO4
+GROUP 17
+CHUA, JASMIN
+SHI, KAYE
+TAN, HAILY
+*/
 class MyAdapter(private val data: MutableList<Books>, private var filteredList: List<Books> , private val myActivityResultLauncher: ActivityResultLauncher<Intent>, val uname: String): RecyclerView.Adapter<MyViewHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
             // Create a LayoutInflater using the parent's context
