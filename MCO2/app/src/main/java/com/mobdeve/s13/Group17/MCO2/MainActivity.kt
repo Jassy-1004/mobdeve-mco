@@ -209,10 +209,6 @@ class MainActivity : AppCompatActivity() {
         this.recyclerView.adapter = myAdapter
         this.recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Set up the listener for Firestore database changes
-        EventChangeListener()
-
-
 
         // Set up the DrawerLayout and its listener
         // drawer layout instance to toggle the menu icon to open
