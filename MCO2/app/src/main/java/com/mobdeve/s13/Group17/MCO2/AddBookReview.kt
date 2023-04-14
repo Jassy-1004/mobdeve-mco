@@ -177,16 +177,20 @@ class AddBookReview : AppCompatActivity() {
                         }
 
                 }
-
-
-            //Discard button will exit the add book review activity
-            viewBinding.discardbtn.setOnClickListener(View.OnClickListener {
-                finish()
-            })
-
-
         }
-
-
+        //Discard button will exit the add book review activity
+        viewBinding.discardbtn.setOnClickListener(View.OnClickListener {
+            Log.w(ContentValues.TAG, "I AM HERE")
+            val intent = Intent(this, BookInfoActivity::class.java)
+            intent.putExtra(BookInfoActivity.UNAME, this.intent.getStringExtra(UNAME))
+            intent.putExtra(BookInfoActivity.PUBLICATION_DATE_KEY, this.intent.getStringExtra(BookInfoActivity.PUBLICATION_DATE_KEY))
+            intent.putExtra(BookInfoActivity.BOOK_TITLE_KEY, this.intent.getStringExtra(BookInfoActivity.BOOK_TITLE_KEY))
+            intent.putExtra(BookInfoActivity.ISBN_KEY, this.intent.getStringExtra(BookInfoActivity.ISBN_KEY))
+            intent.putExtra(BookInfoActivity.IMG_KEY, this.intent.getStringExtra(BookInfoActivity.IMG_KEY))
+            intent.putExtra(BookInfoActivity.RATING_KEY, this.intent.getStringExtra(BookInfoActivity.RATING_KEY))
+            intent.putExtra(BookInfoActivity.DESCRIPTION_KEY, this.intent.getStringExtra(BookInfoActivity.DESCRIPTION_KEY))
+            startActivity(intent)
+            finish()
+        })
     }
 }
