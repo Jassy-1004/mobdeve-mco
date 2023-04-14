@@ -64,7 +64,6 @@ class AddBookReview : AppCompatActivity() {
         // Initialize Firebase Firestore
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-
         // Retrieve the book image and rating from the "Books" collection using Firestore
         firebaseFirestore.collection("Books")
             .get()
@@ -91,47 +90,47 @@ class AddBookReview : AppCompatActivity() {
 
 
         // Set an OnClickListener on the "Save" button to add the review to the "UserReviews" collection in Firestore
-        //Save button
         viewBinding.savebtn.setOnClickListener() {
-            if (Review.text.toString().isEmpty()) {
-                Toast.makeText(this@AddBookReview, "Please write your comment", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (Rating.rating.toFloat().equals(0F)) {
-                Toast.makeText(this@AddBookReview, "Please rate the book", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                val username = this.intent.getStringExtra(UNAME).toString()
-                Log.w(TAG, "$username")
-                val currentTimestamp = com.google.firebase.Timestamp.now()
-                val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
-                val currentDate = dateFormat.format(currentTimestamp.toDate())
-                firebaseFirestore.collection("UserReviews").get()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val reg_entry: MutableMap<String, Any> = HashMap()
-                            reg_entry["User"] = username
-                            reg_entry["Review"] = Review.text.toString()
-                            reg_entry["Rating"] = Rating.rating.toFloat()
-                            reg_entry["Book Title"] = viewBinding.booktitletv.text.toString()
-                            reg_entry["Date Posted"] = currentDate
+                // Display a toast message if the comment is empty
+                if (Review.text.toString().isEmpty()) {
+                    Toast.makeText(
+                        this@AddBookReview,
+                        "Please write your comment",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    // Display a toast message if the rating is zero
+                } else if (Rating.rating.toFloat().equals(0F)) {
+                    Toast.makeText(this@AddBookReview, "Please rate the book", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    // Add the review to the "UserReviews" collection in Firestore
+                    // Retrieve the user's username from SharedPreferences
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val username = sharedPrefs.getString("username", "")
+                    Log.w(TAG, "$username")
+                    // Get current date to be used in Date Posted
+                    val currentTimestamp = com.google.firebase.Timestamp.now()
+                    val dateFormat = SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault())
+                    val currentDate = dateFormat.format(currentTimestamp.toDate())
+                    firebaseFirestore.collection("UserReviews").get()
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val reg_entry: MutableMap<String, Any> = HashMap()
+                                reg_entry["User"] = username.toString()
+                                reg_entry["Review"] = Review.text.toString()
+                                reg_entry["Rating"] = Rating.rating.toFloat()
+                                reg_entry["Book Title"] = viewBinding.booktitletv.text.toString()
+                                reg_entry["Date Posted"] = currentDate
 
-                            firebaseFirestore.collection("UserReviews")
-                                .whereEqualTo("Book Title", title)
-                                .whereEqualTo("User", username)
-                                .get()
-                                .addOnSuccessListener { documents ->
-                                    if (documents.isEmpty) {
-                                       // user has not add a review yet
-                                        val intent = Intent(this, AddBookReview::class.java)
-
-                                    } else {
-                                        // has a review already
+                                firebaseFirestore.collection("UserReviews")
+                                    .add(reg_entry)
+                                    .addOnSuccessListener { documentReference ->
+                                        // Display a toast message and exit the activity when the review is added successfully
                                         Toast.makeText(
                                             this@AddBookReview,
-                                            "You have already reviewed this book",
+                                            "Review successfully added",
                                             Toast.LENGTH_SHORT
                                         ).show()
-<<<<<<< Updated upstream
                                     }
 
                             } else {
@@ -177,96 +176,15 @@ class AddBookReview : AppCompatActivity() {
                                                 Log.w(TAG, "Error updating book rating", e)
                                             }
                                         break
-=======
->>>>>>> Stashed changes
                                     }
                                 }
-                                .addOnFailureListener { exception ->
-                                    Log.e(
-                                        TAG,
-                                        "Error checking if user has reviewed book: $exception"
-                                    )
-                                }
-
-
-                            firebaseFirestore.collection("UserReviews")
-                                .add(reg_entry)
-                                .addOnSuccessListener { documentReference ->
-                                    Toast.makeText(
-                                        this@AddBookReview,
-                                        "Review successfully added",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                    val intent: Intent = Intent()
-                                    setResult(Activity.RESULT_OK, intent)
-                                    finish()
-                                }
-
-                        } else {
-                            Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                            } else {
+                                Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
+                            }
                         }
 
-<<<<<<< Updated upstream
                 }
         }
-=======
-<<<<<<< HEAD
-                        firebaseFirestore.collection("Books")
-                            .get()
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    for (document in task.result) {
-                                        val bookTitle = document.data["Title"] as String
-                                        // Check if the book title matches the title in the view
-                                        if (bookTitle == viewBinding.booktitletv.text) {
-                                            // Retrieve the current rating and number of ratings for the book
-                                            val currentRating =
-                                                document.data["Rating"] as? Double ?: 0.0
-
-                                            // Calculate the new rating and number of ratings based on the user's rating
-                                            val userRating = Rating.rating.toFloat()
-                                            val newRating = (currentRating + userRating) / 2
-
-
-                                            // Update the "Books" collection in Firestore with the new rating and number of ratings
-                                            firebaseFirestore.collection("Books")
-                                                .document(document.id)
-                                                .update("Rating", newRating)
-                                                .addOnSuccessListener {
-                                                    Log.d(TAG, "Book rating updated successfully")
-                                                }
-                                                .addOnFailureListener { e ->
-                                                    Log.w(TAG, "Error updating book rating", e)
-                                                }
-                                            break
-                                        }
-                                    }
-                                } else {
-                                    Log.w(
-                                        ContentValues.TAG,
-                                        "Error getting documents.",
-                                        task.exception
-                                    )
-                                }
-                            }
-
-                    }
-
-                //Discard button will exit the add book review activity
-                viewBinding.discardbtn.setOnClickListener(View.OnClickListener {
-                    finish()
-                })
-
-
-            }
-
-
-        }
-    }}
-=======
-                }
-        }
->>>>>>> Stashed changes
         //Discard button will exit the add book review activity
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener {
             Log.w(ContentValues.TAG, "I AM HERE")
@@ -283,4 +201,3 @@ class AddBookReview : AppCompatActivity() {
         })
     }
 }
->>>>>>> 50f497ec1eb2ca5afb7af1581f4fc37b1bf6b964

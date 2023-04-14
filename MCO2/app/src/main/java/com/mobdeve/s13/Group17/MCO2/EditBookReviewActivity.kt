@@ -2,22 +2,18 @@ package com.mobdeve.s13.Group17.MCO2
 
 import android.app.Activity
 import android.content.ContentValues
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.RatingBar
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
-import com.google.common.util.concurrent.RateLimiter
 import com.google.firebase.firestore.FirebaseFirestore
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityAddoreditreviewBinding
 import com.mobdeve.s13.Group17.MCO2.databinding.ActivityMyreviewBinding
@@ -41,16 +37,13 @@ class EditBookReviewActivity : AppCompatActivity() {
 
     // variable to hold an instance of Firebase Firestore
     private lateinit var dbf : FirebaseFirestore
-    private lateinit var Review: EditText
-    private lateinit var Rating: RatingBar
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
 
         //inflate layout for this activity
-        val viewBinding: ActivityAddoreditreviewBinding =
-            ActivityAddoreditreviewBinding.inflate(layoutInflater)
+        val viewBinding: ActivityAddoreditreviewBinding = ActivityAddoreditreviewBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
         // put intent information to variable
@@ -67,14 +60,8 @@ class EditBookReviewActivity : AppCompatActivity() {
         // set values to views
         viewBinding.booktitletv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_TITLE_KEY)
         viewBinding.authortv.text = intent.getStringExtra(EditBookReviewActivity.AUTHOR_KEY)
-        viewBinding.descriptiontv.text =
-            intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
-        viewBinding.bookimg.setImageResource(
-            intent.getIntExtra(
-                EditBookReviewActivity.IMG_KEY,
-                R.drawable.hob_logo
-            )
-        )
+        viewBinding.descriptiontv.text = intent.getStringExtra(EditBookReviewActivity.BOOK_DESCRIPTION_KEY)
+        viewBinding.bookimg.setImageResource(intent.getIntExtra(EditBookReviewActivity.IMG_KEY, R.drawable.hob_logo))
         viewBinding.myRatingBar.rating = intent.getFloatExtra(RATING_KEY, 0F).toFloat()
         viewBinding.commentEt.setText(intent.getStringExtra(REVIEW_KEY))
 
@@ -90,12 +77,11 @@ class EditBookReviewActivity : AppCompatActivity() {
                         val bookTitle = document.data["Title"] as String
                         if (bookTitle == viewBinding.booktitletv.text) {
                             val imageUri = Uri.parse(document.data["Book Img"] as String?)
-                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo)
-                                .into(viewBinding.bookimg);
+                            Picasso.get().load(imageUri).placeholder(R.drawable.hob_logo).into(viewBinding.bookimg);
 
                             viewBinding.descriptiontv.text = document.data["Plot"] as CharSequence?
                             Log.e("TAG", imageUri.toString())
-                            Log.e("TAG", "${document.data["Rating"]}")
+                            Log.e("TAG","${document.data["Rating"]}")
                             break
                         }
                     }
@@ -105,9 +91,7 @@ class EditBookReviewActivity : AppCompatActivity() {
             }
 
         // retrieve user review from Firestore collection
-        dbf.collection("UserReviews")
-            .whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString())
-            .whereEqualTo("Book Title", title)
+        dbf.collection("UserReviews").whereEqualTo("User", this.intent.getStringExtra(BookInfoActivity.UNAME).toString()).whereEqualTo("Book Title",title)
             .get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -164,10 +148,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                                 val intent: Intent = Intent(this, BookReviewActivity::class.java)
 
                                 intent.putExtra(BookReviewActivity.BOOK_TITLE_KEY, title)
-                                intent.putExtra(
-                                    BookReviewActivity.BOOK_DESCRIPTION_KEY,
-                                    description
-                                )
+                                intent.putExtra(BookReviewActivity.BOOK_DESCRIPTION_KEY, description)
                                 intent.putExtra(BookReviewActivity.RATING_KEY, rating)
                                 intent.putExtra(BookReviewActivity.REVIEW_KEY, review)
                                 intent.putExtra(BookReviewActivity.IMAGE_KEY, image)
@@ -176,7 +157,7 @@ class EditBookReviewActivity : AppCompatActivity() {
                                     BookReviewActivity.UNAME,
                                     this.intent.getStringExtra(UNAME).toString()
                                 )
-                                startActivity(intent)
+                               startActivity(intent)
 
                                 Log.d(ContentValues.TAG, "Transaction success!")
                                 finish()
@@ -185,52 +166,17 @@ class EditBookReviewActivity : AppCompatActivity() {
                             Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
                         }
                     }
-            } else {
+            }
+            else{
                 // show a Toast message to remind the user to enter a review
-                Toast.makeText(
-                    this,
+                Toast.makeText(this,
                     "Please enter your review",
-                    Toast.LENGTH_SHORT
-                )
+                    Toast.LENGTH_SHORT)
                     .show()
             }
         }
 
-        dbf.collection("Books")
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    for (document in task.result) {
-                        val bookTitle = document.data["Title"] as String
-                        // Check if the book title matches the title in the view
-                        if (bookTitle == viewBinding.booktitletv.text) {
-                            // Retrieve the current rating and number of ratings for the book
-                            val currentRating = document.data["Rating"] as? Double ?: 0.0
-
-                            // Calculate the new rating and number of ratings based on the user's rating
-                            val userRating = Rating.rating.toFloat()
-                            val newRating = (currentRating + userRating) / 2
-
-
-                            // Update the "Books" collection in Firestore with the new rating and number of ratings
-                            dbf.collection("Books").document(document.id)
-                                .update("Rating", newRating)
-                                .addOnSuccessListener {
-                                    Log.d(TAG, "Book rating updated successfully")
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w(TAG, "Error updating book rating", e)
-                                }
-                            break
-                        }
-                    }
-                } else {
-                    Log.w(ContentValues.TAG, "Error getting documents.", task.exception)
-                }
-            }
-
-
-    // handle click events for the discard button
+        // handle click events for the discard button
         viewBinding.discardbtn.setOnClickListener(View.OnClickListener{
             val intent: Intent = Intent(this, BookReviewActivity::class.java)
 

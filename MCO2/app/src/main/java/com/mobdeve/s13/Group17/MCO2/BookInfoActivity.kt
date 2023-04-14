@@ -173,7 +173,9 @@ class BookInfoActivity : AppCompatActivity() {
                 .whereEqualTo("User", user)
                 .get()
                 .addOnSuccessListener { documents ->
-                    if (documents.isEmpty) {
+                    if (!documents.isEmpty) {
+                        Toast.makeText(this@BookInfoActivity, "You have already reviewed this book", Toast.LENGTH_SHORT).show()
+                    } else {
                         // If the user hasn't left a review, launch the AddBookReview activity
                         val intent = Intent(this, AddBookReview::class.java)
                         intent.putExtra(AddBookReview.BOOK_TITLE_KEY, title)
@@ -182,13 +184,7 @@ class BookInfoActivity : AppCompatActivity() {
                         intent.putExtra(AddBookReview.IMG_KEY, image)
                         intent.putExtra(AddBookReview.UNAME, user)
                         startActivity(intent)
-<<<<<<< Updated upstream
                         finish()
-=======
-
-                    } else {
-                        Toast.makeText(this@BookInfoActivity, "You have already reviewed this book", Toast.LENGTH_SHORT).show()
->>>>>>> Stashed changes
                     }
                 }
                 .addOnFailureListener { exception ->
