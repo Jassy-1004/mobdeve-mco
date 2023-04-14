@@ -104,7 +104,7 @@ class MyLibraryActivity : AppCompatActivity() {
                 // progress dialog is shown when fetching data from db and checking if user has reviews
                 val progressDialog = ProgressDialog(this@MyLibraryActivity)
                 progressDialog.setMessage("Loading....., Please Wait")
-                progressDialog.show()
+                //progressDialog.show()
 
                 if (bookTitles.isNotEmpty()) {  // if users have a review
 

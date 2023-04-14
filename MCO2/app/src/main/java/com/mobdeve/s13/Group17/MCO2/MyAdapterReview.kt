@@ -47,7 +47,6 @@ class MyAdapterReview(private var bookList: List<BookReview>, private val myActi
 
             // Launch the BookReviewActivity using myActivityResultLauncher
             holder.itemView.context.startActivity(intent)
-            (holder.itemView.context as Activity).finish()
         }
     }
 
