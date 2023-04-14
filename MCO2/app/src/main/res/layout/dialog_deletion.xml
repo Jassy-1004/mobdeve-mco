@@ -26,7 +26,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="4dp"
             android:gravity="center_horizontal"
-            android:text="are you sure you want to delete your comment?"
+            android:text="Are you sure you want to delete your comment?"
             android:textSize="20sp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
