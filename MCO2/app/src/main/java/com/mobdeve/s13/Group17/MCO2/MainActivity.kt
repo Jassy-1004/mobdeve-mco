@@ -170,6 +170,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+
         // Get the username passed from the previous activity
         val username = this.intent.getStringExtra(UNAME).toString()
         Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(UNAME).toString()}")
@@ -177,6 +178,28 @@ class MainActivity : AppCompatActivity() {
         // Set the view using view binding
         val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        // Set up the spinner for sorting options
+        val dropdown = findViewById<Spinner>(R.id.filter)
+        val items = arrayOf("Filter", "A-Z", "Most Rated", "Least Rated")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        dropdown.adapter = adapter
+        dropdown.setSelection(0)
+
+        // Set up the listener for the spinner
+        dropdown.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                when (position) {
+                    1 -> sortAlphabetically(bookList)
+                    2 -> sortByRatingDescending(bookList)
+                    3 -> sortByLeastRated(bookList)
+                }
+                myAdapter.notifyDataSetChanged()
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle nothing selected event
+            }
+        }
 
         // Set up the RecyclerView and its adapter
         // Initialize the RecyclerView
@@ -188,6 +211,70 @@ class MainActivity : AppCompatActivity() {
 
         // Set up the listener for Firestore database changes
         EventChangeListener()
+
+
+
+        // Set up the DrawerLayout and its listener
+        // drawer layout instance to toggle the menu icon to open
+        // drawer and back button to close drawer
+        drawerLayout = findViewById(R.id.drawer_layout)
+        actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close)
+
+        // pass the Open and Close toggle for the drawer layout listener
+        // to toggle the button
+        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+        actionBarDrawerToggle.syncState()
+
+        // to make the Navigation drawer icon always appear on the action bar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Set up the NavigationView and its listener
+        val navigationView = findViewById<NavigationView>(R.id.navigation_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            // Handle menu item clicks here
+            when (menuItem.itemId) {
+                // Go to the MainActivity
+                R.id.nav_home -> {
+                    val home = Intent(this, MainActivity::class.java)
+                    home.putExtra(MainActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+                    startActivity(home)
+                    finishAffinity()
+                }
+
+                // Go to the MyLibraryActivity
+                R.id.nav_books-> {
+                    // Do something for menu item 2
+                    val lib = Intent(this, MyLibraryActivity::class.java)
+                    lib.putExtra(MyLibraryActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+                    startActivity(lib)
+                    finishAffinity()
+                }
+
+                // Go to the MyProfileActivity
+                R.id.nav_profile->{
+                    val profile = Intent(this, MyProfileActivity::class.java)
+                    profile.putExtra(MyProfileActivity.UNAME, this.intent.getStringExtra(UNAME).toString())
+                    startActivity(profile)
+                    finishAffinity()
+                }
+
+                // Go to the Logout
+                R.id.nav_logout->{
+                    isUserLoggedIn = false
+                    val sharedPrefs = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.clear();
+                    editor.apply();
+                    startActivity(Intent(this, StartPage::class.java))
+                    finishAffinity()
+
+
+                }
+            }
+            // Close the drawer
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
     // EventChangeListener function used to listen to changes in the Firestore collection "Books" and populate a RecyclerView accordingly
