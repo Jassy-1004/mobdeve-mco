@@ -167,6 +167,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // Get the username passed from the previous activity
+        val username = this.intent.getStringExtra(UNAME).toString()
+        Log.d(TAG, "DocumentSnapshot data: ${this.intent.getStringExtra(UNAME).toString()}")
+
+        // Set the view using view binding
+        val viewBinding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(viewBinding.root)
+
+        // Set up the RecyclerView and its adapter
+        // Initialize the RecyclerView
+        this.recyclerView = viewBinding.recyclerView
+        bookList = arrayListOf()
+        myAdapter= MyAdapter(bookList, bookList,bookInfoResultLauncher, username)
+        this.recyclerView.adapter = myAdapter
+        this.recyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Set up the listener for Firestore database changes
+        EventChangeListener()
+    }
+
     // EventChangeListener function used to listen to changes in the Firestore collection "Books" and populate a RecyclerView accordingly
     private fun EventChangeListener() {
 
