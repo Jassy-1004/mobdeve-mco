@@ -106,6 +106,7 @@ class MyLibraryActivity : AppCompatActivity() {
                     }
                 }
 
+                progressDialog.dismiss()
                 // Split the book titles into batches of 10
                 val batches = bookTitles.chunked(10)
 
@@ -131,6 +132,7 @@ class MyLibraryActivity : AppCompatActivity() {
                                 // hide the view and show no reviews view if user has no reviews
                                 viewBinding.empty.visibility = View.GONE
                             }
+
 
                             // If this is the last batch, update the UI
                             if (batch == batches.last()) {
