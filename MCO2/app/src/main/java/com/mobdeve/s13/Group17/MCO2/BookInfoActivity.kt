@@ -184,6 +184,7 @@ class BookInfoActivity : AppCompatActivity() {
                         intent.putExtra(AddBookReview.IMG_KEY, image)
                         intent.putExtra(AddBookReview.UNAME, user)
                         startActivity(intent)
+                        finish()
                     }
                 }
                 .addOnFailureListener { exception ->
